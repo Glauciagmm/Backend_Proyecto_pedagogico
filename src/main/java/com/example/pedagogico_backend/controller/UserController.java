@@ -12,7 +12,7 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/uniquecare")
 @RequiredArgsConstructor
 @CrossOrigin(origins="http://localhost:4200/")
 public class UserController {
@@ -31,13 +31,13 @@ public class UserController {
     }
 
     @PutMapping("/user/edit")
-    public User updateProperty (@RequestBody @Valid User user){
+    public User updateUser (@RequestBody @Valid User user){
         userRepository.findById(user.getId()).orElseThrow(RuntimeException::new);
         return userService.updateUser(user);
     }
 
     @DeleteMapping("/user/{id}")
-    public ResponseEntity<Boolean> deleteProperty (@PathVariable("id") Long id){
+    public ResponseEntity<Boolean> deleteUser(@PathVariable("id") Long id){
         userService.deleteUserById(id);
         return new ResponseEntity<Boolean>(Boolean.TRUE, HttpStatus.OK);
     }

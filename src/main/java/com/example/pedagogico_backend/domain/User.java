@@ -90,57 +90,41 @@ public class User {
         this.password = password;
     }
 
-
-
-
-    /*public Collection<Role> getRoles() {
-        return roles;
+    public String getCity() {
+        return city;
     }
 
-    public void setRoles(Collection<Role> roles) {
-        this.roles = roles;
+    public void setCity(String city) {
+        this.city = city;
     }
 
-    public List<Advertisements> getAdvertisements() {
-        return advertisement;
-    }
-
-    public void setAdvertisements(List<Advertisements> advertisements) {
-        this.advertisements = advertisements;
-    }
-
-    public List<Contract> getContract() {
-        return contract;
-    }
-
-    public void setContract(List<Contract> contract) {
-        this.contract = contract;*/
-    }
-
-    public User(Long id, String name, String surname, String email, String username, String password, String city, Collection<Role> roles) {
-        this.id= id;
+    public User(Long id, String name, String surname, String username, String email, String password, String city) {
+        this.id = id;
         this.name = name;
         this.surname = surname;
-        this.email = email;
         this.username = username;
+        this.email = email;
         this.password = password;
         this.city = city;
-       /* this.roles = roles;*/
     }
 
-    public User(Long id, List<Advertisements> advertisements) {
+    public User(Long id, String name, String username, String email, String city) {
         this.id = id;
-        this.advertisements = advertisements;
+        this.name = name;
+        this.username = username;
+        this.email = email;
+        this.city = city;
+    }
+
+    public User(String username, String password) {
+        this.username = username;
+        this.password = password;
+    }
+
+    public User(Long id) {
+        this.id = id;
     }
 
     public User() {
-    }
-
-    public void add(User guest) {
-        this.contract = contract;
-    }
-
-    public void remove(User guest) {
-        this.contract = contract;
     }
 }
