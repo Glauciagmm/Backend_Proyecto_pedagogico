@@ -1,8 +1,8 @@
-package com.example.pedagogico_backend.controller;
+package com.uniquecare.pedagogico_backend.controllers;
 
-import com.example.pedagogico_backend.domain.User;
-import com.example.pedagogico_backend.repositories.UserRepository;
-import com.example.pedagogico_backend.services.IUserService;
+import com.uniquecare.pedagogico_backend.models.User;
+import com.uniquecare.pedagogico_backend.repositories.UserRepository;
+import com.uniquecare.pedagogico_backend.services.IUserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,10 +26,10 @@ public class UserController {
         return ResponseEntity.ok().body(userService.getUsers());
     }
 
-    @GetMapping("/user/{id}")
+  /*  @GetMapping("/user/{id}")
     public User findUserById(@PathVariable("id") Long id) {
         return userRepository.findById(id).orElseThrow(UserNotFoundException::new);
-    }
+    }*/
 
     @PutMapping("/user/edit")
     public User updateUser (@RequestBody @Valid User user){

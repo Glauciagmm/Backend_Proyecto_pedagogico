@@ -1,6 +1,6 @@
-package com.example.pedagogico_backend.services;
+package com.uniquecare.pedagogico_backend.services;
 
-import com.example.pedagogico_backend.domain.User;
+import com.uniquecare.pedagogico_backend.models.User;
 
 import java.util.List;
 

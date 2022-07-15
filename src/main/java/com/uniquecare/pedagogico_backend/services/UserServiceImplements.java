@@ -1,7 +1,7 @@
-package com.example.pedagogico_backend.services;
+package com.uniquecare.pedagogico_backend.services;
 
-import com.example.pedagogico_backend.domain.User;
-import com.example.pedagogico_backend.repositories.UserRepository;
+import com.uniquecare.pedagogico_backend.models.User;
+import com.uniquecare.pedagogico_backend.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -25,9 +25,14 @@ public class UserServiceImplements implements IUserService {
 
     @Override
     public User getUser(String username) {
+        return null;
+    }
+
+    /*@Override
+    public User getUser(String username) {
         log.info("Fetching user {}",  username);
         return userRepository.findByUsername(username);
-    }
+    }*/
 
     @Override
     public User updateUser(User user) {

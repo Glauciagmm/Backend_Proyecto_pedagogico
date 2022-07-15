@@ -1,4 +1,4 @@
-package com.example.pedagogico_backend.controller;
+package com.uniquecare.pedagogico_backend.controllers;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;

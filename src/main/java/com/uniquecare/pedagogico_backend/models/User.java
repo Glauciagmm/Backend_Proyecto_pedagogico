@@ -1,21 +1,21 @@
-package com.example.pedagogico_backend.domain;
+package com.uniquecare.pedagogico_backend.models;
+import java.util.HashSet;
+import java.util.Set;
 
-import lombok.Data;
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
 
-import static javax.persistence.GenerationType.AUTO;
-
-@Entity @Data
-@Table(name="user")
+@Entity
+@Table(name = "users",
+        uniqueConstraints = {
+                @UniqueConstraint(columnNames = "username"),
+                @UniqueConstraint(columnNames = "email")
+        })
 public class User {
     @Id
-    @GeneratedValue(strategy = AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
     @NotBlank
@@ -28,26 +28,24 @@ public class User {
     @Email
     private String email;
     @NotBlank
+    @Size(max = 120)
     private String password;
     @NotBlank
     private String city;
 
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(  name = "user_roles",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id"))
+    private Set<Role> roles = new HashSet<>();
 
-    /*@ManyToMany(fetch = FetchType.EAGER)
-    private Collection<Role> roles = new ArrayList<>();
-
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "assistant")
-    private List<Facility> facilities;
-
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
-    private List<Contract> contract;*/
-
-    public Long getId() {
-        return id;
+    public User() {
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public User(String username, String email, String password) {
+        this.username = username;
+        this.email = email;
+        this.password = password;
     }
 
     public String getName() {
@@ -64,6 +62,22 @@ public class User {
 
     public void setSurname(String surname) {
         this.surname = surname;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getUsername() {
@@ -90,12 +104,12 @@ public class User {
         this.password = password;
     }
 
-    public String getCity() {
-        return city;
+    public Set<Role> getRoles() {
+        return roles;
     }
 
-    public void setCity(String city) {
-        this.city = city;
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
     }
 
     public User(Long id, String name, String surname, String username, String email, String password, String city) {
@@ -125,6 +139,5 @@ public class User {
         this.id = id;
     }
 
-    public User() {
-    }
+
 }
