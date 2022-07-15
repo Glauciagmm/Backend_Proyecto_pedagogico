@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 
 @Service @RequiredArgsConstructor
 @Transactional
@@ -24,15 +25,10 @@ public class UserServiceImplements implements IUserService {
     public User findById(Long id) {return userRepository.findById(id).orElse(null);}
 
     @Override
-    public User getUser(String username) {
-        return null;
-    }
-
-    /*@Override
-    public User getUser(String username) {
+    public Optional<User> getUser(String username) {
         log.info("Fetching user {}",  username);
         return userRepository.findByUsername(username);
-    }*/
+    }
 
     @Override
     public User updateUser(User user) {

@@ -1,0 +1,59 @@
+package com.uniquecare.pedagogico_backend.services;
+
+import com.uniquecare.pedagogico_backend.models.User;
+import com.uniquecare.pedagogico_backend.repositories.UserRepository;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
+
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.verify;
+@ExtendWith(MockitoExtension.class)
+class UserServiceImplementsTest {
+
+    @Mock
+    private UserRepository userRepository;
+
+    private UserServiceImplements underTest;
+
+    @BeforeEach
+    void setUp() {
+        underTest = new UserServiceImplements(userRepository);
+    }
+
+    @Test
+    void getUser() {
+        underTest.getUser("username");
+        verify(userRepository).findByUsername("username");
+    }
+
+    @Test
+    void getUsers() {
+        underTest.getUsers();
+        verify(userRepository).findAll();
+    }
+
+    @Test
+    void findById() {
+        User user = new User(
+                1L,
+                "Glaucia",
+                "glaucia@gmail.com",
+                "Glaucia",
+                "Barcelona"
+        );
+        underTest.updateUser(user);
+        underTest.findById(1L);
+        verify(userRepository).findById(1L);
+
+    }
+
+    @Test
+    void deleteUserById() {
+        underTest.deleteUserById(1L);
+        verify(userRepository).deleteById(1L);
+
+    }
+}

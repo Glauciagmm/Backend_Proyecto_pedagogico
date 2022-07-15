@@ -21,6 +21,9 @@ public class Role {
         this.name = name;
     }
 
+    public Role(long l, String role_admin) {
+    }
+
     public Integer getId() {
         return id;
     }
