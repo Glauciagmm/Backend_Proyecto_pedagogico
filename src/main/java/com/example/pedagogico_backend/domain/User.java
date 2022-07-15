@@ -37,7 +37,7 @@ public class User {
     private Collection<Role> roles = new ArrayList<>();
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "assistant")
-    private List<Advertisement> advertisements;
+    private List<Facility> facilities;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
     private List<Contract> contract;*/
