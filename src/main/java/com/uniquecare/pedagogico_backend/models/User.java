@@ -1,5 +1,6 @@
 package com.uniquecare.pedagogico_backend.models;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.*;
@@ -39,6 +40,12 @@ public class User {
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles = new HashSet<>();
 
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")//Generate the service
+    private List<Facilit> facilit;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")//Client
+    private List<Contract> contract;
+
     public User() {
     }
 
@@ -46,6 +53,18 @@ public class User {
         this.username = username;
         this.email = email;
         this.password = password;
+    }
+
+    public List<Facilit> getFacilit() {
+        return facilit;
+    }
+
+    public void setFacilit(List<Facilit> facilit) {
+        this.facilit = facilit;
+    }
+
+    public void setContract(List<Contract> contract) {
+        this.contract = contract;
     }
 
     public String getName() {
@@ -137,6 +156,20 @@ public class User {
 
     public User(Long id) {
         this.id = id;
+    }
+
+
+    public List <Contract> getContract() {
+        return contract;
+    }
+
+
+    public void add(User user) {
+        this.contract = contract;
+    }
+
+    public void remove(User user) {
+        this.contract = contract;
     }
 
 

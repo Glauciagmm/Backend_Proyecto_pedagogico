@@ -15,7 +15,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/uniquecare")
 @RequiredArgsConstructor
-@CrossOrigin(origins="http://localhost:4200/")
+@CrossOrigin(origins="*")
 public class UserController {
     private final IUserService userService;
     private final UserRepository userRepository;
@@ -26,7 +26,7 @@ public class UserController {
         return ResponseEntity.ok().body(userService.getUsers());
     }
 
-  /*  @GetMapping("/user/{id}")
+    /*@GetMapping("/user/{id}")
     public User findUserById(@PathVariable("id") Long id) {
         return userRepository.findById(id).orElseThrow(UserNotFoundException::new);
     }*/

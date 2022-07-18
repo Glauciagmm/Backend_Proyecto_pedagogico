@@ -24,7 +24,7 @@ class UserServiceImplementsTest {
     }
 
     @Test
-    void getUser() {
+    void getUserByUsername() {
         underTest.getUser("username");
         verify(userRepository).findByUsername("username");
     }
@@ -45,7 +45,7 @@ class UserServiceImplementsTest {
                 "Barcelona"
         );
         underTest.updateUser(user);
-        underTest.findById(1L);
+        underTest.getUserById(1L);
         verify(userRepository).findById(1L);
 
     }

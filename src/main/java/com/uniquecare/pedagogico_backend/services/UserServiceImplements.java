@@ -22,10 +22,16 @@ public class UserServiceImplements implements IUserService {
     }
 
     @Override
-    public User findById(Long id) {return userRepository.findById(id).orElse(null);}
+    public User getUserById(Long id) {return userRepository.findById(id).orElse(null);}
 
     @Override
-    public Optional<User> getUser(String username) {
+    public Optional<User> getUserByUsername(String username) {
+        log.info("Fetching user {}",  username);
+        return userRepository.findByUsername(username);
+    }
+
+    @Override
+    public Optional<User> findByUsername(String username) {
         log.info("Fetching user {}",  username);
         return userRepository.findByUsername(username);
     }
@@ -35,11 +41,15 @@ public class UserServiceImplements implements IUserService {
         return userRepository.save(user);
     }
 
+
+
+
     @Override
     public void deleteUserById(Long id) {
         userRepository.deleteById(id);
     }
 
 
-
+    public void getUser(String username) {
+    }
 }

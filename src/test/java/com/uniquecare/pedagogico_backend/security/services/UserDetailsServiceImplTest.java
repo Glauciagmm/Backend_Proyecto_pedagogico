@@ -22,18 +22,18 @@ class UserDetailsServiceImplTest {
 
     @Mock
     private UserRepository userRepository;
-    @Mock
-    private PasswordEncoder passwordEncoder;
+    /*@Mock
+    private PasswordEncoder passwordEncoder;*/
     @Mock
     private RoleRepository roleRepository;
 
     private UserDetailsServiceImpl underTest;
 
-    @BeforeEach
+   /* @BeforeEach
     void setUp() {
-        underTest = new UserDetailsServiceImpl(userRepository, passwordEncoder, roleRepository);
+        underTest = new UserDetailsServiceImpl(userRepository, roleRepository);
     }
-
+*/
     @Test
     void loadUserByUsername() {
         User user = new User(
