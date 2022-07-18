@@ -26,7 +26,7 @@ public class ContractController {
     //private final IFacilitService facilitService;
 
     @GetMapping("/contract")
-    public ResponseEntity<List<Contract>> getOrders() {
+    public ResponseEntity<List<Contract>> getContract() {
         return ResponseEntity.ok().body(contractService.findAllContracts());
     }
 
