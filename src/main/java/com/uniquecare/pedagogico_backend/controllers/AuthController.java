@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 
 import javax.validation.Valid;
 
+import com.uniquecare.pedagogico_backend.models.ERole;
 import com.uniquecare.pedagogico_backend.models.User;
 import com.uniquecare.pedagogico_backend.payload.request.LoginRequest;
 import com.uniquecare.pedagogico_backend.payload.request.SignupRequest;

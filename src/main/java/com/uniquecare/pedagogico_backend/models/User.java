@@ -17,27 +17,34 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private String name;
     @NotBlank
+
     private String surname;
     @NotBlank
     @Size(max = 20)
+
     private String username;
     @NotBlank
     @Size(max = 50)
+
     @Email
     private String email;
     @NotBlank
     @Size(max = 120)
+
     private String password;
     @NotBlank
+
     private String city;
 
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(  name = "user_roles",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles = new HashSet<>();
+
 
     public User() {
     }
@@ -139,5 +146,8 @@ public class User {
         this.id = id;
     }
 
+    public void addRole(Role roles) {
+        this.roles.add(roles);
+    }
 
 }
