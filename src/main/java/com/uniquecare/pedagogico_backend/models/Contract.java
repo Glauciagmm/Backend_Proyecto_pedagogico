@@ -58,10 +58,10 @@ public class Contract {
         this.start(start);
         this.finish(finish);
     }*/
-    public void removeContract(User user, Facilit facilit, LocalDateTime start, LocalDateTime finish) {
+/*    public void removeContract(User user, Facilit facilit, LocalDateTime start, LocalDateTime finish) {
         user.remove(user);
         facilit.remove(facilit);
-    }
+    }*/
 
     @JsonBackReference
     public User getUser() {

@@ -166,7 +166,7 @@ public class User {
     }
 
 
-    public List <Contract> getContract() {
+/*    public List <Contract> getContract() {
         return contract;
     }
 
@@ -177,7 +177,7 @@ public class User {
 
     public void remove(User user) {
         this.contract = contract;
-    }
+    }*/
 
 
 }
