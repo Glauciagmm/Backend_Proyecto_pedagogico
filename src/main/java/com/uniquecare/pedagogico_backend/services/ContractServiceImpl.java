@@ -4,10 +4,12 @@ import com.uniquecare.pedagogico_backend.models.Contract;
 import com.uniquecare.pedagogico_backend.repositories.ContractRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -18,11 +20,11 @@ public class ContractServiceImpl implements IContractService {
 
    private final ContractRepository contractRepository;
 
-    @Override
+   /* @Override
     public Contract addContract(Contract contract) {
         return contractRepository.save(contract);
     }
-
+*/
     @Override
     public List<Contract> findAllContracts() {
         return contractRepository.findAll();
@@ -41,6 +43,11 @@ public class ContractServiceImpl implements IContractService {
 
     @Override
     public Contract updateContract(Contract contract) {
+        return contractRepository.save(contract);
+    }
+
+    @Override
+    public Contract addContract(Authentication authentication, Contract contract) {
         return contractRepository.save(contract);
     }
 }

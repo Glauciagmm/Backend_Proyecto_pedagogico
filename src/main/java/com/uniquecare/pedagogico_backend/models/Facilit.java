@@ -1,5 +1,7 @@
 package com.uniquecare.pedagogico_backend.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -16,10 +18,11 @@ public class Facilit {
     private int pricePerHour;
 
     @ManyToOne
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
 
     @OneToMany(mappedBy = "facilit")
+    //@JsonIgnoreProperties("facilit")
     private Set <Contract> contract;
 
     public Facilit() {

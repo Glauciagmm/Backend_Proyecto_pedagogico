@@ -3,14 +3,14 @@ package com.uniquecare.pedagogico_backend.models;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @Entity
 public class Contract {
     @Id
     Long id;
-    private Date start;
-    private Date finish;
+    private LocalDateTime start;
+    private LocalDateTime finish;
     private int totalPrice;
 
    /* @ManyToOne
@@ -18,43 +18,47 @@ public class Contract {
     User user;*/
 
     @ManyToOne
-    @JoinColumn (name = "facilit_id", nullable = false)
+    //@JsonIgnoreProperties("contract")
+    @JoinColumn (name = "facilit_id", referencedColumnName = "id", nullable = false)
     private Facilit facilit;
 
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "user_id", nullable = false)
+    //@JsonIgnoreProperties("contract")
+    @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
     private User user;
 
     public Contract(){
     }
 
-    public Contract (Long id,Date start, Date finish, User user, Facilit facilit){
+    public void Contract (Long id, LocalDateTime start, LocalDateTime finish, Facilit facilit, int totalPrice){
         this.id = id;
+        this.start  = start;
+        this.finish = finish;
+        //this.user = user;
+        this.facilit = facilit;
+        this.totalPrice = totalPrice;
+    }
+
+    /*public Contract (LocalDateTime start, LocalDateTime finish, User user, Facilit facilit){
         this.start  = start;
         this.finish = finish;
         this.user = user;
         this.facilit = facilit;
-    }
+    }*/
 
-    public Contract (Date start, Date finish, User user, Facilit facilit){
-        this.start  = start;
-        this.finish = finish;
-        this.user = user;
-        this.facilit = facilit;
-    }
-
-    public Contract (Long id, User user, Facilit facilit){
+  /*  public Contract (Long id, User user, Facilit facilit){
         this.id = id;
         this.user = user;
         this.facilit = facilit;
     }
 
-    public void addContract(User user, Facilit facilit){
-        user.add(user);
-        facilit.add(facilit);
-
-    }
-    public void removeContract(User user, Facilit facilit) {
+    public void addContract(User user, Facilit facilit, LocalDateTime start, LocalDateTime finish){
+        this.user(user);
+        this.facilit(facilit);
+        this.start(start);
+        this.finish(finish);
+    }*/
+    public void removeContract(User user, Facilit facilit, LocalDateTime start, LocalDateTime finish) {
         user.remove(user);
         facilit.remove(facilit);
     }
@@ -82,19 +86,19 @@ public class Contract {
         this.id = id;
     }
 
-    public Date getStart() {
+    public LocalDateTime getStart() {
         return start;
     }
 
-    public void setStart(Date start) {
+    public void setStart(LocalDateTime start) {
         this.start = start;
     }
 
-    public Date getFinish() {
+    public LocalDateTime getFinish() {
         return finish;
     }
 
-    public void setFinish(Date finish) {
+    public void setFinish(LocalDateTime finish) {
         this.finish = finish;
     }
 
@@ -105,6 +109,7 @@ public class Contract {
     public void setTotalPrice(int totalPrice) {
         this.totalPrice = totalPrice;
     }
+
 
     @Override
     public String toString() {

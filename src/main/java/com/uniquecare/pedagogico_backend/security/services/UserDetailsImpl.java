@@ -1,5 +1,6 @@
 package com.uniquecare.pedagogico_backend.security.services;
 
+import java.security.PrivateKey;
 import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
@@ -22,17 +23,26 @@ public class UserDetailsImpl implements UserDetails {
 
     private String email;
 
+    private String name;
+
+    private String surname;
+
+    private String city;
+
     @JsonIgnore
     private String password;
 
     private Collection<? extends GrantedAuthority> authorities;
 
-    public UserDetailsImpl(Long id, String username, String email, String password,
+    public UserDetailsImpl(Long id, String name, String surname, String username, String email, String password, String city,
                            Collection<? extends GrantedAuthority> authorities) {
         this.id = id;
+        this.name = name;
+        this.surname = surname;
         this.username = username;
         this.email = email;
         this.password = password;
+        this.city= city;
         this.authorities = authorities;
     }
 
@@ -46,6 +56,9 @@ public class UserDetailsImpl implements UserDetails {
                 user.getUsername(),
                 user.getEmail(),
                 user.getPassword(),
+                user.getName(),
+                user.getSurname(),
+                user.getCity(),
                 authorities);
     }
 
@@ -60,6 +73,30 @@ public class UserDetailsImpl implements UserDetails {
 
     public String getEmail() {
         return email;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getSurname() {
+        return surname;
+    }
+
+    public void setSurname(String surname) {
+        this.surname = surname;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
     }
 
     @Override

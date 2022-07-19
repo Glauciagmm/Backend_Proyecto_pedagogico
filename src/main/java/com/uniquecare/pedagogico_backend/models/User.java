@@ -1,4 +1,7 @@
 package com.uniquecare.pedagogico_backend.models;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -6,6 +9,7 @@ import java.util.Set;
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 
 @Entity
@@ -19,7 +23,6 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
-    @NotBlank
     private String surname;
     @NotBlank
     @Size(max = 20)
@@ -31,8 +34,8 @@ public class User {
     @NotBlank
     @Size(max = 120)
     private String password;
-    @NotBlank
     private String city;
+
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(  name = "user_roles",
@@ -41,19 +44,17 @@ public class User {
     private Set<Role> roles = new HashSet<>();
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")//Generate the service
+    //@JsonIgnoreProperties("user")
     private List<Facilit> facilit;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")//Client
+    @OneToMany
+    (cascade = CascadeType.ALL, mappedBy = "user")//Client
+    //@JsonIgnoreProperties("user")
     private List<Contract> contract;
 
     public User() {
     }
 
-    public User(String username, String email, String password) {
-        this.username = username;
-        this.email = email;
-        this.password = password;
-    }
 
     public List<Facilit> getFacilit() {
         return facilit;
@@ -153,6 +154,12 @@ public class User {
         this.username = username;
         this.password = password;
     }
+    public User(String username, String email, String password) {
+        this.username = username;
+        this.email = email;
+        this.password = password;
+    }
+
 
     public User(Long id) {
         this.id = id;
