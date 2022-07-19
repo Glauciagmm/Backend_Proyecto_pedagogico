@@ -14,13 +14,13 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/uniquecare")
+@RequestMapping("/api")
 @CrossOrigin(origins="*")
 public class FacilitController {
 
     private final IFacilitService facilitService;
 
-    @GetMapping("/facilit")
+    @GetMapping("/facility")
     public ResponseEntity<List<Facilit>>getFacilit(Authentication authentication, HttpSession session){
         if (authentication == null){
             System.out.println("Es necesario que hagas el login");
@@ -30,24 +30,30 @@ public class FacilitController {
         }return ResponseEntity.ok().body(facilitService.getAllFacilities());
     }
 
-    @PostMapping("/facilit/save")
-    public ResponseEntity<Facilit> addFacilit(@RequestBody Facilit facilit){
-        URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/uniquecare/facility/save").toUriString());
+    @PostMapping("/facility/save")
+    public ResponseEntity<Facilit> addFacilit(Authentication authentication, @RequestBody Facilit facilit) {
+        URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/facility/save").toUriString());
+        if (authentication == null) {
+            System.out.println("Es necesario que hagas el login");
+        } else {
+            String username = authentication.getPrincipal().toString();
+            System.out.println(username);
+        }
         return ResponseEntity.created(uri).body(facilitService.addFacilit(facilit));
     }
 
-    @GetMapping("/facilit/{id}")
+    @GetMapping("/facility/{id}")
     public ResponseEntity<Facilit> findFacilitById(@PathVariable Long id){
         return ResponseEntity.ok().body(facilitService.findFacilityById(id));
     }
 
-    @PutMapping("/facilit/edit")
+    @PutMapping("/facility/edit")
     public ResponseEntity<Facilit> editFacilit(@RequestBody Facilit facilit){
-        URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/uniquecare/facilit/save").toUriString());
+        URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/facility/save").toUriString());
         return ResponseEntity.created(uri).body(facilitService.updateFacilit(facilit));
     }
 
-    @DeleteMapping("/facilit/delete/{id}")
+    @DeleteMapping("/facility/delete/{id}")
     public ResponseEntity<Void> deleteFacilitById(@PathVariable Long id){
         facilitService.deleteFacilitById(id);
         return ResponseEntity.noContent().build();
