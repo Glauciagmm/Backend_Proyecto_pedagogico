@@ -28,7 +28,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.uniquecare.pedagogico_backend.models.ERole;
 import com.uniquecare.pedagogico_backend.models.Role;
 import com.uniquecare.pedagogico_backend.repositories.RoleRepository;
 import com.uniquecare.pedagogico_backend.repositories.UserRepository;
