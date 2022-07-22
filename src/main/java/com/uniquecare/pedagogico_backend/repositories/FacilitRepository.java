@@ -8,5 +8,5 @@ import java.util.List;
 
 @Repository
 public interface FacilitRepository extends JpaRepository<Facilit, Long> {
-    //List<Facilit> findAllByCategory(String categoryName);
+    List<Facilit> findAllByCategory(String categoryName);
 }

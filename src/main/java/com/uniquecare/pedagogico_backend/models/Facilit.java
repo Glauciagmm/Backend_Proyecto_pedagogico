@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -16,6 +17,12 @@ public class Facilit {
     private String title;
     private String description;
     private int pricePerHour;
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(  name = "facilit_categories",
+            joinColumns = @JoinColumn(name = "facilit_id"),
+            inverseJoinColumns = @JoinColumn(name = "category_id"))
+    private Set<Role> roles = new HashSet<>();
     @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;

@@ -39,10 +39,10 @@ public class FacilitServiceImpl implements IFacilitService{
         facilitRepository.deleteById(id);
     }
 
-    /*@Override
-    public List<Facilit> findFacilityByCategory(String categoryName){
+    @Override
+    public List<Facilit> getAllFacilitiesByCategory(String categoryName){
         return facilitRepository.findAllByCategory(categoryName);
-    }*/
+    }
 
     @Override
     public Facilit updateFacilit(Facilit facilit) {

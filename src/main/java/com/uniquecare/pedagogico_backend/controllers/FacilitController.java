@@ -17,7 +17,6 @@ import java.util.List;
 @RequestMapping("/api")
 @CrossOrigin(origins="*")
 public class FacilitController {
-
     private final IFacilitService facilitService;
 
     @GetMapping("/facility")

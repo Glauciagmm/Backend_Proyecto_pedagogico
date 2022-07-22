@@ -8,6 +8,8 @@ public interface IFacilitService {
     Facilit addFacilit(Facilit facilit);
     List<Facilit> getAllFacilities();
     Facilit findFacilityById(Long id);
+
+    List <Facilit> getAllFacilitiesByCategory (String categoryName);
     void deleteFacilitById(Long id);
 
     //List<Facilit> findFacilityByCategory(String categoryName);
