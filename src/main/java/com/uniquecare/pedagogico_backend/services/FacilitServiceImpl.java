@@ -1,10 +1,11 @@
 package com.uniquecare.pedagogico_backend.services;
 
 import com.uniquecare.pedagogico_backend.models.Facilit;
+import com.uniquecare.pedagogico_backend.repositories.CategoryRepository;
 import com.uniquecare.pedagogico_backend.repositories.FacilitRepository;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
@@ -18,6 +19,7 @@ import java.util.List;
 public class FacilitServiceImpl implements IFacilitService{
 
     private final FacilitRepository facilitRepository;
+    private final CategoryRepository categoryRepository;
 
     @Override
     public Facilit addFacilit(Facilit facilit) {
@@ -25,7 +27,7 @@ public class FacilitServiceImpl implements IFacilitService{
     }
 
     @Override
-    public List<Facilit> getAllFacilities() {
+    public List<Facilit> getAllFacilities(Pageable pageable) {
         return facilitRepository.findAll();
     }
 
@@ -35,14 +37,24 @@ public class FacilitServiceImpl implements IFacilitService{
     }
 
     @Override
+    public List<Facilit> getAllFacilitiesByCategoryId(Long categoryId) {
+        return facilitRepository.findAllByCategoryId(categoryId);
+    }
+    @Override
+    public List<Facilit> getAllFacilitiesByCategoryName(String categoryName) {
+        return facilitRepository.findAllByCategoryName(categoryName);
+    }
+
+    @Override
     public void deleteFacilitById(Long id) {
         facilitRepository.deleteById(id);
     }
 
-    @Override
+/*    @Override
     public List<Facilit> getAllFacilitiesByCategory(String categoryName){
+        categoryName = categoryRepository.findByName(ECategory name);
         return facilitRepository.findAllByCategory(categoryName);
-    }
+    }*/
 
     @Override
     public Facilit updateFacilit(Facilit facilit) {

@@ -49,7 +49,7 @@ class FacilitServiceImplTest {
 
     @Test
     void getAllFacilities() {
-        underTest.getAllFacilities();
+        underTest.getAllFacilities(pageable);
         verify(facilitRepository).findAll();
     }
 

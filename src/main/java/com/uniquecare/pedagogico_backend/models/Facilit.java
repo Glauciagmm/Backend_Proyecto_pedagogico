@@ -1,15 +1,17 @@
 package com.uniquecare.pedagogico_backend.models;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
 import javax.persistence.*;
-import java.util.HashSet;
 import java.util.Set;
+
 
 @Entity
 @Data
+@Table(name = "facilities",uniqueConstraints = {@UniqueConstraint(columnNames = {"title"})})
+
+
 public class Facilit {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,11 +20,18 @@ public class Facilit {
     private String description;
     private int pricePerHour;
 
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(  name = "facilit_categories",
-            joinColumns = @JoinColumn(name = "facilit_id"),
-            inverseJoinColumns = @JoinColumn(name = "category_id"))
-    private Set<Role> roles = new HashSet<>();
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(  name = "category_id")
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    private Category category;
+
+//    @ManyToOne
+//    @JoinColumn(name="category_id", nullable=false)
+//    private Category category;
+
+
+
+
     @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
@@ -67,6 +76,24 @@ public class Facilit {
         this.pricePerHour = pricePerHour;
     }
 
+ /*
+    public Category getCategories() {
+        return category;
+    }
+
+  public void addCategory(Category category) {
+        this.category.add(category);
+        category.getFacilities().add(this);
+    }*/
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
+    }
+
     public User getUser() {
         return user;
     }
@@ -83,7 +110,7 @@ public class Facilit {
         this.contract = contract;
     }
 
-    public Facilit(Long id, String title, String description, int pricePerHour, User user, Set<Contract> contract) {
+    public Facilit(Long id, String title, String description, int pricePerHour, User user,   Set<Contract> contract) {
         this.id = id;
         this.title = title;
         this.description = description;
