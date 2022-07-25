@@ -11,9 +11,10 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
-@RequestMapping("/uniquecare")
+@RequestMapping("/api")
 @RequiredArgsConstructor
 @CrossOrigin(origins="*")
 public class UserController {
@@ -26,12 +27,12 @@ public class UserController {
         return ResponseEntity.ok().body(userService.getUsers());
     }
 
-    /*@GetMapping("/user/{id}")
-    public User findUserById(@PathVariable("id") Long id) {
-        return userRepository.findById(id).orElseThrow(UserNotFoundException::new);
-    }*/
+    @GetMapping("/user/{id}")
+    public Optional<User> findUserById(@PathVariable("id") Long id) {
+        return userRepository.findById(id);
+    }
 
-    @PutMapping("/user/edit")
+    @PutMapping("/user/edit/{id}")
     public User updateUser (@RequestBody @Valid User user){
         userRepository.findById(user.getId()).orElseThrow(RuntimeException::new);
         return userService.updateUser(user);

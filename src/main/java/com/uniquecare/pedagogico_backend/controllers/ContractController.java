@@ -20,7 +20,7 @@ import java.util.UUID;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping ("/uniquecare")
+@RequestMapping ("/api")
 @CrossOrigin(origins="*")
 public class ContractController {
 
