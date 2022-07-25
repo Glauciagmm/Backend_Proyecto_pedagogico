@@ -169,6 +169,10 @@ public class User {
         this.id = id;
     }
 
+    public String getPseudo() {
+        return null;
+    }
+
 
 /*    public List <Contract> getContract() {
         return contract;

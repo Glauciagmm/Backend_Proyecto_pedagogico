@@ -1,27 +1,25 @@
 package com.uniquecare.pedagogico_backend.controllers;
 
-import com.uniquecare.pedagogico_backend.models.Category;
-import com.uniquecare.pedagogico_backend.models.ERole;
-import com.uniquecare.pedagogico_backend.models.Facilit;
-import com.uniquecare.pedagogico_backend.models.Role;
+import com.uniquecare.pedagogico_backend.models.*;
 import com.uniquecare.pedagogico_backend.repositories.CategoryRepository;
 import com.uniquecare.pedagogico_backend.repositories.RoleRepository;
 import com.uniquecare.pedagogico_backend.repositories.UserRepository;
+import com.uniquecare.pedagogico_backend.security.services.UserDetailsImpl;
 import com.uniquecare.pedagogico_backend.services.IFacilitService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import javax.servlet.http.HttpServletRequest;
 import java.net.URI;
 import java.util.HashSet;
 import java.util.List;
@@ -62,27 +60,21 @@ public class FacilitController {
  }
 
     @PostMapping("/save")
-    public ResponseEntity<Facilit> addFacilit(Authentication authentication, @RequestBody Facilit facilit) {
+    @PreAuthorize("hasRole('USER')")
+    public ResponseEntity<Facilit> addFacilit(@AuthenticationPrincipal UserDetailsImpl user,@RequestBody Facilit facilit, HttpServletRequest request) {
         Optional<Category> OptionalCategory= categoryRepository.findById(facilit.getCategory().getId());
-         if(!OptionalCategory.isPresent()){
+        Optional<User>OptionalUser= userRepository.findByUsername(user.getUsername());
+         if(!OptionalCategory.isPresent()||!OptionalUser.isPresent()){
              return ResponseEntity.unprocessableEntity().build();
          }
+
         Set<GrantedAuthority> authorities = new HashSet<>();
         authorities.add(new SimpleGrantedAuthority("ROLE_FACILIT_GUAI"));
 
-       Authentication reAuth = new UsernamePasswordAuthenticationToken(
-               "user",
-               new BCryptPasswordEncoder().encode("password"),authorities);
+        facilit.setUser(OptionalUser.get());
+        facilit.setCategory(OptionalCategory.get());
 
-        SecurityContextHolder.getContext().setAuthentication(reAuth);
-       /* UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication()
-                .getPrincipal();
-        String username = userDetails.getUsername();
-
-         Set<Role> roles = new HashSet<>();
-        Role userRole = roleRepository.findByName(ERole.ROLE_USER).orElseThrow(() -> new RuntimeException("Error: Role is not found."));
-        roles.add(userRole);*/
-         facilit.setCategory(OptionalCategory.get());
+        System.out.println(facilit);
          Facilit facilitysaved = facilitService.addFacilit(facilit);
          URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/id")
                  .buildAndExpand(facilitysaved.getId()).toUri();

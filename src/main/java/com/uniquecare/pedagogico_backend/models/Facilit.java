@@ -1,10 +1,12 @@
 package com.uniquecare.pedagogico_backend.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.uniquecare.pedagogico_backend.security.services.UserDetailsImpl;
 import lombok.Data;
 
 import javax.persistence.*;
-import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 
 
@@ -36,11 +38,11 @@ public class Facilit {
 //    private Category category;
 
 
-
-
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+ @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id", referencedColumnName = "id")
+    @JsonIgnore
     private User user;
+    private UserDetailsImpl userDetails;
 
 
 
@@ -99,7 +101,7 @@ public class Facilit {
         this.category = category;
     }
 
-    public User getUser() {
+    public User getUser(User user) {
         return user;
     }
 
@@ -125,12 +127,13 @@ public class Facilit {
         this.contract = contract;
     }
 
-    public Facilit(Long id, String title, String description, int pricePerHour,Category category) {
+    public Facilit(Long id, String title, String description, int pricePerHour,Category category,User user) {
        this.id = id;
         this.title = title;
         this.description = description;
         this.pricePerHour = pricePerHour;
         this.category= category;
+        this.user=user;
 
     }
 
@@ -154,5 +157,9 @@ public class Facilit {
 
     public void remove(Facilit facilit) {
         this.contract = contract;
+    }
+
+
+    public void getUser(UserDetailsImpl loggedInUser) {
     }
 }

@@ -4,9 +4,13 @@ import com.uniquecare.pedagogico_backend.models.User;
 import com.uniquecare.pedagogico_backend.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -20,6 +24,12 @@ public class UserServiceImplements implements IUserService {
         log.info("Fetching all users");
         return userRepository.findAll();
     }
+
+    @Override
+    public Collection<User> setFacilityRole(String role) {
+        return setFacilityRole("ROLE_FACILITY");
+    }
+
 
     @Override
     public User getUserById(Long userId) {
@@ -37,6 +47,9 @@ public class UserServiceImplements implements IUserService {
         log.info("Fetching user {}",  username);
         return userRepository.findByUsername(username);
     }
+
+
+
 
     @Override
     public User updateUser(User user) {
