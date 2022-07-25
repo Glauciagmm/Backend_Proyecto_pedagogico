@@ -36,9 +36,10 @@ class FacilitServiceImplTest {
                 1L,
                 "Limpieza",
                 "Limpieza de casa y jardines",
-                12
+                12,
+                1
 
-        );
+                );
         underTest.addFacilit(facilit);
         ArgumentCaptor<Facilit> facilitArgumentCaptor = ArgumentCaptor.forClass(Facilit.class);
         verify(facilitRepository).save(facilitArgumentCaptor.capture());
@@ -59,9 +60,9 @@ class FacilitServiceImplTest {
                 1L,
                 "Limpieza",
                 "Limpieza de casa y jardines",
-                12
+                12,
 
-        );
+                role);
         given(facilitRepository.findById(facilit.getId())).willReturn(Optional.of(facilit));
         underTest.findFacilityById(facilit.getId());
         verify(facilitRepository).findById(facilit.getId());
@@ -71,12 +72,12 @@ class FacilitServiceImplTest {
     @Test
     void deleteFacilitById() {
         Facilit facilit = new Facilit(
-                1L,
+                 1L,
                 "Limpieza",
                 "Limpieza de casa y jardines",
-                12
+                12,
 
-        );
+                role);
         underTest.deleteFacilitById(1L);
         verify(facilitRepository).deleteById(1L);
 
@@ -85,12 +86,12 @@ class FacilitServiceImplTest {
     @Test
     void updateFacilit() {
         Facilit facilit = new Facilit(
-                1L,
+                   1L,
                 "Limpieza",
                 "Limpieza de casa y jardines",
-                12
+                12,
 
-        );
+                role);
         underTest.updateFacilit(facilit);
         verify(facilitRepository).save(facilit);
     }

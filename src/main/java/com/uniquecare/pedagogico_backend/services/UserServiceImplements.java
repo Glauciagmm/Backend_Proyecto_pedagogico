@@ -22,7 +22,9 @@ public class UserServiceImplements implements IUserService {
     }
 
     @Override
-    public User getUserById(Long id) {return userRepository.findById(id).orElse(null);}
+    public User getUserById(Long userId) {
+     return userRepository.findById(userId).orElse(null);
+     }
 
     @Override
     public Optional<User> getUserByUsername(String username) {

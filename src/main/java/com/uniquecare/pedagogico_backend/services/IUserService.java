@@ -14,7 +14,7 @@ public interface IUserService {
 
     User updateUser(User user);
 
-    User getUserById(Long id);
+    User getUserById(Long userId);
 
     Optional<User> getUserByUsername(String username);
 }

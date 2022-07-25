@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
 
@@ -13,6 +14,8 @@ import java.util.Set;
 
 
 public class Facilit {
+
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -20,10 +23,13 @@ public class Facilit {
     private String description;
     private int pricePerHour;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(  name = "category_id")
+
+
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(  name = "category_id", referencedColumnName = "id")
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private Category category;
+
 
 //    @ManyToOne
 //    @JoinColumn(name="category_id", nullable=false)
@@ -32,9 +38,13 @@ public class Facilit {
 
 
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
+
+
+
+
 
     @OneToMany(mappedBy = "facilit")
     //@JsonIgnoreProperties("facilit")
@@ -43,6 +53,7 @@ public class Facilit {
     public Facilit() {
 
     }
+
 
     public Long getId() {
         return id;
@@ -76,15 +87,9 @@ public class Facilit {
         this.pricePerHour = pricePerHour;
     }
 
- /*
-    public Category getCategories() {
-        return category;
-    }
 
-  public void addCategory(Category category) {
-        this.category.add(category);
-        category.getFacilities().add(this);
-    }*/
+
+
 
     public Category getCategory() {
         return category;
@@ -110,30 +115,35 @@ public class Facilit {
         this.contract = contract;
     }
 
-    public Facilit(Long id, String title, String description, int pricePerHour, User user,   Set<Contract> contract) {
+    public Facilit(Long id, String title, String description, int pricePerHour, User user, Category category,   Set<Contract> contract) {
         this.id = id;
         this.title = title;
         this.description = description;
         this.pricePerHour = pricePerHour;
+        this.category=  category;
         this.user = user;
         this.contract = contract;
     }
 
-    public Facilit(Long id, String title, String description, int pricePerHour) {
-        this.id = id;
+    public Facilit(Long id, String title, String description, int pricePerHour,Category category) {
+       this.id = id;
         this.title = title;
         this.description = description;
         this.pricePerHour = pricePerHour;
+        this.category= category;
+
     }
 
     public Facilit(Long id, User user, Set<Contract> contract) {
-        this.id = id;
+         this.id = id;
         this.user = user;
         this.contract = contract;
     }
 
-    public Facilit(Long id, Set<Contract> contract) {
+    public Facilit(Long id,Set<Contract> contract) {
+
         this.id = id;
+
         this.contract = contract;
     }
 

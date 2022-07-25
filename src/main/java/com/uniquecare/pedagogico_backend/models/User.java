@@ -43,6 +43,10 @@ public class User {
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles = new HashSet<>();
 
+    public void addRole(Role role) {
+        this.roles.add(role);
+    }
+
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")//Generate the service
     //@JsonIgnoreProperties("user")
     private List<Facilit> facilit;
