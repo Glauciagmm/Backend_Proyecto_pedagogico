@@ -16,7 +16,6 @@ public class Facilit {
     private String title;
     private String description;
     private int pricePerHour;
-
     @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;

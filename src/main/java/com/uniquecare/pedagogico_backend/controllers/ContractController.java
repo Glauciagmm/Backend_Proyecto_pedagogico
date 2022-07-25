@@ -33,11 +33,11 @@ public class ContractController {
         return ResponseEntity.ok().body(contractService.findAllContracts());
     }
 
-    @GetMapping("/contract/{id}")
+/*    @GetMapping("/contract/{id}")
     public ResponseEntity<List<Contract>> getContractByUserId(@PathVariable Long id) {
         User user = userService.getUserById(id);
         return ResponseEntity.ok().body(user.getContract());
-    }
+    }*/
 
     @PostMapping("/user/{user_id}/addContract/{facilit_id}")
     public ResponseEntity<?> addContract(Authentication authentication, @RequestBody Contract contract) {
