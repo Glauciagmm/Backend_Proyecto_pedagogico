@@ -1,7 +1,5 @@
 package com.uniquecare.pedagogico_backend.models;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -9,7 +7,7 @@ import java.util.Set;
 
 @Entity
 @Data
-public class Facilit {
+public class Facility {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -20,11 +18,11 @@ public class Facilit {
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
 
-    @OneToMany(mappedBy = "facilit")
-    //@JsonIgnoreProperties("facilit")
+    @OneToMany(mappedBy = "facility")
+    //@JsonIgnoreProperties("facility")
     private Set <Contract> contract;
 
-    public Facilit() {
+    public Facility() {
 
     }
 
@@ -76,7 +74,7 @@ public class Facilit {
         this.contract = contract;
     }
 
-    public Facilit(Long id, String title, String description, int pricePerHour, User user, Set<Contract> contract) {
+    public Facility(Long id, String title, String description, int pricePerHour, User user, Set<Contract> contract) {
         this.id = id;
         this.title = title;
         this.description = description;
@@ -85,30 +83,30 @@ public class Facilit {
         this.contract = contract;
     }
 
-    public Facilit(Long id, String title, String description, int pricePerHour) {
+    public Facility(Long id, String title, String description, int pricePerHour) {
         this.id = id;
         this.title = title;
         this.description = description;
         this.pricePerHour = pricePerHour;
     }
 
-    public Facilit(Long id, User user, Set<Contract> contract) {
+    public Facility(Long id, User user, Set<Contract> contract) {
         this.id = id;
         this.user = user;
         this.contract = contract;
     }
 
-    public Facilit(Long id, Set<Contract> contract) {
+    public Facility(Long id, Set<Contract> contract) {
         this.id = id;
         this.contract = contract;
     }
 
 
-    public void add(Facilit facilit) {
+    public void add(Facility facility) {
         this.contract = contract;
     }
 
-    public void remove(Facilit facilit) {
+    public void remove(Facility facility) {
         this.contract = contract;
     }
 }

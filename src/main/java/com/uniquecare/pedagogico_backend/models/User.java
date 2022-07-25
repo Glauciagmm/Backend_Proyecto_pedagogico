@@ -45,7 +45,7 @@ public class User {
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")//Generate the service
     //@JsonIgnoreProperties("user")
-    private List<Facilit> facilit;
+    private List<Facility> facility;
 
     @OneToMany
     (cascade = CascadeType.ALL, mappedBy = "user")//Client
@@ -56,12 +56,12 @@ public class User {
     }
 
 
-    public List<Facilit> getFacilit() {
-        return facilit;
+    public List<Facility> getFacility() {
+        return facility;
     }
 
-    public void setFacilit(List<Facilit> facilit) {
-        this.facilit = facilit;
+    public void setFacility(List<Facility> facility) {
+        this.facility = facility;
     }
 
     public void setContract(List<Contract> contract) {

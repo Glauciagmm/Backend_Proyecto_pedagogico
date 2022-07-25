@@ -1,7 +1,7 @@
 package com.uniquecare.pedagogico_backend.controllers;
 
-import com.uniquecare.pedagogico_backend.models.Facilit;
-import com.uniquecare.pedagogico_backend.services.IFacilitService;
+import com.uniquecare.pedagogico_backend.models.Facility;
+import com.uniquecare.pedagogico_backend.services.IFacilityService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -16,22 +16,22 @@ import java.util.List;
 @RequiredArgsConstructor
 @RequestMapping("/api")
 @CrossOrigin(origins="*")
-public class FacilitController {
+public class FacilityController {
 
-    private final IFacilitService facilitService;
+    private final IFacilityService facilityService;
 
     @GetMapping("/facility")
-    public ResponseEntity<List<Facilit>>getFacilit(Authentication authentication, HttpSession session){
+    public ResponseEntity<List<Facility>>getFacilit(Authentication authentication, HttpSession session){
         if (authentication == null){
             System.out.println("Es necesario que hagas el login");
         }else{
             String username = authentication.getPrincipal().toString();
             System.out.println(username);
-        }return ResponseEntity.ok().body(facilitService.getAllFacilities());
+        }return ResponseEntity.ok().body(facilityService.getAllFacilities());
     }
 
     @PostMapping("/facility/save")
-    public ResponseEntity<Facilit> addFacilit(Authentication authentication, @RequestBody Facilit facilit) {
+    public ResponseEntity<Facility> addFacilit(Authentication authentication, @RequestBody Facility facility) {
         URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/facility/save").toUriString());
         if (authentication == null) {
             System.out.println("Es necesario que hagas el login");
@@ -39,23 +39,23 @@ public class FacilitController {
             String username = authentication.getPrincipal().toString();
             System.out.println(username);
         }
-        return ResponseEntity.created(uri).body(facilitService.addFacilit(facilit));
+        return ResponseEntity.created(uri).body(facilityService.addFacility(facility));
     }
 
     @GetMapping("/facility/{id}")
-    public ResponseEntity<Facilit> findFacilitById(@PathVariable Long id){
-        return ResponseEntity.ok().body(facilitService.findFacilityById(id));
+    public ResponseEntity<Facility> findFacilityById(@PathVariable Long id){
+        return ResponseEntity.ok().body(facilityService.findFacilityById(id));
     }
 
     @PutMapping("/facility/edit")
-    public ResponseEntity<Facilit> editFacilit(@RequestBody Facilit facilit){
+    public ResponseEntity<Facility> editFacilit(@RequestBody Facility facility){
         URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/facility/save").toUriString());
-        return ResponseEntity.created(uri).body(facilitService.updateFacilit(facilit));
+        return ResponseEntity.created(uri).body(facilityService.updateFacility(facility));
     }
 
     @DeleteMapping("/facility/delete/{id}")
-    public ResponseEntity<Void> deleteFacilitById(@PathVariable Long id){
-        facilitService.deleteFacilitById(id);
+    public ResponseEntity<Void> deleteFacilityById(@PathVariable Long id){
+        facilityService.deleteFacilityById(id);
         return ResponseEntity.noContent().build();
     }
 

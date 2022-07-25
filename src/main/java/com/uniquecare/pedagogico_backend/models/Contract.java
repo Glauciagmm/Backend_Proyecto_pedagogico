@@ -19,8 +19,8 @@ public class Contract {
 
     @ManyToOne
     //@JsonIgnoreProperties("contract")
-    @JoinColumn (name = "facilit_id", referencedColumnName = "id", nullable = false)
-    private Facilit facilit;
+    @JoinColumn (name = "facility_id", referencedColumnName = "id", nullable = false)
+    private Facility facility;
 
     @ManyToOne(cascade = CascadeType.ALL)
     //@JsonIgnoreProperties("contract")
@@ -30,12 +30,12 @@ public class Contract {
     public Contract(){
     }
 
-    public void Contract (Long id, LocalDateTime start, LocalDateTime finish, Facilit facilit, int totalPrice){
+    public void Contract (Long id, LocalDateTime start, LocalDateTime finish, Facility facility, int totalPrice){
         this.id = id;
         this.start  = start;
         this.finish = finish;
         //this.user = user;
-        this.facilit = facilit;
+        this.facility = facility;
         this.totalPrice = totalPrice;
     }
 
@@ -72,10 +72,10 @@ public class Contract {
         this.user = user;
     }
 
-    public Facilit getFacilit(){ return facilit;}
+    public Facility getFacility(){ return facility;}
 
-    public void setFacilit(Facilit facilit){
-        this.facilit = facilit;
+    public void setFacility(Facility facility){
+        this.facility = facility;
     }
 
     public Long getId() {
@@ -118,7 +118,7 @@ public class Contract {
                 ", start=" + start +
                 ", finish=" + finish +
                 ", totalPrice=" + totalPrice +
-                ", facilit=" + facilit +
+                ", facility=" + facility +
                 ", user=" + user +
                 '}';
     }
