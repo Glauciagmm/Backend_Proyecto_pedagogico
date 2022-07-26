@@ -6,7 +6,6 @@ import com.uniquecare.pedagogico_backend.security.services.UserDetailsImpl;
 import lombok.Data;
 
 import javax.persistence.*;
-import java.util.Optional;
 import java.util.Set;
 
 
@@ -15,7 +14,7 @@ import java.util.Set;
 @Table(name = "facilities",uniqueConstraints = {@UniqueConstraint(columnNames = {"title"})})
 
 
-public class Facilit {
+public class Facility {
 
 
     @Id
@@ -48,11 +47,11 @@ public class Facilit {
 
 
 
-    @OneToMany(mappedBy = "facilit")
+    @OneToMany(mappedBy = "facility")
     //@JsonIgnoreProperties("facilit")
     private Set <Contract> contract;
 
-    public Facilit() {
+    public Facility() {
 
     }
 
@@ -117,7 +116,7 @@ public class Facilit {
         this.contract = contract;
     }
 
-    public Facilit(Long id, String title, String description, int pricePerHour, User user, Category category,   Set<Contract> contract) {
+    public Facility(Long id, String title, String description, int pricePerHour, User user, Category category, Set<Contract> contract) {
         this.id = id;
         this.title = title;
         this.description = description;
@@ -127,7 +126,7 @@ public class Facilit {
         this.contract = contract;
     }
 
-    public Facilit(Long id, String title, String description, int pricePerHour,Category category,User user) {
+    public Facility(Long id, String title, String description, int pricePerHour, Category category, User user) {
        this.id = id;
         this.title = title;
         this.description = description;
@@ -137,13 +136,13 @@ public class Facilit {
 
     }
 
-    public Facilit(Long id, User user, Set<Contract> contract) {
+    public Facility(Long id, User user, Set<Contract> contract) {
          this.id = id;
         this.user = user;
         this.contract = contract;
     }
 
-    public Facilit(Long id,Set<Contract> contract) {
+    public Facility(Long id, Set<Contract> contract) {
 
         this.id = id;
 
@@ -151,11 +150,11 @@ public class Facilit {
     }
 
 
-    public void add(Facilit facilit) {
+    public void add(Facility facility) {
         this.contract = contract;
     }
 
-    public void remove(Facilit facilit) {
+    public void remove(Facility facility) {
         this.contract = contract;
     }
 

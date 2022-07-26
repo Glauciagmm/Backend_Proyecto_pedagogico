@@ -15,7 +15,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -49,7 +48,7 @@ public class FacilitController {
     }*/
 
  @GetMapping("/list")
-    public ResponseEntity<List<Facilit>>getFacilit(Authentication authentication, Pageable pageable) {
+    public ResponseEntity<List<Facility>>getFacilit(Authentication authentication, Pageable pageable) {
      if (authentication == null) {
          System.out.println("Es necesario que hagas el login");
      } else {
@@ -61,8 +60,8 @@ public class FacilitController {
 
     @PostMapping("/save")
     @PreAuthorize("hasRole('USER')")
-    public ResponseEntity<Facilit> addFacilit(@AuthenticationPrincipal UserDetailsImpl user,@RequestBody Facilit facilit, HttpServletRequest request) {
-        Optional<Category> OptionalCategory= categoryRepository.findById(facilit.getCategory().getId());
+    public ResponseEntity<Facility> addFacilit(@AuthenticationPrincipal UserDetailsImpl user, @RequestBody Facility facility, HttpServletRequest request) {
+        Optional<Category> OptionalCategory= categoryRepository.findById(facility.getCategory().getId());
         Optional<User>OptionalUser= userRepository.findByUsername(user.getUsername());
          if(!OptionalCategory.isPresent()||!OptionalUser.isPresent()){
              return ResponseEntity.unprocessableEntity().build();
@@ -71,11 +70,11 @@ public class FacilitController {
         Set<GrantedAuthority> authorities = new HashSet<>();
         authorities.add(new SimpleGrantedAuthority("ROLE_FACILIT_GUAI"));
 
-        facilit.setUser(OptionalUser.get());
-        facilit.setCategory(OptionalCategory.get());
+        facility.setUser(OptionalUser.get());
+        facility.setCategory(OptionalCategory.get());
 
-        System.out.println(facilit);
-         Facilit facilitysaved = facilitService.addFacilit(facilit);
+        System.out.println(facility);
+         Facility facilitysaved = facilitService.addFacilit(facility);
          URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/id")
                  .buildAndExpand(facilitysaved.getId()).toUri();
          return ResponseEntity.created(uri).body(facilitysaved);
@@ -87,20 +86,20 @@ public class FacilitController {
         return ResponseEntity.ok().body(facilitService.findFacilityById(id));
     }*/
     @GetMapping("/category/{CategoryId}")
-    public ResponseEntity<List<Facilit>> findFacilityByCategoryId(@PathVariable("CategoryId") Long CategoryId){
+    public ResponseEntity<List<Facility>> findFacilityByCategoryId(@PathVariable("CategoryId") Long CategoryId){
 
        return ResponseEntity.ok().body(facilitService.getAllFacilitiesByCategoryId(CategoryId));
     }
 
 @GetMapping("/{categoryName}")
-    public ResponseEntity<List<Facilit>> findFacilityByCategoryName(@PathVariable("categoryName") String categoryName) {
+    public ResponseEntity<List<Facility>> findFacilityByCategoryName(@PathVariable("categoryName") String categoryName) {
     return ResponseEntity.ok().body(facilitService.getAllFacilitiesByCategoryName(categoryName));
 }
 
     @PutMapping("/edit")
-    public ResponseEntity<Facilit> editFacilit(@RequestBody Facilit facilit){
+    public ResponseEntity<Facility> editFacilit(@RequestBody Facility facility){
         URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/facility/save").toUriString());
-        return ResponseEntity.created(uri).body(facilitService.updateFacilit(facilit));
+        return ResponseEntity.created(uri).body(facilitService.updateFacilit(facility));
     }
 
     @DeleteMapping("/delete/{id}")

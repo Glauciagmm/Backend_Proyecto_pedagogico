@@ -1,6 +1,4 @@
 package com.uniquecare.pedagogico_backend.models;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import java.util.HashSet;
 import java.util.List;
@@ -9,7 +7,6 @@ import java.util.Set;
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 
 @Entity
@@ -49,7 +46,7 @@ public class User {
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")//Generate the service
     //@JsonIgnoreProperties("user")
-    private List<Facilit> facilit;
+    private List<Facility> facility;
 
     @OneToMany
     (cascade = CascadeType.ALL, mappedBy = "user")//Client
@@ -60,12 +57,12 @@ public class User {
     }
 
 
-    public List<Facilit> getFacilit() {
-        return facilit;
+    public List<Facility> getFacilit() {
+        return facility;
     }
 
-    public void setFacilit(List<Facilit> facilit) {
-        this.facilit = facilit;
+    public void setFacilit(List<Facility> facility) {
+        this.facility = facility;
     }
 
     public void setContract(List<Contract> contract) {

@@ -1,6 +1,6 @@
 package com.uniquecare.pedagogico_backend.services;
 
-import com.uniquecare.pedagogico_backend.models.Facilit;
+import com.uniquecare.pedagogico_backend.models.Facility;
 import com.uniquecare.pedagogico_backend.repositories.FacilitRepository;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -18,7 +18,7 @@ import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
 
 @ExtendWith(MockitoExtension.class)
-class FacilitServiceImplTest {
+class FacilityServiceImplTest {
 
     @Mock
     private FacilitRepository facilitRepository;
@@ -32,7 +32,7 @@ class FacilitServiceImplTest {
 
     @Test
     void addFacilit() {
-        Facilit facilit = new Facilit(
+        Facility facility = new Facility(
                 1L,
                 "Limpieza",
                 "Limpieza de casa y jardines",
@@ -40,11 +40,11 @@ class FacilitServiceImplTest {
                 1
 
                 );
-        underTest.addFacilit(facilit);
-        ArgumentCaptor<Facilit> facilitArgumentCaptor = ArgumentCaptor.forClass(Facilit.class);
+        underTest.addFacilit(facility);
+        ArgumentCaptor<Facility> facilitArgumentCaptor = ArgumentCaptor.forClass(Facility.class);
         verify(facilitRepository).save(facilitArgumentCaptor.capture());
-        Facilit capturedFacilit = facilitArgumentCaptor.getValue();
-        assertThat(capturedFacilit).isEqualTo(facilit);
+        Facility capturedFacility = facilitArgumentCaptor.getValue();
+        assertThat(capturedFacility).isEqualTo(facility);
 
     }
 
@@ -56,22 +56,22 @@ class FacilitServiceImplTest {
 
     @Test
     void findFacilityById() {
-        Facilit facilit = new Facilit(
+        Facility facility = new Facility(
                 1L,
                 "Limpieza",
                 "Limpieza de casa y jardines",
                 12,
 
                 role);
-        given(facilitRepository.findById(facilit.getId())).willReturn(Optional.of(facilit));
-        underTest.findFacilityById(facilit.getId());
-        verify(facilitRepository).findById(facilit.getId());
+        given(facilitRepository.findById(facility.getId())).willReturn(Optional.of(facility));
+        underTest.findFacilityById(facility.getId());
+        verify(facilitRepository).findById(facility.getId());
     }
 
 
     @Test
     void deleteFacilitById() {
-        Facilit facilit = new Facilit(
+        Facility facility = new Facility(
                  1L,
                 "Limpieza",
                 "Limpieza de casa y jardines",
@@ -85,14 +85,14 @@ class FacilitServiceImplTest {
 
     @Test
     void updateFacilit() {
-        Facilit facilit = new Facilit(
+        Facility facility = new Facility(
                    1L,
                 "Limpieza",
                 "Limpieza de casa y jardines",
                 12,
 
                 role);
-        underTest.updateFacilit(facilit);
-        verify(facilitRepository).save(facilit);
+        underTest.updateFacilit(facility);
+        verify(facilitRepository).save(facility);
     }
 }

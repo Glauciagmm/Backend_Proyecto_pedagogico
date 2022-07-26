@@ -1,6 +1,6 @@
 package com.uniquecare.pedagogico_backend.services;
 
-import com.uniquecare.pedagogico_backend.models.Facilit;
+import com.uniquecare.pedagogico_backend.models.Facility;
 import com.uniquecare.pedagogico_backend.repositories.CategoryRepository;
 import com.uniquecare.pedagogico_backend.repositories.FacilitRepository;
 import lombok.RequiredArgsConstructor;
@@ -22,26 +22,26 @@ public class FacilitServiceImpl implements IFacilitService{
     private final CategoryRepository categoryRepository;
 
     @Override
-    public Facilit addFacilit(Facilit facilit) {
-        return facilitRepository.save(facilit);
+    public Facility addFacilit(Facility facility) {
+        return facilitRepository.save(facility);
     }
 
     @Override
-    public List<Facilit> getAllFacilities(Pageable pageable) {
+    public List<Facility> getAllFacilities(Pageable pageable) {
         return facilitRepository.findAll();
     }
 
     @Override
-    public Facilit findFacilityById(Long id) {
+    public Facility findFacilityById(Long id) {
         return facilitRepository.findById(id).orElseThrow(()-> new UsernameNotFoundException("Servicio no encontrado"));
     }
 
     @Override
-    public List<Facilit> getAllFacilitiesByCategoryId(Long categoryId) {
+    public List<Facility> getAllFacilitiesByCategoryId(Long categoryId) {
         return facilitRepository.findAllByCategoryId(categoryId);
     }
     @Override
-    public List<Facilit> getAllFacilitiesByCategoryName(String categoryName) {
+    public List<Facility> getAllFacilitiesByCategoryName(String categoryName) {
         return facilitRepository.findAllByCategoryName(categoryName);
     }
 
@@ -57,7 +57,7 @@ public class FacilitServiceImpl implements IFacilitService{
     }*/
 
     @Override
-    public Facilit updateFacilit(Facilit facilit) {
-        return facilitRepository.save(facilit);
+    public Facility updateFacilit(Facility facility) {
+        return facilitRepository.save(facility);
     }
 }

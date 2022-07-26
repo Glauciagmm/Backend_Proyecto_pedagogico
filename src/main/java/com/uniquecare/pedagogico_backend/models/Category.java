@@ -16,7 +16,7 @@ public class Category {
     @NotNull
     private String name;
     @OneToMany(mappedBy ="category", cascade = CascadeType.ALL)
-    private Set<Facilit> facilities= new HashSet<>();
+    private Set<Facility> facilities= new HashSet<>();
 /*  public Category() {
     }
    @Enumerated(EnumType.STRING)
@@ -48,13 +48,13 @@ public class Category {
         public void setName(ECategory name) {
            this.name = name;
        }*/
-   public Set<Facilit> getFacilities(){
+   public Set<Facility> getFacilities(){
         return facilities;
    }
-   public void setFacilities(Set<Facilit> facilities){
+   public void setFacilities(Set<Facility> facilities){
         this.facilities=facilities;
-        for(Facilit facilit:facilities){
-            facilit.setCategory(this);
+        for(Facility facility :facilities){
+            facility.setCategory(this);
         }
    }
 
