@@ -126,7 +126,7 @@ public class FacilityController {
     }
 
     @PutMapping("/edit")
-    public ResponseEntity<Facility> editFacilit(@RequestBody Facility facility){
+    public ResponseEntity<Facility> editFacility(@RequestBody Facility facility){
         URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/facility/save").toUriString());
         return ResponseEntity.created(uri).body(facilityService.updateFacility(facility));
     }
