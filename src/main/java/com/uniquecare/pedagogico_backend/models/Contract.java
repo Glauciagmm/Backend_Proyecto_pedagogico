@@ -19,7 +19,8 @@ public class Contract {
 
     @ManyToOne
     //@JsonIgnoreProperties("contract")
-    @JoinColumn (name = "facilit_id", referencedColumnName = "id", nullable = false)
+
+    @JoinColumn (name = "facility_id", referencedColumnName = "id", nullable = false)
     private Facility facility;
 
     @ManyToOne(cascade = CascadeType.ALL)
@@ -72,9 +73,11 @@ public class Contract {
         this.user = user;
     }
 
+
     public Facility getFacilit(){ return facility;}
 
     public void setFacilit(Facility facility){
+
         this.facility = facility;
     }
 
@@ -118,7 +121,7 @@ public class Contract {
                 ", start=" + start +
                 ", finish=" + finish +
                 ", totalPrice=" + totalPrice +
-                ", facilit=" + facility +
+                ", facility=" + facility +
                 ", user=" + user +
                 '}';
     }

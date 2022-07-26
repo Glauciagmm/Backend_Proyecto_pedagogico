@@ -4,7 +4,6 @@ import com.uniquecare.pedagogico_backend.models.Facility;
 import com.uniquecare.pedagogico_backend.repositories.CategoryRepository;
 import com.uniquecare.pedagogico_backend.repositories.FacilityRepository;
 import lombok.RequiredArgsConstructor;
-
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
@@ -19,7 +18,9 @@ import java.util.List;
 public class FacilityServiceImpl implements IFacilityService {
 
     private final FacilityRepository facilityRepository;
+
     private final CategoryRepository categoryRepository;
+
 
     @Override
     public Facility addFacility(Facility facility) {
@@ -27,6 +28,7 @@ public class FacilityServiceImpl implements IFacilityService {
     }
 
     @Override
+
     public List<Facility> getAllFacilities(Pageable pageable) {
         return facilityRepository.findAll();
     }
@@ -40,6 +42,7 @@ public class FacilityServiceImpl implements IFacilityService {
     public List<Facility> getAllFacilitiesByCategoryId(Long categoryId) {
         return facilityRepository.findAllByCategoryId(categoryId);
     }
+
     @Override
     public List<Facility> getAllFacilitiesByCategoryName(String categoryName) {
         return facilityRepository.findAllByCategoryName(categoryName);
@@ -49,12 +52,6 @@ public class FacilityServiceImpl implements IFacilityService {
     public void deleteFacilityById(Long id) {
         facilityRepository.deleteById(id);
     }
-
-/*    @Override
-    public List<Facilit> getAllFacilitiesByCategory(String categoryName){
-        categoryName = categoryRepository.findByName(ECategory name);
-        return facilitRepository.findAllByCategory(categoryName);
-    }*/
 
     @Override
     public Facility updateFacility(Facility facility) {

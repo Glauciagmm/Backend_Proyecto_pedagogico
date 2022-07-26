@@ -34,7 +34,7 @@ class UserServiceImplementsTest {
         verify(userRepository).findAll();
     }
 
-    @Test
+   /* @Test
     void findById() {
         User user = new User(
                 1L,
@@ -47,7 +47,7 @@ class UserServiceImplementsTest {
         underTest.getUserById(1L);
         verify(userRepository).findById(1L);
 
-    }
+    }*/
 
     @Test
     void deleteUserById() {

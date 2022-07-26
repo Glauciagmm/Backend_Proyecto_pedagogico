@@ -32,6 +32,7 @@ public class User {
     @Size(max = 120)
     private String password;
     private String city;
+    private String phone;
 
 
     @ManyToMany(fetch = FetchType.LAZY)
@@ -53,20 +54,47 @@ public class User {
     //@JsonIgnoreProperties("user")
     private List<Contract> contract;
 
+    public User(String name, String surname, String username, String email, String city, String phone, String password) {
+        this.name = name;
+        this.surname = surname;
+        this.username = username;
+        this.email = email;
+        this.password = password;
+        this.city = city;
+        this.phone = phone;
+        this.roles = roles;
+    }
+
+
     public User() {
+
     }
 
 
-    public List<Facility> getFacilit() {
-        return facility;
+
+    public User(Long id, String name, String surname, String username, String email, String password, String city, String phone, Set<Role> roles) {
+        this.id = id;
+        this.name = name;
+        this.surname = surname;
+        this.username = username;
+        this.email = email;
+        this.password = password;
+        this.city = city;
+        this.phone = phone;
+        this.roles = roles;
     }
 
-    public void setFacilit(List<Facility> facility) {
+    public User(Long id, List<Facility> facility) {
+        this.id = id;
         this.facility = facility;
     }
 
-    public void setContract(List<Contract> contract) {
-        this.contract = contract;
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -83,22 +111,6 @@ public class User {
 
     public void setSurname(String surname) {
         this.surname = surname;
-    }
-
-    public String getCity() {
-        return city;
-    }
-
-    public void setCity(String city) {
-        this.city = city;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public String getUsername() {
@@ -125,6 +137,22 @@ public class User {
         this.password = password;
     }
 
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
     public Set<Role> getRoles() {
         return roles;
     }
@@ -133,7 +161,36 @@ public class User {
         this.roles = roles;
     }
 
-    public User(Long id, String name, String surname, String username, String email, String password, String city) {
+    public List<Facility> getFacility() {
+        return facility;
+    }
+
+    public void setFacility(List<Facility> facility) {
+        this.facility = facility;
+    }
+
+    public List<Contract> getContract() {
+        return contract;
+    }
+
+    public void setContract(List<Contract> contract) {
+        this.contract = contract;
+    }
+
+    /*  public User(String name, String surname, String username, String email, String password, String city, String phone, Set<Role> roles) {
+        this.name = name;
+        this.surname = surname;
+        this.username = username;
+        this.email = email;
+        this.password = password;
+        this.city = city;
+        this.phone = phone;
+        this.roles = roles;
+    }*/
+
+
+
+    /*public User(Long id, String name, String surname, String username, String email, String password, String city, String phone) {
         this.id = id;
         this.name = name;
         this.surname = surname;
@@ -141,6 +198,7 @@ public class User {
         this.email = email;
         this.password = password;
         this.city = city;
+        this.phone = phone;
     }
 
     public User(Long id, String name, String username, String email, String city) {
@@ -165,10 +223,14 @@ public class User {
     public User(Long id) {
         this.id = id;
     }
+<<<<<<< HEAD
 
     public String getPseudo() {
         return null;
     }
+
+=======
+*/
 
 
 /*    public List <Contract> getContract() {

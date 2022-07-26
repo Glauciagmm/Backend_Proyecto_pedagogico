@@ -65,6 +65,8 @@ public class UserServiceImplements implements IUserService {
     }
 
 
-    public void getUser(String username) {
+    public Optional<User> getUser(String username) {
+        log.info("Fetching user {}",  username);
+        return userRepository.findByUsername(username);
     }
 }

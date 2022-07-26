@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.net.URI;
 import java.util.HashSet;
 import java.util.List;
@@ -32,6 +33,7 @@ import java.util.Set;
 public class FacilityController {
     @Autowired
     private final IFacilityService facilityService;
+
 
     @Autowired
     private CategoryRepository categoryRepository;
@@ -96,13 +98,41 @@ public class FacilityController {
     return ResponseEntity.ok().body(facilityService.getAllFacilitiesByCategoryName(categoryName));
 }
 
+    @GetMapping("/facility")
+    public ResponseEntity<List<Facility>>getFacility(Authentication authentication, HttpSession session, Pageable pageable ){
+        if (authentication == null){
+            System.out.println("Es necesario que hagas el login");
+        }else{
+            String username = authentication.getPrincipal().toString();
+            System.out.println(username);
+        }return ResponseEntity.ok().body(facilityService.getAllFacilities(pageable));
+    }
+
+   /* @PostMapping("/save")
+    public ResponseEntity<Facility> addFacility(Authentication authentication, @RequestBody Facility facility) {
+        URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/facility/save").toUriString());
+        if (authentication == null) {
+            System.out.println("Es necesario que hagas el login");
+        } else {
+            String username = authentication.getPrincipal().toString();
+            System.out.println(username);
+        }
+        return ResponseEntity.created(uri).body(facilityService.addFacility(facility));
+    }*/
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Facility> findFacilityById(@PathVariable Long id){
+        return ResponseEntity.ok().body(facilityService.findFacilityById(id));
+    }
+
     @PutMapping("/edit")
-    public ResponseEntity<Facility> editFacility(@RequestBody Facility facility){
+    public ResponseEntity<Facility> editFacilit(@RequestBody Facility facility){
         URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/facility/save").toUriString());
         return ResponseEntity.created(uri).body(facilityService.updateFacility(facility));
     }
 
     @DeleteMapping("/delete/{id}")
+
     public ResponseEntity<Void> deleteFacilityById(@PathVariable Long id){
         facilityService.deleteFacilityById(id);
         return ResponseEntity.noContent().build();
