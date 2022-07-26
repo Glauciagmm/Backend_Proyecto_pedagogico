@@ -5,8 +5,8 @@ import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
-public interface IFacilitService {
-    Facility addFacilit(Facility facility);
+public interface IFacilityService {
+    Facility addFacility(Facility facility);
     List<Facility> getAllFacilities(Pageable pageable);
     Facility findFacilityById(Long id);
 
@@ -14,9 +14,9 @@ public interface IFacilitService {
 
     List <Facility> getAllFacilitiesByCategoryName (String categoryName);
 
-    void deleteFacilitById(Long id);
+    void deleteFacilityById(Long id);
 
     //List<Facilit> findFacilityByCategory(String categoryName);
 
-    Facility updateFacilit(Facility facility);
+    Facility updateFacility(Facility facility);
 }

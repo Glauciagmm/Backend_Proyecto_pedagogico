@@ -5,7 +5,7 @@ import com.uniquecare.pedagogico_backend.repositories.CategoryRepository;
 import com.uniquecare.pedagogico_backend.repositories.RoleRepository;
 import com.uniquecare.pedagogico_backend.repositories.UserRepository;
 import com.uniquecare.pedagogico_backend.security.services.UserDetailsImpl;
-import com.uniquecare.pedagogico_backend.services.IFacilitService;
+import com.uniquecare.pedagogico_backend.services.IFacilityService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
@@ -29,9 +29,9 @@ import java.util.Set;
 @RequiredArgsConstructor
 @RequestMapping("/api/facility")
 @CrossOrigin(origins="*")
-public class FacilitController {
+public class FacilityController {
     @Autowired
-    private final IFacilitService facilitService;
+    private final IFacilityService facilityService;
 
     @Autowired
     private CategoryRepository categoryRepository;
@@ -48,19 +48,19 @@ public class FacilitController {
     }*/
 
  @GetMapping("/list")
-    public ResponseEntity<List<Facility>>getFacilit(Authentication authentication, Pageable pageable) {
+    public ResponseEntity<List<Facility>>getFacility(Authentication authentication, Pageable pageable) {
      if (authentication == null) {
          System.out.println("Es necesario que hagas el login");
      } else {
          String username = authentication.getPrincipal().toString();
          System.out.println(username);
      }
-     return ResponseEntity.ok().body(facilitService.getAllFacilities(pageable));
+     return ResponseEntity.ok().body(facilityService.getAllFacilities(pageable));
  }
 
     @PostMapping("/save")
     @PreAuthorize("hasRole('USER')")
-    public ResponseEntity<Facility> addFacilit(@AuthenticationPrincipal UserDetailsImpl user, @RequestBody Facility facility, HttpServletRequest request) {
+    public ResponseEntity<Facility> addFacility(@AuthenticationPrincipal UserDetailsImpl user, @RequestBody Facility facility, HttpServletRequest request) {
         Optional<Category> OptionalCategory= categoryRepository.findById(facility.getCategory().getId());
         Optional<User>OptionalUser= userRepository.findByUsername(user.getUsername());
          if(!OptionalCategory.isPresent()||!OptionalUser.isPresent()){
@@ -74,7 +74,7 @@ public class FacilitController {
         facility.setCategory(OptionalCategory.get());
 
         System.out.println(facility);
-         Facility facilitysaved = facilitService.addFacilit(facility);
+         Facility facilitysaved = facilityService.addFacility(facility);
          URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/id")
                  .buildAndExpand(facilitysaved.getId()).toUri();
          return ResponseEntity.created(uri).body(facilitysaved);
@@ -88,23 +88,23 @@ public class FacilitController {
     @GetMapping("/category/{CategoryId}")
     public ResponseEntity<List<Facility>> findFacilityByCategoryId(@PathVariable("CategoryId") Long CategoryId){
 
-       return ResponseEntity.ok().body(facilitService.getAllFacilitiesByCategoryId(CategoryId));
+       return ResponseEntity.ok().body(facilityService.getAllFacilitiesByCategoryId(CategoryId));
     }
 
 @GetMapping("/{categoryName}")
     public ResponseEntity<List<Facility>> findFacilityByCategoryName(@PathVariable("categoryName") String categoryName) {
-    return ResponseEntity.ok().body(facilitService.getAllFacilitiesByCategoryName(categoryName));
+    return ResponseEntity.ok().body(facilityService.getAllFacilitiesByCategoryName(categoryName));
 }
 
     @PutMapping("/edit")
-    public ResponseEntity<Facility> editFacilit(@RequestBody Facility facility){
+    public ResponseEntity<Facility> editFacility(@RequestBody Facility facility){
         URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/facility/save").toUriString());
-        return ResponseEntity.created(uri).body(facilitService.updateFacilit(facility));
+        return ResponseEntity.created(uri).body(facilityService.updateFacility(facility));
     }
 
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<Void> deleteFacilitById(@PathVariable Long id){
-        facilitService.deleteFacilitById(id);
+    public ResponseEntity<Void> deleteFacilityById(@PathVariable Long id){
+        facilityService.deleteFacilityById(id);
         return ResponseEntity.noContent().build();
     }
 

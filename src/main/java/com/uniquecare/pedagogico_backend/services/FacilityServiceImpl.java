@@ -2,7 +2,7 @@ package com.uniquecare.pedagogico_backend.services;
 
 import com.uniquecare.pedagogico_backend.models.Facility;
 import com.uniquecare.pedagogico_backend.repositories.CategoryRepository;
-import com.uniquecare.pedagogico_backend.repositories.FacilitRepository;
+import com.uniquecare.pedagogico_backend.repositories.FacilityRepository;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.data.domain.Pageable;
@@ -16,38 +16,38 @@ import java.util.List;
 @RequiredArgsConstructor
 @Transactional
 
-public class FacilitServiceImpl implements IFacilitService{
+public class FacilityServiceImpl implements IFacilityService {
 
-    private final FacilitRepository facilitRepository;
+    private final FacilityRepository facilityRepository;
     private final CategoryRepository categoryRepository;
 
     @Override
-    public Facility addFacilit(Facility facility) {
-        return facilitRepository.save(facility);
+    public Facility addFacility(Facility facility) {
+        return facilityRepository.save(facility);
     }
 
     @Override
     public List<Facility> getAllFacilities(Pageable pageable) {
-        return facilitRepository.findAll();
+        return facilityRepository.findAll();
     }
 
     @Override
     public Facility findFacilityById(Long id) {
-        return facilitRepository.findById(id).orElseThrow(()-> new UsernameNotFoundException("Servicio no encontrado"));
+        return facilityRepository.findById(id).orElseThrow(()-> new UsernameNotFoundException("Servicio no encontrado"));
     }
 
     @Override
     public List<Facility> getAllFacilitiesByCategoryId(Long categoryId) {
-        return facilitRepository.findAllByCategoryId(categoryId);
+        return facilityRepository.findAllByCategoryId(categoryId);
     }
     @Override
     public List<Facility> getAllFacilitiesByCategoryName(String categoryName) {
-        return facilitRepository.findAllByCategoryName(categoryName);
+        return facilityRepository.findAllByCategoryName(categoryName);
     }
 
     @Override
-    public void deleteFacilitById(Long id) {
-        facilitRepository.deleteById(id);
+    public void deleteFacilityById(Long id) {
+        facilityRepository.deleteById(id);
     }
 
 /*    @Override
@@ -57,7 +57,7 @@ public class FacilitServiceImpl implements IFacilitService{
     }*/
 
     @Override
-    public Facility updateFacilit(Facility facility) {
-        return facilitRepository.save(facility);
+    public Facility updateFacility(Facility facility) {
+        return facilityRepository.save(facility);
     }
 }
