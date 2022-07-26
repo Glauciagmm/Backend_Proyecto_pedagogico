@@ -1,6 +1,4 @@
 package com.uniquecare.pedagogico_backend.models;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import java.util.HashSet;
 import java.util.List;
@@ -9,7 +7,6 @@ import java.util.Set;
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 
 @Entity
@@ -35,6 +32,7 @@ public class User {
     @Size(max = 120)
     private String password;
     private String city;
+    private String phone;
 
 
     @ManyToMany(fetch = FetchType.LAZY)
@@ -52,9 +50,49 @@ public class User {
     //@JsonIgnoreProperties("user")
     private List<Contract> contract;
 
-    public User() {
+    public User(String name, String surname, String username, String email, String city, String phone, String password) {
+        this.name = name;
+        this.surname = surname;
+        this.username = username;
+        this.email = email;
+        this.password = password;
+        this.city = city;
+        this.phone = phone;
+        this.roles = roles;
     }
 
+
+    public User() {
+
+    }
+
+    public User(Long id, String name, String surname, String username, String email, String password, String city, String phone, Set<Role> roles) {
+        this.id = id;
+        this.name = name;
+        this.surname = surname;
+        this.username = username;
+        this.email = email;
+        this.password = password;
+        this.city = city;
+        this.phone = phone;
+        this.roles = roles;
+    }
+
+    public User(Long id, List<Facility> facility) {
+        this.id = id;
+        this.facility = facility;
+    }
+
+    /*  public User(String name, String surname, String username, String email, String password, String city, String phone, Set<Role> roles) {
+        this.name = name;
+        this.surname = surname;
+        this.username = username;
+        this.email = email;
+        this.password = password;
+        this.city = city;
+        this.phone = phone;
+        this.roles = roles;
+    }*/
 
     public List<Facility> getFacility() {
         return facility;
@@ -132,7 +170,19 @@ public class User {
         this.roles = roles;
     }
 
-    public User(Long id, String name, String surname, String username, String email, String password, String city) {
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public List<Contract> getContract() {
+        return contract;
+    }
+
+    /*public User(Long id, String name, String surname, String username, String email, String password, String city, String phone) {
         this.id = id;
         this.name = name;
         this.surname = surname;
@@ -140,6 +190,7 @@ public class User {
         this.email = email;
         this.password = password;
         this.city = city;
+        this.phone = phone;
     }
 
     public User(Long id, String name, String username, String email, String city) {
@@ -164,7 +215,7 @@ public class User {
     public User(Long id) {
         this.id = id;
     }
-
+*/
 
 /*    public List <Contract> getContract() {
         return contract;

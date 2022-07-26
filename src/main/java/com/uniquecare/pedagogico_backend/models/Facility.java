@@ -74,7 +74,14 @@ public class Facility {
         this.contract = contract;
     }
 
-    public Facility(Long id, String title, String description, int pricePerHour, User user, Set<Contract> contract) {
+    public Facility(String title, String description, int pricePerHour, User user) {
+        this.title = title;
+        this.description = description;
+        this.pricePerHour = pricePerHour;
+        this.user = user;
+    }
+
+    /* public Facility(Long id, String title, String description, int pricePerHour, User user, Set<Contract> contract) {
         this.id = id;
         this.title = title;
         this.description = description;
@@ -104,7 +111,7 @@ public class Facility {
 
     public void add(Facility facility) {
         this.contract = contract;
-    }
+    }*/
 
     public void remove(Facility facility) {
         this.contract = contract;
