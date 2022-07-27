@@ -22,6 +22,7 @@ public class SignupRequest {
     private String surname;
     private String city;
     private String phone;
+    private String photo;
 
     public String getPhone() {
         return phone;
@@ -87,7 +88,15 @@ public class SignupRequest {
         this.role = role;
     }
 
-    public SignupRequest(String username, String email, Set<String> role, String password, String name, String surname, String city) {
+    public String getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(String photo) {
+        this.photo = photo;
+    }
+
+    public SignupRequest(String username, String email, Set<String> role, String password, String name, String surname, String city, String photo) {
         this.username = username;
         this.email = email;
         this.role = role;

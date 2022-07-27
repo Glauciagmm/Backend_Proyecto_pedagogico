@@ -33,6 +33,7 @@ public class User {
     private String password;
     private String city;
     private String phone;
+    private String photo;
 
 
     @ManyToMany(fetch = FetchType.LAZY)
@@ -54,7 +55,7 @@ public class User {
     //@JsonIgnoreProperties("user")
     private List<Contract> contract;
 
-    public User(String name, String surname, String username, String email, String city, String phone, String password) {
+    public User(String name, String surname, String username, String email, String city, String phone, String password, String photo) {
         this.name = name;
         this.surname = surname;
         this.username = username;
@@ -62,6 +63,7 @@ public class User {
         this.password = password;
         this.city = city;
         this.phone = phone;
+        this.photo = photo;
         this.roles = roles;
     }
 
@@ -177,6 +179,13 @@ public class User {
         this.contract = contract;
     }
 
+    public String getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(String photo) {
+        this.photo = photo;
+    }
     /*  public User(String name, String surname, String username, String email, String password, String city, String phone, Set<Role> roles) {
         this.name = name;
         this.surname = surname;

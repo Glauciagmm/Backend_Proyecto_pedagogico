@@ -60,7 +60,7 @@ public class FacilityController {
      return ResponseEntity.ok().body(facilityService.getAllFacilities(pageable));
  }
 
-    @PostMapping("/save")
+  /*  @PostMapping("/save")
     @PreAuthorize("hasRole('USER')")
     public ResponseEntity<Facility> addFacility(@AuthenticationPrincipal UserDetailsImpl user, @RequestBody Facility facility, HttpServletRequest request) {
         Optional<Category> OptionalCategory= categoryRepository.findById(facility.getCategory().getId());
@@ -81,7 +81,7 @@ public class FacilityController {
                  .buildAndExpand(facilitysaved.getId()).toUri();
          return ResponseEntity.created(uri).body(facilitysaved);
 
-    }
+    }*/
 
   /*  @GetMapping("/{id}")
     public ResponseEntity<Facilit> findFacilitById(@PathVariable Long id){
@@ -98,7 +98,7 @@ public class FacilityController {
     return ResponseEntity.ok().body(facilityService.getAllFacilitiesByCategoryName(categoryName));
 }
 
-    @GetMapping("/facility")
+    @GetMapping("/facilit")
     public ResponseEntity<List<Facility>>getFacility(Authentication authentication, HttpSession session, Pageable pageable ){
         if (authentication == null){
             System.out.println("Es necesario que hagas el login");
@@ -108,7 +108,7 @@ public class FacilityController {
         }return ResponseEntity.ok().body(facilityService.getAllFacilities(pageable));
     }
 
-   /* @PostMapping("/save")
+   @PostMapping("/save")
     public ResponseEntity<Facility> addFacility(Authentication authentication, @RequestBody Facility facility) {
         URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/facility/save").toUriString());
         if (authentication == null) {
@@ -118,7 +118,7 @@ public class FacilityController {
             System.out.println(username);
         }
         return ResponseEntity.created(uri).body(facilityService.addFacility(facility));
-    }*/
+    }
 
     @GetMapping("/{id}")
     public ResponseEntity<Facility> findFacilityById(@PathVariable Long id){
