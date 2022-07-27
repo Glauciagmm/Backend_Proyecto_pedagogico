@@ -34,20 +34,23 @@ class UserServiceImplementsTest {
         verify(userRepository).findAll();
     }
 
-   /* @Test
+    @Test
     void findById() {
         User user = new User(
                 1L,
                 "Glaucia",
-                "glaucia@gmail.com",
-                "Glaucia",
-                "Barcelona"
+                "Mesquita",
+                "glaucia",
+                "Glaucia@gmail.com",
+                "123456789",
+                "Barcelona",
+                "123789456"
         );
         underTest.updateUser(user);
         underTest.getUserById(1L);
         verify(userRepository).findById(1L);
 
-    }*/
+    }
 
     @Test
     void deleteUserById() {

@@ -21,10 +21,7 @@ import static org.mockito.Mockito.verify;
 class FacilityServiceImplTest {
 
 
-   /* @Mock
-=======
     @Mock
->>>>>>> feature/test
     private FacilityRepository facilityRepository;
     private FacilityServiceImpl underTest;
 
@@ -34,23 +31,17 @@ class FacilityServiceImplTest {
 
     }
 
-<<<<<<< HEAD
     @Test
-    void addFacilit() {
-=======
-   /* @Test
     void addFacility() {
->>>>>>> feature/test
+
         Facility facility = new Facility(
                 1L,
                 "Limpieza",
                 "Limpieza de casa y jardines",
-<<<<<<< HEAD
                 12,
                 1
-
-                );
-        underTest.addFacilit(facility);
+        );
+        underTest.addFacility(facility);
         ArgumentCaptor<Facility> facilitArgumentCaptor = ArgumentCaptor.forClass(Facility.class);
         verify(facilityRepository).save(facilitArgumentCaptor.capture());
         Facility capturedFacility = facilitArgumentCaptor.getValue();
@@ -65,40 +56,16 @@ class FacilityServiceImplTest {
     }
 
     @Test
-=======
-                12
-
-        );
-        underTest.addFacility(facility);
-        ArgumentCaptor<Facility> facilityArgumentCaptor = ArgumentCaptor.forClass(Facility.class);
-        verify(facilityRepository).save(facilityArgumentCaptor.capture());
-        Facility capturedFacilit = facilityArgumentCaptor.getValue();
-        assertThat(capturedFacilit).isEqualTo(facility);
-
-    }
-*/
-   /* @Test
     void getAllFacilities() {
         underTest.getAllFacilities();
         verify(facilityRepository).findAll();
-    }*/
+    }
 
-  /*  @Test
->>>>>>> feature/test
+    @Test
     void findFacilityById() {
         Facility facility = new Facility(
-                1L,
-                "Limpieza",
-                "Limpieza de casa y jardines",
-<<<<<<< HEAD
-                12,
-
-                role);
-=======
-                12
-
+                1L
         );
->>>>>>> feature/test
         given(facilityRepository.findById(facility.getId())).willReturn(Optional.of(facility));
         underTest.findFacilityById(facility.getId());
         verify(facilityRepository).findById(facility.getId());
@@ -106,55 +73,54 @@ class FacilityServiceImplTest {
 
 
     @Test
-<<<<<<< HEAD
-    void deleteFacilitById() {
+    void deleteFacilityById() {
         Facility facility = new Facility(
-                 1L,
+                1L,
                 "Limpieza",
                 "Limpieza de casa y jardines",
                 12,
-
-                role);
+                1L
+        );
         underTest.deleteFacilityById(1L);
         verify(facilityRepository).deleteById(1L);
 
     }
 
     @Test
-    void updateFacilit() {
-        Facility facility = new Facility(
-                   1L,
-                "Limpieza",
-                "Limpieza de casa y jardines",
-                12,
-
-                role);
-        underTest.updateFacilit(facility);
-=======
-    void deleteFacilityById() {
-        Facility facility = new Facility(
-                1L,
-                "Limpieza",
-                "Limpieza de casa y jardines",
-                12
-
-        );
-        underTest.deleteFacilityById(1L);
-        verify(facilityRepository).deleteById(1L);
-
-    }*/
-
-   /* @Test
     void updateFacility() {
         Facility facility = new Facility(
                 1L,
                 "Limpieza",
                 "Limpieza de casa y jardines",
-                12
-
+                12,
+                1L
         );
         underTest.updateFacility(facility);
->>>>>>> feature/test
-        verify(facilityRepository).save(facility);
-    }*/
+    }
+        @Test
+        void deleteFacilityById () {
+            Facility facil = new Facility(
+                    1L,
+                    "Limpieza",
+                    "Limpieza de casa y jardines",
+                    10,
+                    4L
+            );
+            underTest.deleteFacilityById(1L);
+            verify(facilityRepository).deleteById(1L);
+        }
+
+        @Test
+        void updateFacility () {
+            Facility facilities = new Facility(
+                    1L,
+                    "Limpieza",
+                    "Limpieza de casa y jardines",
+                    10,
+                    12
+
+            );
+            underTest.updateFacility(facility);
+            verify(facilityRepository).save(facility);
+        }
 }

@@ -50,7 +50,7 @@ public class Facility {
     //@JsonIgnoreProperties("facility")
     private Set <Contract> contract;
 
-    public Facility() {
+    public Facility(long l) {
 
     }
 
@@ -111,63 +111,17 @@ public class Facility {
         this.contract = contract;
     }
 
-    public Facility(String title, String description, int pricePerHour, User user) {
-        this.title = title;
-        this.description = description;
-        this.pricePerHour = pricePerHour;
-        this.user = user;
-    }
-
-    /* public Facility(Long id, String title, String description, int pricePerHour, User user, Set<Contract> contract) {
->>>>>>> feature/test
+    public Facility(Long id, String title, String description, int pricePerHour, Category category) {
         this.id = id;
         this.title = title;
         this.description = description;
         this.pricePerHour = pricePerHour;
-        this.category=  category;
-        this.user = user;
-        this.contract = contract;
+        this.category = category;
     }
-
-<<<<<<< HEAD
-    public Facility(Long id, String title, String description, int pricePerHour, Category category, User user) {
-       this.id = id;
-=======
-    public Facility(Long id, String title, String description, int pricePerHour) {
-        this.id = id;
->>>>>>> feature/test
-        this.title = title;
-        this.description = description;
-        this.pricePerHour = pricePerHour;
-        this.category= category;
-        this.user=user;
-
-    }
-
-    public Facility(Long id, User user, Set<Contract> contract) {
-<<<<<<< HEAD
-         this.id = id;
-=======
-        this.id = id;
->>>>>>> feature/test
-        this.user = user;
-        this.contract = contract;
-    }
-
-    public Facility(Long id, Set<Contract> contract) {
-<<<<<<< HEAD
-
-=======
->>>>>>> feature/test
-        this.id = id;
-
-        this.contract = contract;
-    }
-
 
     public void add(Facility facility) {
         this.contract = contract;
-    }*/
+    }
 
     public void remove(Facility facility) {
         this.contract = contract;

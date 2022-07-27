@@ -70,7 +70,16 @@ public class User {
 
     }
 
-
+    public User(Long id, String name, String surname, String username, String email, String password, String city, String phone) {
+        this.id = id;
+        this.name = name;
+        this.surname = surname;
+        this.username = username;
+        this.email = email;
+        this.password = password;
+        this.city = city;
+        this.phone = phone;
+    }
 
     public User(Long id, String name, String surname, String username, String email, String password, String city, String phone, Set<Role> roles) {
         this.id = id;
