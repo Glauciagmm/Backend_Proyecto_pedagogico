@@ -64,10 +64,10 @@ public class RoleRepositoryTests {
     public void testAddRoleToExistingUser() {
         /*User user = userRepo.findById(1L).get();
         Role roleUser = roleRepo.findByName("User");
-        /*Role roleFacility = new Role(3);*/
+        Role roleFacility = new Role(3);*/
 
-       /* user.addRole(roleUser);
-        /*user.addRole(roleFacility);*/
+        /*user.addRole(roleUser);
+        user.addRole(roleFacility);*/
 
         /*Role roleAdmin = new Role("User");
         user.addRole(roleAdmin);
