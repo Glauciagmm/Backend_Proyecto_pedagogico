@@ -104,5 +104,6 @@ public class SignupRequest {
         this.name = name;
         this.surname = surname;
         this.city = city;
+        this.photo = photo;
     }
 }
