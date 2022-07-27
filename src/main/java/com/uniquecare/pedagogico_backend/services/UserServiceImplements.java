@@ -4,10 +4,15 @@ import com.uniquecare.pedagogico_backend.models.User;
 import com.uniquecare.pedagogico_backend.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 @Service @RequiredArgsConstructor
 @Transactional
@@ -21,23 +26,38 @@ public class UserServiceImplements implements IUserService {
     }
 
     @Override
-    public User findById(Long id) {return userRepository.findById(id).orElse(null);}
-
-    @Override
-    public User getUser(String username) {
-        return null;
+    public Collection<User> setFacilityRole(String role) {
+        return setFacilityRole("ROLE_FACILITY");
     }
 
-    /*@Override
-    public User getUser(String username) {
+
+    @Override
+    public User getUserById(Long userId) {
+     return userRepository.findById(userId).orElse(null);
+     }
+
+    @Override
+    public Optional<User> getUserByUsername(String username) {
         log.info("Fetching user {}",  username);
         return userRepository.findByUsername(username);
-    }*/
+    }
+
+    @Override
+    public Optional<User> findByUsername(String username) {
+        log.info("Fetching user {}",  username);
+        return userRepository.findByUsername(username);
+    }
+
+
+
 
     @Override
     public User updateUser(User user) {
         return userRepository.save(user);
     }
+
+
+
 
     @Override
     public void deleteUserById(Long id) {
@@ -45,5 +65,8 @@ public class UserServiceImplements implements IUserService {
     }
 
 
-
+    public Optional<User> getUser(String username) {
+        log.info("Fetching user {}",  username);
+        return userRepository.findByUsername(username);
+    }
 }

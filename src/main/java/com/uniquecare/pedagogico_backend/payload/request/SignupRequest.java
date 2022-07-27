@@ -13,12 +13,48 @@ public class SignupRequest {
     @Size(max = 50)
     @Email
     private String email;
-
     private Set<String> role;
 
     @NotBlank
     @Size(min = 6, max = 40)
     private String password;
+    private String name;
+    private String surname;
+    private String city;
+    private String phone;
+    private String photo;
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getSurname() {
+        return surname;
+    }
+
+    public void setSurname(String surname) {
+        this.surname = surname;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
 
     public String getUsername() {
         return username;
@@ -50,5 +86,24 @@ public class SignupRequest {
 
     public void setRole(Set<String> role) {
         this.role = role;
+    }
+
+    public String getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(String photo) {
+        this.photo = photo;
+    }
+
+    public SignupRequest(String username, String email, Set<String> role, String password, String name, String surname, String city, String photo) {
+        this.username = username;
+        this.email = email;
+        this.role = role;
+        this.password = password;
+        this.name = name;
+        this.surname = surname;
+        this.city = city;
+        this.photo = photo;
     }
 }
