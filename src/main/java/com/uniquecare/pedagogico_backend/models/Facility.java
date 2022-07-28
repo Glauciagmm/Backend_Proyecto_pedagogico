@@ -19,13 +19,16 @@ public class Facility {
     private String description;
     private int pricePerHour;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(  name = "category_id", referencedColumnName = "id")
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    @JsonIgnore
-    private Category category;
+  @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "facility_categories",
+            joinColumns = { @JoinColumn(name = "facility_id") },
+            inverseJoinColumns = { @JoinColumn(name = "category_id") })
+@JsonIgnore
+  private Set<Category> categories = new HashSet<>();
+  public Facility(){
 
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+  }
+@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "assistant_id", referencedColumnName = "id")
     @JsonIgnoreProperties({"facility", "roles"})
     private User assistant;
@@ -35,7 +38,10 @@ public class Facility {
     @JsonIgnore
     private Set<Contract> contract = new HashSet<>();
 
-    public Facility() {}
+    public Facility(String title, String description, int pricePerHour, User assistant, Set<Category> categories, User facilityAssistant) {
+
+    }
+
 
     public Long getId() {
         return id;
@@ -69,13 +75,9 @@ public class Facility {
         this.pricePerHour = pricePerHour;
     }
 
-    public Category getCategory() {
-        return category;
-    }
 
-    public void setCategory(Category category) {
-        this.category = category;
-    }
+
+
 
     public User getAssistant() {
         return assistant;
@@ -93,12 +95,28 @@ public class Facility {
         this.contract = contract;
     }
 
-    public Facility(String title, String description, int pricePerHour, User assistant) {
+    public Facility(String title, String description, int pricePerHour, User assistant,Set<Category> categories) {
         this.title = title;
         this.description = description;
         this.pricePerHour = pricePerHour;
+        this.categories= categories;
         this.assistant = assistant;
+
     }
+    public void addCategory(Category category) {
+        this.categories.add(category);
+        category.getFacilities().add(this);
+    }
+
+    public void removeCategory(long categoryId) {
+        Category category = this.categories.stream().filter(t -> t.getId() == categoryId).findFirst().orElse(null);
+        if (category != null) {
+            this.categories.remove(category);
+            category.getFacilities().remove(this);
+        }
+    }
+
+
 
     public void remove(Facility facility) {
         this.contract = contract;

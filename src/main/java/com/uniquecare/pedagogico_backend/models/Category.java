@@ -1,11 +1,16 @@
 package com.uniquecare.pedagogico_backend.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.Data;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
+@Data
 @Table(name = "category")
 
 public class Category {
@@ -15,23 +20,22 @@ public class Category {
 
     @NotNull
     private String name;
-    @OneToMany(mappedBy ="category", cascade = CascadeType.ALL)
-    private Set<Facility> facility= new HashSet<>();
-/*  public Category() {
+
+    @ManyToMany(fetch = FetchType.LAZY,
+            cascade = {
+                    CascadeType.PERSIST,
+                    CascadeType.MERGE
+            },
+            mappedBy = "categories")
+
+    private Set<Facility> facilities= new HashSet<>();
+    public Category() {
     }
-   @Enumerated(EnumType.STRING)
-    @Column(length = 20)
-   private ECategory name;
 
 
-    public Category(ECategory name) {
-        this.name = name;
-   }*/
-    public Long getId() {
-        return this.id;
-    }
-    public void setId(Long id) {
-        this.id = id;
+
+    public long getId() {
+        return id;
     }
 
   public String getName() {
@@ -42,21 +46,18 @@ public class Category {
         this.name = name;
     }
 
-    /*   public ECategory getName() {
-           return name;
-       }
-        public void setName(ECategory name) {
-           this.name = name;
-       }*/
-   public Set<Facility> getFacility(){
-        return facility;
-   }
-   public void setFacility(Set<Facility> facility){
-        this.facility=facility;
-        for(Facility facilit :facility){
-            facilit.setCategory(this);
-        }
-   }
 
+
+
+    public Set <Facility> getFacilities() {
+        return facilities;
+    }
+
+    public void setFacilities(Set<Facility> facilities) {
+        this.facilities = facilities;
+    }
 
 }
+
+
+

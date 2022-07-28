@@ -1,10 +1,11 @@
 package com.uniquecare.pedagogico_backend.services;
 
 import com.uniquecare.pedagogico_backend.models.Facility;
+import com.uniquecare.pedagogico_backend.models.User;
 import com.uniquecare.pedagogico_backend.repositories.CategoryRepository;
 import com.uniquecare.pedagogico_backend.repositories.FacilityRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Pageable;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
@@ -17,15 +18,24 @@ import java.util.List;
 
 public class FacilityServiceImpl implements IFacilityService {
 
+    @Autowired
     private final FacilityRepository facilityRepository;
-
+    @Autowired
     private final CategoryRepository categoryRepository;
+     @Autowired
+
+     private final UserServiceImplements userServiceImplements;
 
 
     @Override
     public Facility addFacility(Facility facility) {
+        User user= (User) userServiceImplements.setFacilityRole("ROLE_FACILITY");
+        user.setFacility((List<Facility>) facility);
+        User user_assistant =facility.getAssistant();
+        facility.setAssistant(user_assistant);
         return facilityRepository.save(facility);
     }
+
 
     @Override
 
@@ -38,15 +48,13 @@ public class FacilityServiceImpl implements IFacilityService {
         return facilityRepository.findById(id).orElseThrow(()-> new UsernameNotFoundException("Servicio no encontrado"));
     }
 
-    @Override
-    public List<Facility> getAllFacilitiesByCategoryId(Long categoryId) {
-        return facilityRepository.findAllByCategoryId(categoryId);
-    }
+
 
     @Override
-    public List<Facility> getAllFacilitiesByCategoryName(String categoryName) {
-        return facilityRepository.findAllByCategoryName(categoryName);
+    public List<Facility> getAllFacilitiesByCategoriesId(Long categoryId) {
+        return facilityRepository.findFacilitiesByCategoriesId(categoryId);
     }
+
 
     @Override
     public void deleteFacilityById(Long id) {
