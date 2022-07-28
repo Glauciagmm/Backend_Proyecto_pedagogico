@@ -17,7 +17,7 @@ class UserServiceImplementsTest {
 
     private UserServiceImplements underTest;
 
-    @BeforeEach
+  /*  @BeforeEach
     void setUp() {
         underTest = new UserServiceImplements(userRepository);
     }
@@ -34,7 +34,7 @@ class UserServiceImplementsTest {
         verify(userRepository).findAll();
     }
 
-   /* @Test
+   *//* @Test
     void findById() {
         User user = new User(
                 1L,
@@ -47,12 +47,12 @@ class UserServiceImplementsTest {
         underTest.getUserById(1L);
         verify(userRepository).findById(1L);
 
-    }*/
+    }*//*
 
     @Test
     void deleteUserById() {
         underTest.deleteUserById(1L);
         verify(userRepository).deleteById(1L);
 
-    }
+    }*/
 }

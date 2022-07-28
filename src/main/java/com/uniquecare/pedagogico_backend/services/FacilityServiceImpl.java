@@ -29,7 +29,7 @@ public class FacilityServiceImpl implements IFacilityService {
 
     @Override
 
-    public List<Facility> getAllFacilities(Pageable pageable) {
+    public List<Facility> getAllFacilities() {
         return facilityRepository.findAll();
     }
 
@@ -56,5 +56,16 @@ public class FacilityServiceImpl implements IFacilityService {
     @Override
     public Facility updateFacility(Facility facility) {
         return facilityRepository.save(facility);
+    }
+
+    @Override
+    public List<Facility> getContractByUserID(Long userId) {
+        return null;
+        //return facilityRepository.getContractById(userId);
+
+         /* @Override
+    public void removeFacilityFromContract(Long userId, Long facilityId) {
+        facilityRepository.removeFacilityFromContract(userId, facilityId);
+    }*/
     }
 }

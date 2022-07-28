@@ -8,7 +8,6 @@ import com.uniquecare.pedagogico_backend.security.services.UserDetailsImpl;
 import com.uniquecare.pedagogico_backend.services.IFacilityService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
@@ -34,7 +33,6 @@ public class FacilityController {
     @Autowired
     private final IFacilityService facilityService;
 
-
     @Autowired
     private CategoryRepository categoryRepository;
 
@@ -44,23 +42,7 @@ public class FacilityController {
     @Autowired
     RoleRepository roleRepository;
 
-/*    @GetMapping
-    public ResponseEntity<Page<Facilit>> FacilitiesList(Pageable pageable){
-        return (ResponseEntity<List<Facilit>>) ResponseEntity.ok(facilitService.getAllFacilities(pageable));
-    }*/
-
- @GetMapping("/list")
-    public ResponseEntity<List<Facility>>getFacility(Authentication authentication, Pageable pageable) {
-     if (authentication == null) {
-         System.out.println("Es necesario que hagas el login");
-     } else {
-         String username = authentication.getPrincipal().toString();
-         System.out.println(username);
-     }
-     return ResponseEntity.ok().body(facilityService.getAllFacilities(pageable));
- }
-
-  /*  @PostMapping("/save")
+    @PostMapping("/save")
     @PreAuthorize("hasRole('USER')")
     public ResponseEntity<Facility> addFacility(@AuthenticationPrincipal UserDetailsImpl user, @RequestBody Facility facility, HttpServletRequest request) {
         Optional<Category> OptionalCategory= categoryRepository.findById(facility.getCategory().getId());
@@ -70,9 +52,9 @@ public class FacilityController {
          }
 
         Set<GrantedAuthority> authorities = new HashSet<>();
-        authorities.add(new SimpleGrantedAuthority("ROLE_FACILIT_GUAI"));
+        authorities.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
 
-        facility.setUser(OptionalUser.get());
+        facility.setAssistant(OptionalUser.get());
         facility.setCategory(OptionalCategory.get());
 
         System.out.println(facility);
@@ -80,49 +62,49 @@ public class FacilityController {
          URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/id")
                  .buildAndExpand(facilitysaved.getId()).toUri();
          return ResponseEntity.created(uri).body(facilitysaved);
+    }
 
-    }*/
-
-  /*  @GetMapping("/{id}")
-    public ResponseEntity<Facilit> findFacilitById(@PathVariable Long id){
-        return ResponseEntity.ok().body(facilitService.findFacilityById(id));
-    }*/
+    @GetMapping("/{id}")
+    public ResponseEntity<Facility> findFacilityById(@PathVariable Long id){
+        return ResponseEntity.ok().body(facilityService.findFacilityById(id));
+    }
     @GetMapping("/category/{CategoryId}")
     public ResponseEntity<List<Facility>> findFacilityByCategoryId(@PathVariable("CategoryId") Long CategoryId){
 
        return ResponseEntity.ok().body(facilityService.getAllFacilitiesByCategoryId(CategoryId));
     }
 
-@GetMapping("/{categoryName}")
+    @GetMapping("/{categoryName}")
     public ResponseEntity<List<Facility>> findFacilityByCategoryName(@PathVariable("categoryName") String categoryName) {
     return ResponseEntity.ok().body(facilityService.getAllFacilitiesByCategoryName(categoryName));
-}
+    }
 
-    @GetMapping("/facilit")
-    public ResponseEntity<List<Facility>>getFacility(Authentication authentication, HttpSession session, Pageable pageable ){
+    @GetMapping("/list1")
+    public ResponseEntity<List<Facility>>getFacility(Authentication authentication, HttpSession session){
         if (authentication == null){
             System.out.println("Es necesario que hagas el login");
         }else{
             String username = authentication.getPrincipal().toString();
             System.out.println(username);
-        }return ResponseEntity.ok().body(facilityService.getAllFacilities(pageable));
+        }return ResponseEntity.ok().body(facilityService.getAllFacilities());
     }
 
-   @PostMapping("/save")
+    @GetMapping("/list2")
+    public ResponseEntity<List<Facility>>getFacilities(){
+        return ResponseEntity.ok().body(facilityService.getAllFacilities());
+    }
+
+    @PostMapping("/create")
     public ResponseEntity<Facility> addFacility(Authentication authentication, @RequestBody Facility facility) {
         URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/facility/save").toUriString());
         if (authentication == null) {
             System.out.println("Es necesario que hagas el login");
         } else {
-            String username = authentication.getPrincipal().toString();
-            System.out.println(username);
+            UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
+            User user = userRepository.findUserById(userDetails.getId());
+            //System.out.println(username);
         }
         return ResponseEntity.created(uri).body(facilityService.addFacility(facility));
-    }
-
-    @GetMapping("/{id}")
-    public ResponseEntity<Facility> findFacilityById(@PathVariable Long id){
-        return ResponseEntity.ok().body(facilityService.findFacilityById(id));
     }
 
     @PutMapping("/edit")
@@ -132,10 +114,20 @@ public class FacilityController {
     }
 
     @DeleteMapping("/delete/{id}")
-
     public ResponseEntity<Void> deleteFacilityById(@PathVariable Long id){
         facilityService.deleteFacilityById(id);
         return ResponseEntity.noContent().build();
     }
-
 }
+
+
+/* @GetMapping("/list")
+    public ResponseEntity<List<Facility>>getFacility(Authentication authentication, Facility facility) {
+     if (authentication == null) {
+         System.out.println("Es necesario que hagas el login");
+     } else {
+         String username = authentication.getPrincipal().toString();
+         System.out.println(username);
+     }
+     return ResponseEntity.ok().body(facilityService.getAllFacilities(facility));
+    }*/

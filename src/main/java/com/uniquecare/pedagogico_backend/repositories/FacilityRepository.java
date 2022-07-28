@@ -10,5 +10,6 @@ import java.util.List;
 public interface FacilityRepository extends JpaRepository<Facility, Long> {
     List<Facility> findAllByCategoryId(Long categoryId);
     List<Facility> findAllByCategoryName(String categoryName);
-
+    List<Facility> getContractByAssistantId(Long assistantId);
+    //void removeFacilityFromContract(Long userId, Long facilityId);
 }

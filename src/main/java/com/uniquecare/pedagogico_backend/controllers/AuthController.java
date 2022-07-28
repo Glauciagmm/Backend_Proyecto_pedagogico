@@ -96,6 +96,7 @@ public class AuthController {
                 signUpRequest.getCity(),
                 signUpRequest.getPhone(),
                 signUpRequest.getPhoto(),
+
                 encoder.encode(signUpRequest.getPassword()));
 
         Set<String> strRoles = signUpRequest.getRole();

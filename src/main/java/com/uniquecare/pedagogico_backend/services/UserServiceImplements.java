@@ -1,16 +1,15 @@
 package com.uniquecare.pedagogico_backend.services;
 
+import com.uniquecare.pedagogico_backend.models.Contract;
 import com.uniquecare.pedagogico_backend.models.User;
+import com.uniquecare.pedagogico_backend.repositories.ContractRepository;
 import com.uniquecare.pedagogico_backend.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -19,6 +18,7 @@ import java.util.Optional;
 @Slf4j
 public class UserServiceImplements implements IUserService {
     private final UserRepository userRepository;
+    private final ContractRepository contractRepository;
     @Override
     public List<User> getUsers() {
         log.info("Fetching all users");
@@ -43,21 +43,26 @@ public class UserServiceImplements implements IUserService {
     }
 
     @Override
+    public List<Contract> getContractByUserId(Long userId) {
+        return contractRepository.findAll();
+    }
+
+    @Override
     public Optional<User> findByUsername(String username) {
         log.info("Fetching user {}",  username);
         return userRepository.findByUsername(username);
     }
 
-
+    @Override
+    public User save(User user) {
+        return userRepository.save(user);
+    }
 
 
     @Override
     public User updateUser(User user) {
         return userRepository.save(user);
     }
-
-
-
 
     @Override
     public void deleteUserById(Long id) {

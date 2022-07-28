@@ -1,5 +1,9 @@
 package com.uniquecare.pedagogico_backend.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -30,11 +34,11 @@ public class User {
     private String email;
     @NotBlank
     @Size(max = 120)
+    @JsonIgnore
     private String password;
     private String city;
     private String phone;
     private String photo;
-
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(  name = "user_roles",
@@ -42,54 +46,21 @@ public class User {
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles = new HashSet<>();
 
-    public void addRole(Role role) {
-        this.roles.add(role);
-    }
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")//Generate the service
-    //@JsonIgnoreProperties("user")
+    /*
+        Relation User <-> Facility
+     */
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "assistant")//Generate the service
+    // @JsonIgnoreProperties("user")
+    @JsonIgnore
     private List<Facility> facility;
 
-    @OneToMany
-    (cascade = CascadeType.ALL, mappedBy = "user")//Client
-    //@JsonIgnoreProperties("user")
-    private List<Contract> contract;
-
-    public User(String name, String surname, String username, String email, String city, String phone, String password, String photo) {
-        this.name = name;
-        this.surname = surname;
-        this.username = username;
-        this.email = email;
-        this.password = password;
-        this.city = city;
-        this.phone = phone;
-        this.photo = photo;
-        this.roles = roles;
-    }
+    @OneToMany(mappedBy = "client")
+    // @JsonIgnoreProperties("assistant")
+    @JsonIgnore
+    private Set<Contract> contract = new HashSet<>();
 
 
-    public User() {
-
-    }
-
-
-
-    public User(Long id, String name, String surname, String username, String email, String password, String city, String phone, Set<Role> roles) {
-        this.id = id;
-        this.name = name;
-        this.surname = surname;
-        this.username = username;
-        this.email = email;
-        this.password = password;
-        this.city = city;
-        this.phone = phone;
-        this.roles = roles;
-    }
-
-    public User(Long id, List<Facility> facility) {
-        this.id = id;
-        this.facility = facility;
-    }
 
     public Long getId() {
         return id;
@@ -171,14 +142,6 @@ public class User {
         this.facility = facility;
     }
 
-    public List<Contract> getContract() {
-        return contract;
-    }
-
-    public void setContract(List<Contract> contract) {
-        this.contract = contract;
-    }
-
     public String getPhoto() {
         return photo;
     }
@@ -186,7 +149,31 @@ public class User {
     public void setPhoto(String photo) {
         this.photo = photo;
     }
-    /*  public User(String name, String surname, String username, String email, String password, String city, String phone, Set<Role> roles) {
+
+    public Set<Contract> getContract() {
+        return contract;
+    }
+
+    public void setContract(Set<Contract> contract) {
+        this.contract = contract;
+    }
+
+    public User() {}
+
+    public User(String name, String surname, String username, String email, String city, String phone, String photo, String password) {
+        this.name = name;
+        this.surname = surname;
+        this.username = username;
+        this.email = email;
+        this.city = city;
+        this.phone = phone;
+        this.photo = photo;
+        this.password = password;
+        this.roles = roles;
+    }
+
+    public User(Long id, String name, String surname, String username, String email, String password, String city, String phone, Set<Role> roles) {
+        this.id = id;
         this.name = name;
         this.surname = surname;
         this.username = username;
@@ -195,65 +182,23 @@ public class User {
         this.city = city;
         this.phone = phone;
         this.roles = roles;
+    }
+
+    public User(Long id, List<Facility> facility) {
+        this.id = id;
+        this.facility = facility;
+    }
+
+     void addRole(Role role) {
+        this.roles.add(role);
+    }
+
+    public boolean sendRequest(Facility facility) {
+        return contract.contains(facility);
+    }
+
+
+    /*public void addContract(Facility facility) {
+        return facility.add(contract);
     }*/
-
-
-
-    /*public User(Long id, String name, String surname, String username, String email, String password, String city, String phone) {
-        this.id = id;
-        this.name = name;
-        this.surname = surname;
-        this.username = username;
-        this.email = email;
-        this.password = password;
-        this.city = city;
-        this.phone = phone;
-    }
-
-    public User(Long id, String name, String username, String email, String city) {
-        this.id = id;
-        this.name = name;
-        this.username = username;
-        this.email = email;
-        this.city = city;
-    }
-
-    public User(String username, String password) {
-        this.username = username;
-        this.password = password;
-    }
-    public User(String username, String email, String password) {
-        this.username = username;
-        this.email = email;
-        this.password = password;
-    }
-
-
-    public User(Long id) {
-        this.id = id;
-    }
-<<<<<<< HEAD
-
-    public String getPseudo() {
-        return null;
-    }
-
-=======
-*/
-
-
-/*    public List <Contract> getContract() {
-        return contract;
-    }
-
-
-    public void add(User user) {
-        this.contract = contract;
-    }
-
-    public void remove(User user) {
-        this.contract = contract;
-    }*/
-
-
 }

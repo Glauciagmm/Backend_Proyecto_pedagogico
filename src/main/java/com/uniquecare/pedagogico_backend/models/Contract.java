@@ -1,6 +1,8 @@
 package com.uniquecare.pedagogico_backend.models;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -13,70 +15,39 @@ public class Contract {
     private LocalDateTime finish;
     private int totalPrice;
 
-   /* @ManyToOne
-    @JoinColumn(name="user_id")
-    User user;*/
-
     @ManyToOne
-    //@JsonIgnoreProperties("contract")
-
     @JoinColumn (name = "facility_id", referencedColumnName = "id", nullable = false)
+    @JsonIgnoreProperties({"contract"})
     private Facility facility;
 
     @ManyToOne(cascade = CascadeType.ALL)
-    //@JsonIgnoreProperties("contract")
-    @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
-    private User user;
+    @JoinColumn(name = "client_id", referencedColumnName = "id", nullable = false)
+    @JsonIgnoreProperties({"contract", "facility", "roles"})
+    private User client;
 
     public Contract(){
     }
 
-    public void Contract (Long id, LocalDateTime start, LocalDateTime finish, Facility facility, int totalPrice){
+    public void Contract (Long id, LocalDateTime start, LocalDateTime finish, Facility facility, int totalPrice, User client){
         this.id = id;
         this.start  = start;
         this.finish = finish;
-        //this.user = user;
+        this.client = client;
         this.facility = facility;
         this.totalPrice = totalPrice;
     }
 
-    /*public Contract (LocalDateTime start, LocalDateTime finish, User user, Facilit facilit){
-        this.start  = start;
-        this.finish = finish;
-        this.user = user;
-        this.facilit = facilit;
-    }*/
-
-  /*  public Contract (Long id, User user, Facilit facilit){
-        this.id = id;
-        this.user = user;
-        this.facilit = facilit;
+    public User getClient() {
+        return client;
     }
 
-    public void addContract(User user, Facilit facilit, LocalDateTime start, LocalDateTime finish){
-        this.user(user);
-        this.facilit(facilit);
-        this.start(start);
-        this.finish(finish);
-    }*/
-/*    public void removeContract(User user, Facilit facilit, LocalDateTime start, LocalDateTime finish) {
-        user.remove(user);
-        facilit.remove(facilit);
-    }*/
-
-    @JsonBackReference
-    public User getUser() {
-        return user;
+    public void setClient(User client) {
+        this.client = client;
     }
 
-    public void setUser(User user) {
-        this.user = user;
-    }
+    public Facility getFacility(){ return facility;}
 
-
-    public Facility getFacilit(){ return facility;}
-
-    public void setFacilit(Facility facility){
+    public void setFacility(Facility facility){
 
         this.facility = facility;
     }
@@ -122,7 +93,10 @@ public class Contract {
                 ", finish=" + finish +
                 ", totalPrice=" + totalPrice +
                 ", facility=" + facility +
-                ", user=" + user +
+                ", client=" + client +
                 '}';
+    }
+
+    public void add(Contract contract) {
     }
 }

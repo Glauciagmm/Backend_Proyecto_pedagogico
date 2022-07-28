@@ -1,18 +1,15 @@
 package com.uniquecare.pedagogico_backend.models;
 
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.*;
 import com.uniquecare.pedagogico_backend.security.services.UserDetailsImpl;
 import lombok.Data;
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
-
 
 @Entity
 @Data
 @Table(name = "facility",uniqueConstraints = {@UniqueConstraint(columnNames = {"title"})})
-
 
 public class Facility {
     @Id
@@ -22,38 +19,23 @@ public class Facility {
     private String description;
     private int pricePerHour;
 
-
-
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(  name = "category_id", referencedColumnName = "id")
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    @JsonIgnore
     private Category category;
 
-
-//    @ManyToOne
-//    @JoinColumn(name="category_id", nullable=false)
-//    private Category category;
-
-
- @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinColumn(name = "user_id", referencedColumnName = "id")
-    @JsonIgnore
-    private User user;
-    private UserDetailsImpl userDetails;
-
-
-
-
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinColumn(name = "assistant_id", referencedColumnName = "id")
+    @JsonIgnoreProperties({"facility", "roles"})
+    private User assistant;
 
 
     @OneToMany(mappedBy = "facility")
-    //@JsonIgnoreProperties("facility")
-    private Set <Contract> contract;
+    @JsonIgnore
+    private Set<Contract> contract = new HashSet<>();
 
-    public Facility() {
-
-    }
-
+    public Facility() {}
 
     public Long getId() {
         return id;
@@ -95,12 +77,12 @@ public class Facility {
         this.category = category;
     }
 
-    public User getUser(User user) {
-        return user;
+    public User getAssistant() {
+        return assistant;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setAssistant(User assistant) {
+        this.assistant = assistant;
     }
 
     public Set<Contract> getContract() {
@@ -111,63 +93,12 @@ public class Facility {
         this.contract = contract;
     }
 
-    public Facility(String title, String description, int pricePerHour, User user) {
+    public Facility(String title, String description, int pricePerHour, User assistant) {
         this.title = title;
         this.description = description;
         this.pricePerHour = pricePerHour;
-        this.user = user;
+        this.assistant = assistant;
     }
-
-    /* public Facility(Long id, String title, String description, int pricePerHour, User user, Set<Contract> contract) {
->>>>>>> feature/test
-        this.id = id;
-        this.title = title;
-        this.description = description;
-        this.pricePerHour = pricePerHour;
-        this.category=  category;
-        this.user = user;
-        this.contract = contract;
-    }
-
-<<<<<<< HEAD
-    public Facility(Long id, String title, String description, int pricePerHour, Category category, User user) {
-       this.id = id;
-=======
-    public Facility(Long id, String title, String description, int pricePerHour) {
-        this.id = id;
->>>>>>> feature/test
-        this.title = title;
-        this.description = description;
-        this.pricePerHour = pricePerHour;
-        this.category= category;
-        this.user=user;
-
-    }
-
-    public Facility(Long id, User user, Set<Contract> contract) {
-<<<<<<< HEAD
-         this.id = id;
-=======
-        this.id = id;
->>>>>>> feature/test
-        this.user = user;
-        this.contract = contract;
-    }
-
-    public Facility(Long id, Set<Contract> contract) {
-<<<<<<< HEAD
-
-=======
->>>>>>> feature/test
-        this.id = id;
-
-        this.contract = contract;
-    }
-
-
-    public void add(Facility facility) {
-        this.contract = contract;
-    }*/
 
     public void remove(Facility facility) {
         this.contract = contract;
@@ -175,5 +106,9 @@ public class Facility {
 
 
     public void getUser(UserDetailsImpl loggedInUser) {
+    }
+
+    public void add(Facility contract) {
+
     }
 }
