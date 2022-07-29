@@ -33,7 +33,7 @@ import com.uniquecare.pedagogico_backend.repositories.RoleRepository;
 import com.uniquecare.pedagogico_backend.repositories.UserRepository;
 
 
-@CrossOrigin(origins = "*", maxAge = 3600)
+@CrossOrigin(origins = "**", maxAge = 3600)
 @RestController
 @RequestMapping("/api/auth")
 public class AuthController {

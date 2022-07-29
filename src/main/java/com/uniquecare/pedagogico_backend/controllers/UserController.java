@@ -19,7 +19,7 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/api")
 @RequiredArgsConstructor
-@CrossOrigin(origins="*")
+@CrossOrigin(origins="**")
 public class UserController {
     private final IUserService userService;
     private final UserRepository userRepository;

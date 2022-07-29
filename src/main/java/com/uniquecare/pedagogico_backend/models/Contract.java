@@ -8,6 +8,7 @@ import java.time.LocalDateTime;
 @Entity
 public class Contract {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
     private LocalDateTime start;
     private LocalDateTime finish;
