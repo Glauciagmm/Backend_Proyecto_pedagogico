@@ -22,7 +22,6 @@ import java.util.List;
 @CrossOrigin(origins="*")
 public class ContractController {
 
-
     private final IContractService contractService;
     private final IUserService userService;
     private final IFacilityService facilityService;
@@ -34,7 +33,8 @@ public class ContractController {
         this.facilityService = facilityService;
     }
 
-    @GetMapping("/contract1")
+    /**Lista todos los contractos de la base de datos, sus datos como fechas, assistente y cliente - works! */
+    @GetMapping("/contract")
     public ResponseEntity<List<Contract>> getContract() {
         return ResponseEntity.ok().body(contractService.findAllContracts());
     }

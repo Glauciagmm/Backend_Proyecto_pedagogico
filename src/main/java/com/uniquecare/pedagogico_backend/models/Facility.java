@@ -35,13 +35,18 @@ public class Facility {
     @JsonIgnore
     private Set<Contract> contract = new HashSet<>();
 
-    public Facility() {}
+    public Facility(String limpieza, String description, int pricePerHour, String user) {
+
+    }
+
+    public Facility() {
+    }
 
     public Long getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId() {
         this.id = id;
     }
 
@@ -49,7 +54,7 @@ public class Facility {
         return title;
     }
 
-    public void setTitle(String title) {
+    public void setTitle() {
         this.title = title;
     }
 
@@ -57,7 +62,7 @@ public class Facility {
         return description;
     }
 
-    public void setDescription(String description) {
+    public void setDescription() {
         this.description = description;
     }
 
@@ -65,7 +70,7 @@ public class Facility {
         return pricePerHour;
     }
 
-    public void setPricePerHour(int pricePerHour) {
+    public void setPricePerHour() {
         this.pricePerHour = pricePerHour;
     }
 
@@ -99,6 +104,11 @@ public class Facility {
         this.pricePerHour = pricePerHour;
         this.assistant = assistant;
     }
+
+     public Facility(Long id) {
+        this.id = id;
+    }
+
 
     public void remove(Facility facility) {
         this.contract = contract;

@@ -1,30 +1,24 @@
 package com.uniquecare.pedagogico_backend.services;
 
 import com.uniquecare.pedagogico_backend.models.Facility;
-import com.uniquecare.pedagogico_backend.repositories.CategoryRepository;
 import com.uniquecare.pedagogico_backend.repositories.FacilityRepository;
-import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Pageable;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-
 import javax.transaction.Transactional;
 import java.util.List;
 
 @Service
-@RequiredArgsConstructor
 @Transactional
-
+@Slf4j
 public class FacilityServiceImpl implements IFacilityService {
 
     private final FacilityRepository facilityRepository;
 
-    private final CategoryRepository categoryRepository;
-
-
-    @Override
-    public Facility addFacility(Facility facility) {
-        return facilityRepository.save(facility);
+    @Autowired
+    public FacilityServiceImpl(FacilityRepository facilityRepository){
+        this.facilityRepository = facilityRepository;
     }
 
     @Override
@@ -38,6 +32,7 @@ public class FacilityServiceImpl implements IFacilityService {
         return facilityRepository.findById(id).orElseThrow(()-> new UsernameNotFoundException("Servicio no encontrado"));
     }
 
+    /** works*/
     @Override
     public List<Facility> getAllFacilitiesByCategoryId(Long categoryId) {
         return facilityRepository.findAllByCategoryId(categoryId);
@@ -48,11 +43,13 @@ public class FacilityServiceImpl implements IFacilityService {
         return facilityRepository.findAllByCategoryName(categoryName);
     }
 
+    /** works*/
     @Override
     public void deleteFacilityById(Long id) {
         facilityRepository.deleteById(id);
     }
 
+    /** works*/
     @Override
     public Facility updateFacility(Facility facility) {
         return facilityRepository.save(facility);
@@ -61,11 +58,11 @@ public class FacilityServiceImpl implements IFacilityService {
     @Override
     public List<Facility> getContractByUserID(Long userId) {
         return null;
-        //return facilityRepository.getContractById(userId);
+    }
 
-         /* @Override
-    public void removeFacilityFromContract(Long userId, Long facilityId) {
-        facilityRepository.removeFacilityFromContract(userId, facilityId);
-    }*/
+    /** works*/
+    @Override
+    public Facility addNewFacility(Facility facility){
+        return facilityRepository.save(facility);
     }
 }

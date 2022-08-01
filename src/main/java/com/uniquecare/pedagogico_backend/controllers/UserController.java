@@ -23,16 +23,19 @@ public class UserController {
     private final UserRepository userRepository;
     private final PasswordEncoder encoder;
 
+    /**Lista todos los usuaruios de la base de datos - works! */
     @GetMapping("/user")
     public ResponseEntity<List<User>>getUsers(){
         return ResponseEntity.ok().body(userService.getUsers());
     }
 
+    /**Encuentra un usuario por su ID - works! */
     @GetMapping("/user/{id}")
     public Optional<User> findUserById(@PathVariable("id") Long id) {
         return userRepository.findById(id);
     }
 
+    /**Edita un usuario sin editar la contraseña - works! */
     @PutMapping("/user/edit/{id}")
     public User updateUser (@RequestBody @Valid ProfileRequest profileRequest){
         User user = userRepository.findById(profileRequest.getId()).orElseThrow(RuntimeException::new);
@@ -46,6 +49,7 @@ public class UserController {
     return userService.updateUser(user);
     }
 
+    /**Borra un user de la base de datos - works! */
     @DeleteMapping("/user/{id}")
     public ResponseEntity<Boolean> deleteUser(@PathVariable("id") Long id){
         userService.deleteUserById(id);
