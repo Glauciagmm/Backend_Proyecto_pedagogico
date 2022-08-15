@@ -18,10 +18,9 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping ("/api")
+@RequestMapping ("/api/contract")
 @CrossOrigin(origins="*")
 public class ContractController {
-
 
     private final IContractService contractService;
     private final IUserService userService;
@@ -34,7 +33,8 @@ public class ContractController {
         this.facilityService = facilityService;
     }
 
-    @GetMapping("/contract1")
+    /**Lista todos los contractos de la base de datos, sus datos como fechas, assistente y cliente - works! */
+    @GetMapping("/contract")
     public ResponseEntity<List<Contract>> getContract() {
         return ResponseEntity.ok().body(contractService.findAllContracts());
     }
@@ -44,7 +44,6 @@ public class ContractController {
     List<Facility> getContracts(){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
-
         return contractService.getFacilityByUser(userDetails.getId());
     }
 */
@@ -53,9 +52,7 @@ public class ContractController {
     ResponseEntity<?> addToContract(@RequestParam("id") Long contractId) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
-
         contractService.addContract(userDetails.getId(), contractId);
-
         return ResponseEntity.ok(new MessageResponse("Solicitud enviada"));
     }*/
 
@@ -64,9 +61,7 @@ public class ContractController {
     ResponseEntity<?> removeContract(@RequestParam("id") Long contractId) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
-
         contractService.removeFromContract(userDetails.getId(), contractId);
-
         return ResponseEntity.ok(new MessageResponse("Solicitud removida"));
     }*/
 
@@ -97,4 +92,3 @@ public class ContractController {
         URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/uniquecare/contract/{id}/").toUriString());
         return ResponseEntity.created(uri).build();*/
 }
-

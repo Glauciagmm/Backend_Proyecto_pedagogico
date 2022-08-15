@@ -9,7 +9,11 @@ import java.util.List;
 @Repository
 public interface FacilityRepository extends JpaRepository<Facility, Long> {
     List<Facility> findFacilitiesByCategoriesId(Long categoryId);
- /*   List<Facility> findFacilitiesByCategoryName(String categoryName);*/
+ List<Facility> findFacilitiesByCategoriesName(String categoryName);
+
+ List<Facility>findFacilitiesByAssistant(Long assistantId);
+
+//    List<Facility>findFacilitiesByUserId(Long userId);
     List<Facility> getContractByAssistantId(Long assistantId);
     //void removeFacilityFromContract(Long userId, Long facilityId);
 }

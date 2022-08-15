@@ -15,6 +15,8 @@ public interface IContractService {
     Contract updateContract (Contract contract);
     List<Contract> getContractByUser(Long userId);
 
+    List<Contract> getContractByAssistant(Long assistantId);
+
     //List<Facility> getFacilityByUser(Long id);
     //void removeFromContract(Long id, Long contractId);
     //void deleteContractById(Long UserId, Long facilityId);

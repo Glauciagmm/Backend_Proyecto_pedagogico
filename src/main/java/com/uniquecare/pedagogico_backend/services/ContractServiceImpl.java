@@ -61,6 +61,11 @@ public class ContractServiceImpl implements IContractService {
         return userService.getContractByUserId(userId);
     }
 
+    @Override
+    public List<Contract> getContractByAssistant(Long assistantId) {
+        return userService.getContractByAssistantId(assistantId);
+    }
+
 /*    @Override
     public Contract addContract(Authentication authentication, Contract contract) {
         return contractRepository.save(contract);

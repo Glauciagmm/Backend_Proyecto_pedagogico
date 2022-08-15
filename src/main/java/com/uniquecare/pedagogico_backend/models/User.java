@@ -1,8 +1,6 @@
 package com.uniquecare.pedagogico_backend.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import java.util.HashSet;
 import java.util.List;
@@ -40,17 +38,17 @@ public class User {
     private String phone;
     private String photo;
 
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.LAZY,cascade=CascadeType.MERGE)
     @JoinTable(  name = "user_roles",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
-    private Set<Role> roles = new HashSet<>();
+    private Set <Role> roles = new HashSet<>();
 
 
     /*
         Relation User <-> Facility
      */
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "assistant")//Generate the service
+    @OneToMany(cascade = CascadeType.MERGE, mappedBy = "assistant")//Generate the service
     // @JsonIgnoreProperties("user")
     @JsonIgnore
     private List<Facility> facility;
@@ -126,9 +124,11 @@ public class User {
         this.phone = phone;
     }
 
+
     public Set<Role> getRoles() {
         return roles;
     }
+
 
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
@@ -169,10 +169,10 @@ public class User {
         this.phone = phone;
         this.photo = photo;
         this.password = password;
-        this.roles = roles;
+
     }
 
-    public User(Long id, String name, String surname, String username, String email, String password, String city, String phone, Set<Role> roles) {
+    public User(Long id, String name, String surname, String username, String email, String password, String city, String phone) {
         this.id = id;
         this.name = name;
         this.surname = surname;
@@ -181,7 +181,7 @@ public class User {
         this.password = password;
         this.city = city;
         this.phone = phone;
-        this.roles = roles;
+
     }
 
     public User(Long id, List<Facility> facility) {
@@ -189,8 +189,8 @@ public class User {
         this.facility = facility;
     }
 
-     void addRole(Role role) {
-        this.roles.add(role);
+     void addRole(Role roles) {
+        this.roles.add(roles);
     }
 
     public boolean sendRequest(Facility facility) {

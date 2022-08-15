@@ -6,6 +6,8 @@ import com.uniquecare.pedagogico_backend.repositories.CategoryRepository;
 import com.uniquecare.pedagogico_backend.repositories.FacilityRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
@@ -23,16 +25,23 @@ public class FacilityServiceImpl implements IFacilityService {
     @Autowired
     private final CategoryRepository categoryRepository;
      @Autowired
-
-     private final UserServiceImplements userServiceImplements;
+    private final IUserService iUserServiceImplements;
 
 
     @Override
     public Facility addFacility(Facility facility) {
-        User user= (User) userServiceImplements.setFacilityRole("ROLE_FACILITY");
-        user.setFacility((List<Facility>) facility);
+        Authentication loggedInUser = SecurityContextHolder.getContext().getAuthentication();
+        String username = loggedInUser.getName();
+
+                ;
+        //loggedInUser= (Authentication) userServiceImplements.setFacilityRole("ROLE_FACILITY");
+
         User user_assistant =facility.getAssistant();
         facility.setAssistant(user_assistant);
+        return facilityRepository.save(facility);
+    }
+    @Override
+    public Facility addNewFacility(Facility facility){
         return facilityRepository.save(facility);
     }
 
@@ -48,12 +57,25 @@ public class FacilityServiceImpl implements IFacilityService {
         return facilityRepository.findById(id).orElseThrow(()-> new UsernameNotFoundException("Servicio no encontrado"));
     }
 
-
+    @Override
+    public List<Facility> getAllFacilitiesByCategoriesName(String categoryName) {
+        return facilityRepository.findFacilitiesByCategoriesName(categoryName);
+    }
 
     @Override
     public List<Facility> getAllFacilitiesByCategoriesId(Long categoryId) {
         return facilityRepository.findFacilitiesByCategoriesId(categoryId);
     }
+    @Override
+    public List<Facility> getAllFacilitiesByAssistantId(Long assistantId) {
+        return facilityRepository.findFacilitiesByAssistant(assistantId);
+    }
+//    @Override
+//    public List<Facility> getAllFacilitiesByUserId(Long userId) {
+//        return facilityRepository.findFacilitiesByUserId(userId);
+//    }
+
+
 
 
     @Override
@@ -66,9 +88,9 @@ public class FacilityServiceImpl implements IFacilityService {
         return facilityRepository.save(facility);
     }
 
-    @Override
+  /*  @Override
     public List<Facility> getContractByUserID(Long userId) {
-        return null;
+        return null;*/
         //return facilityRepository.getContractById(userId);
 
          /* @Override
@@ -76,4 +98,4 @@ public class FacilityServiceImpl implements IFacilityService {
         facilityRepository.removeFacilityFromContract(userId, facilityId);
     }*/
     }
-}
+

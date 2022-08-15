@@ -1,6 +1,7 @@
 package com.uniquecare.pedagogico_backend.services;
 
 import com.uniquecare.pedagogico_backend.models.Contract;
+import com.uniquecare.pedagogico_backend.models.ERole;
 import com.uniquecare.pedagogico_backend.models.User;
 import com.uniquecare.pedagogico_backend.repositories.ContractRepository;
 import com.uniquecare.pedagogico_backend.repositories.UserRepository;
@@ -10,13 +11,14 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
 @Service @RequiredArgsConstructor
 @Transactional
 @Slf4j
-public class UserServiceImplements implements IUserService {
+public class UserServiceImplements extends User implements IUserService {
     private final UserRepository userRepository;
     private final ContractRepository contractRepository;
     @Override
@@ -25,9 +27,9 @@ public class UserServiceImplements implements IUserService {
         return userRepository.findAll();
     }
 
-    @Override
-    public Collection<User> setFacilityRole(String role) {
-        return setFacilityRole("ROLE_FACILITY");
+   @Override
+    public Collection<User> setFacilityRole(ERole eRole) {
+        return setFacilityRole(ERole.valueOf("ROLE_FACILITY"));
     }
 
 
@@ -45,6 +47,11 @@ public class UserServiceImplements implements IUserService {
     @Override
     public List<Contract> getContractByUserId(Long userId) {
         return contractRepository.findAll();
+    }
+
+    @Override
+    public List<Contract> getContractByAssistantId(Long assistantId) {
+        return contractRepository.findAllById(Collections.singleton(assistantId));
     }
 
     @Override
@@ -73,5 +80,9 @@ public class UserServiceImplements implements IUserService {
     public Optional<User> getUser(String username) {
         log.info("Fetching user {}",  username);
         return userRepository.findByUsername(username);
+    }
+    @Override
+    public User getByUsername(String username) {
+        return userRepository.findByUsername(username).orElseThrow(()->new RuntimeException("User not Found"));
     }
 }

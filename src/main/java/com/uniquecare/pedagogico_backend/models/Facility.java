@@ -23,7 +23,7 @@ public class Facility {
     @JoinTable(name = "facility_categories",
             joinColumns = { @JoinColumn(name = "facility_id") },
             inverseJoinColumns = { @JoinColumn(name = "category_id") })
-@JsonIgnore
+  @JsonIgnoreProperties({"categories"})
   private Set<Category> categories = new HashSet<>();
   public Facility(){
 
@@ -83,8 +83,9 @@ public class Facility {
         return assistant;
     }
 
-    public void setAssistant(User assistant) {
-        this.assistant = assistant;
+    public User setAssistant(User assistant) {
+        return  this.assistant = assistant;
+
     }
 
     public Set<Contract> getContract() {
@@ -117,8 +118,18 @@ public class Facility {
     }
 
 
+    public Facility(String title, String description, int pricePerHour, User assistant) {
+        this.title = title;
+        this.description = description;
+        this.pricePerHour = pricePerHour;
+        this.assistant = assistant;
+    }
 
-    public void remove(Facility facility) {
+    public Facility(Long id) {
+        this.id = id;
+    }
+
+     public void remove(Facility facility) {
         this.contract = contract;
     }
 
