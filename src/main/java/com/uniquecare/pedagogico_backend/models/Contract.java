@@ -6,14 +6,16 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.Date;
 
 @Entity
 public class Contract {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
-    private LocalDateTime start;
-    private LocalDateTime finish;
-    private int totalPrice;
+    private Date start;
+    private Date finish;
+    private double totalPrice;
 
     @ManyToOne
     @JoinColumn (name = "facility_id", referencedColumnName = "id", nullable = false)
@@ -28,18 +30,36 @@ public class Contract {
     public Contract(){
     }
 
-    public void Contract (Long id, LocalDateTime start, LocalDateTime finish, Facility facility, int totalPrice, User client){
+    public Contract(Long id, Date start, Date finish, int totalPrice, Facility facility, User client) {
         this.id = id;
-        this.start  = start;
+        this.start = start;
         this.finish = finish;
-        this.client = client;
-        this.facility = facility;
         this.totalPrice = totalPrice;
+        this.facility = facility;
+        this.client = client;
+    }
+
+    public Contract(Long id) {
+        this.id = id;
+    }
+
+    public Contract(Date start, Date finish, int totalPrice, Facility facility, User client) {
+        this.start = start;
+        this.finish = finish;
+        this.totalPrice = totalPrice;
+        this.facility = facility;
+        this.client = client;
+    }
+
+    public Contract(Date start, Date finish) {
+        this.start = start;
+        this.finish = finish;
     }
 
     public User getClient() {
         return client;
     }
+
 
     public void setClient(User client) {
         this.client = client;
@@ -60,29 +80,30 @@ public class Contract {
         this.id = id;
     }
 
-    public LocalDateTime getStart() {
+    public Date getStart() {
         return start;
     }
 
-    public void setStart(LocalDateTime start) {
+    public void setStart(Date start) {
         this.start = start;
     }
 
-    public LocalDateTime getFinish() {
+    public Date getFinish() {
         return finish;
     }
 
-    public void setFinish(LocalDateTime finish) {
+    public void setFinish(Date finish) {
         this.finish = finish;
     }
 
-    public int getTotalPrice() {
+    public double getTotalPrice() {
         return totalPrice;
     }
 
-    public void setTotalPrice(int totalPrice) {
+    public void setTotalPrice(double totalPrice) {
         this.totalPrice = totalPrice;
     }
+
 
 
     @Override
@@ -97,6 +118,5 @@ public class Contract {
                 '}';
     }
 
-    public void add(Contract contract) {
-    }
+
 }

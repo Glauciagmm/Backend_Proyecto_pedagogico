@@ -8,8 +8,8 @@ public interface IFacilityService {
 
     /** works*/
     List<Facility> getAllFacilities();
-    List <Facility> getAllFacilitiesByCategoryId (Long categoryId);
-    List <Facility> getAllFacilitiesByCategoryName (String categoryName);
+    //List <Facility> getAllFacilitiesByCategoryId (Long categoryId);
+    //List <Facility> getAllFacilitiesByCategoryName (String categoryName);
     /** works*/
     Facility findFacilityById(Long id);
     //Facility addFacility(Facility facility);

@@ -34,7 +34,8 @@ public class ContractServiceImpl implements IContractService {
         public Contract addContract(Contract contract) {
             return contractRepository.save(contract);
         }
-@Override
+
+    @Override
     public List<Contract> findAllContracts() {
         return contractRepository.findAll();
     }
@@ -44,11 +45,9 @@ public class ContractServiceImpl implements IContractService {
         return contractRepository.findById(id).orElseThrow(()->new UsernameNotFoundException("Contrato no encontrado"));
     }
 
-
     @Override
     public void deleteContractById(Long id) {
         contractRepository.deleteById(id);
-
     }
 
     @Override

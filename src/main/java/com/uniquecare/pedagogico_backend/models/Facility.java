@@ -105,7 +105,17 @@ public class Facility {
         this.assistant = assistant;
     }
 
-     public Facility(Long id) {
+    public Facility(Long id, String title, String description, int pricePerHour, Category category, User assistant, Set<Contract> contract) {
+        this.id = id;
+        this.title = title;
+        this.description = description;
+        this.pricePerHour = pricePerHour;
+        this.category = category;
+        this.assistant = assistant;
+        this.contract = contract;
+    }
+
+    public Facility(Long id) {
         this.id = id;
     }
 

@@ -22,18 +22,17 @@ public class FacilityServiceImpl implements IFacilityService {
     }
 
     @Override
-
+    /** works*/
     public List<Facility> getAllFacilities() {
         return facilityRepository.findAll();
     }
 
     @Override
     public Facility findFacilityById(Long id) {
-        return facilityRepository.findById(id).orElseThrow(()-> new UsernameNotFoundException("Servicio no encontrado"));
+        return facilityRepository.findById(id).orElse(null);
     }
 
-    /** works*/
-    @Override
+    /*@Override
     public List<Facility> getAllFacilitiesByCategoryId(Long categoryId) {
         return facilityRepository.findAllByCategoryId(categoryId);
     }
@@ -41,7 +40,7 @@ public class FacilityServiceImpl implements IFacilityService {
     @Override
     public List<Facility> getAllFacilitiesByCategoryName(String categoryName) {
         return facilityRepository.findAllByCategoryName(categoryName);
-    }
+    }*/
 
     /** works*/
     @Override

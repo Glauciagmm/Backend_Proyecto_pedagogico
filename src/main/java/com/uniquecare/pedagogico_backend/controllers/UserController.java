@@ -1,27 +1,30 @@
 package com.uniquecare.pedagogico_backend.controllers;
 
 import com.uniquecare.pedagogico_backend.models.User;
-import com.uniquecare.pedagogico_backend.payload.request.ProfileRequest;
 import com.uniquecare.pedagogico_backend.repositories.UserRepository;
 import com.uniquecare.pedagogico_backend.services.IUserService;
-import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
 
 @RestController
 @RequestMapping("/api")
-@RequiredArgsConstructor
 @CrossOrigin(origins="*")
 public class UserController {
     private final IUserService userService;
     private final UserRepository userRepository;
     private final PasswordEncoder encoder;
+
+    public UserController(IUserService userService, UserRepository userRepository, PasswordEncoder encoder) {
+        this.userService = userService;
+        this.userRepository = userRepository;
+        this.encoder = encoder;
+    }
+
 
     /**Lista todos los usuaruios de la base de datos - works! */
     @GetMapping("/user")
@@ -35,9 +38,10 @@ public class UserController {
         return userRepository.findById(id);
     }
 
-    /**Edita un usuario sin editar la contraseña - works! */
+    /**Edita un usuario sin editar la contraseña - works!
+     * @param profileRequest*/
     @PutMapping("/user/edit/{id}")
-    public User updateUser (@RequestBody @Valid ProfileRequest profileRequest){
+    public User updateUser (@RequestBody User profileRequest){
         User user = userRepository.findById(profileRequest.getId()).orElseThrow(RuntimeException::new);
         user.setName(profileRequest.getName());
         user.setSurname(profileRequest.getSurname());

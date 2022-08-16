@@ -6,8 +6,6 @@ import com.uniquecare.pedagogico_backend.repositories.RoleRepository;
 import com.uniquecare.pedagogico_backend.repositories.UserRepository;
 import com.uniquecare.pedagogico_backend.security.services.UserDetailsImpl;
 import com.uniquecare.pedagogico_backend.services.IFacilityService;
-import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
@@ -17,27 +15,30 @@ import java.net.URI;
 import java.util.List;
 
 @RestController
-@RequiredArgsConstructor
 @RequestMapping("/api/facility")
 @CrossOrigin(origins="*")
 public class FacilityController {
-    @Autowired
+
     private final IFacilityService facilityService;
+    private final CategoryRepository categoryRepository;
+    private final UserRepository userRepository;
+    private final RoleRepository roleRepository;
 
-    @Autowired
-    private CategoryRepository categoryRepository;
+    public FacilityController(IFacilityService facilityService, CategoryRepository categoryRepository, UserRepository userRepository, RoleRepository roleRepository) {
+    this.facilityService = facilityService;
+    this.userRepository = userRepository;
+    this.categoryRepository = categoryRepository;
+    this.roleRepository = roleRepository;
 
-    @Autowired
-    UserRepository userRepository;
-
-    @Autowired
-    RoleRepository roleRepository;
-    /**Encuentra un servicio cuando le pasas su ID - works! */
-    @GetMapping("/{id}")
-    public ResponseEntity<Facility> findFacilityById(@PathVariable Long id){
-        return ResponseEntity.ok().body(facilityService.findFacilityById(id));
     }
-    @GetMapping("/category/{CategoryId}")
+
+    /**Encuentra un servicio cuando le pasas su ID -  works! */
+    @GetMapping("/{id}")
+    public Facility findFacilityById(@PathVariable("id") Long id){
+        return facilityService.findFacilityById(id);
+    }
+
+   /* @GetMapping("/category/{CategoryId}")
     public ResponseEntity<List<Facility>> findFacilityByCategoryId(@PathVariable("CategoryId") Long CategoryId){
        return ResponseEntity.ok().body(facilityService.getAllFacilitiesByCategoryId(CategoryId));
     }
@@ -45,7 +46,7 @@ public class FacilityController {
     @GetMapping("/{categoryName}")
     public ResponseEntity<List<Facility>> findFacilityByCategoryName(@PathVariable("categoryName") String categoryName) {
     return ResponseEntity.ok().body(facilityService.getAllFacilitiesByCategoryName(categoryName));
-    }
+    }*/
 
     /**Lista todos los servicios de la base de datos - works! */
     @GetMapping("/list")

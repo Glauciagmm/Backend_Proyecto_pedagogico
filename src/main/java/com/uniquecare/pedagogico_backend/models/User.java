@@ -189,7 +189,18 @@ public class User {
         this.facility = facility;
     }
 
-     void addRole(Role role) {
+    public User(Long id, String name, String surname, String username, String email, String city, String phone, String photo) {
+        this.id = id;
+        this.name = name;
+        this.surname = surname;
+        this.username = username;
+        this.email = email;
+        this.city = city;
+        this.phone = phone;
+        this.photo = photo;
+    }
+
+    void addRole(Role role) {
         this.roles.add(role);
     }
 

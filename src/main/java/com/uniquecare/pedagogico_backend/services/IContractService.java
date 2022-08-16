@@ -9,6 +9,7 @@ public interface IContractService {
 
 
     Contract addContract (Contract contract);
+    /** works*/
     List<Contract> findAllContracts();
     Contract findContractById(Long id);
     void deleteContractById(Long id);
