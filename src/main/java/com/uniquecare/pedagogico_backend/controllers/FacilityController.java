@@ -50,7 +50,14 @@ public class FacilityController {
     @Autowired
     IUserService userService;
 
-
+    @GetMapping("/categories/{categoryId}/categories")
+    public ResponseEntity<List<Facility>> getAllFacilitiesByCategoryId(@PathVariable(value = "categoryId") Long categoryId) {
+        if (!categoryRepository.existsById(categoryId)) {
+            throw new ResourceNotFoundException("Not found Tag  with id = " + categoryId);
+        }
+        List<Facility> facilities =facilityService.getAllFacilitiesByCategoriesId(categoryId);
+        return new ResponseEntity<>(facilities, HttpStatus.OK);
+    }
 
 //Busqueda x categoria-id It Works
     @GetMapping("/categories/{categoryId}")

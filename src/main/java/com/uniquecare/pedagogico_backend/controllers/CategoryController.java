@@ -11,6 +11,7 @@ import java.util.Optional;
 
 import javax.validation.Valid;
 
+import com.uniquecare.pedagogico_backend.repositories.FacilityRepository;
 import com.uniquecare.pedagogico_backend.services.ICategoryService;
 import com.uniquecare.pedagogico_backend.services.IFacilityService;
 import lombok.RequiredArgsConstructor;
@@ -33,7 +34,7 @@ public class CategoryController {
     private CategoryRepository categoryRepository;
 
   @Autowired
-    private ICategoryService iCategoryService;
+    private FacilityRepository facilityRepository;
 
     @GetMapping("/all")
     public String allAccess() {
@@ -60,6 +61,16 @@ public class CategoryController {
         }
         return ResponseEntity.ok(categoryOptional.get());
 
+    }
+    //it works filtering by category
+    @GetMapping("/{categoryId}/facilities")
+    public ResponseEntity<List<Facility>> getAllFacilitiesByCategoryId(@PathVariable(value = "categoryId") Long categoryId) {
+        if (!categoryRepository.existsById(categoryId)) {
+            throw new ResourceNotFoundException("Not found Tag  with id = " + categoryId);
+        }
+
+        List<Facility> facilities = facilityRepository.findFacilitiesByCategoriesId(categoryId);
+        return new ResponseEntity<>(facilities, HttpStatus.OK);
     }
 
 }

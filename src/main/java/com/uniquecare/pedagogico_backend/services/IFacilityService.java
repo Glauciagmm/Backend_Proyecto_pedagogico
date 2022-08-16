@@ -11,7 +11,7 @@ public interface IFacilityService {
     Facility addNewFacility(Facility facility);
 
     List<Facility> getAllFacilities();
-    Collection<Facility> getAllFacilitiesByCategoriesId(Long categoryId);
+    List<Facility> getAllFacilitiesByCategoriesId(Long categoryId);
 
     List <Facility> getAllFacilitiesByCategoriesName(String categoryName);
 
