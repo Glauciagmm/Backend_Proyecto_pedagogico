@@ -11,6 +11,6 @@ import java.util.Optional;
 @Repository
 public interface CategoryRepository extends JpaRepository<Category, Long> {
 
-
+ List<Tag> findTagsByTutorialsId(Long tutorialId);
  Optional<Category> findById(Long id);
 }

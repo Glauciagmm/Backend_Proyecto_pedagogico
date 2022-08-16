@@ -5,6 +5,7 @@ import lombok.Data;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -21,14 +22,17 @@ public class Category {
     @NotNull
     private String name;
 
+
+
     @ManyToMany(fetch = FetchType.LAZY,
             cascade = {
                     CascadeType.PERSIST,
                     CascadeType.MERGE
             },
             mappedBy = "categories")
+    @JsonIgnore
+    private Set<Facility> facilities = new HashSet<>();
 
-    private Set<Facility> facilities= new HashSet<>();
     public Category() {
     }
 
@@ -49,9 +53,10 @@ public class Category {
 
 
 
-    public Set <Facility> getFacilities() {
+    public Set<Facility> getFacilities() {
         return facilities;
     }
+
 
     public void setFacilities(Set<Facility> facilities) {
         this.facilities = facilities;

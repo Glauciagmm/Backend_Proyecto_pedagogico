@@ -12,6 +12,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.Collection;
 import java.util.List;
 
 @Service
@@ -63,7 +64,7 @@ public class FacilityServiceImpl implements IFacilityService {
     }
 
     @Override
-    public List<Facility> getAllFacilitiesByCategoriesId(Long categoryId) {
+    public Collection<Facility> getAllFacilitiesByCategoriesId(Long categoryId) {
         return facilityRepository.findFacilitiesByCategoriesId(categoryId);
     }
     @Override

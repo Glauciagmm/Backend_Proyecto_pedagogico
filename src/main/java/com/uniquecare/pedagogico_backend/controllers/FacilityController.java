@@ -25,6 +25,7 @@ import javax.transaction.Transactional;
 import javax.validation.Valid;
 import java.net.URI;
 import java.security.Principal;
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -59,7 +60,7 @@ public class FacilityController {
             throw new ResourceNotFoundException("Not found Tag  with id = " + categoryId);
         }
 
-        List<Facility> facilities = facilityService.getAllFacilitiesByCategoriesId(categoryId);
+        List<Facility> facilities = (List<Facility>) facilityService.getAllFacilitiesByCategoriesId(categoryId);
         return new ResponseEntity<>(facilities, HttpStatus.OK);
     }
     //detalle facility it Works
@@ -68,10 +69,11 @@ public class FacilityController {
         return ResponseEntity.ok().body(facilityService.findFacilityById(id));
     }
     //x category string it works
-    @GetMapping("/category/{categoryName}")
+   /* @GetMapping("/categories/{categoryName}")
     public ResponseEntity<List<Facility>> findFacilitiesByCategoryName(@PathVariable("categoryName") String categoryName) {
         return ResponseEntity.ok().body(facilityService.getAllFacilitiesByCategoriesName(categoryName));
-    }
+    }*/
+
 
     @GetMapping("/list/{assistantId}")
     public ResponseEntity<List<Facility>>getFacility(Authentication authentication, UserServiceImplements user_logged,

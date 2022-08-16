@@ -23,7 +23,7 @@ public class Facility {
     @JoinTable(name = "facility_categories",
             joinColumns = { @JoinColumn(name = "facility_id") },
             inverseJoinColumns = { @JoinColumn(name = "category_id") })
-  @JsonIgnoreProperties({"categories"})
+@JsonIgnoreProperties({"facility"})
   private Set<Category> categories = new HashSet<>();
   public Facility(){
 
