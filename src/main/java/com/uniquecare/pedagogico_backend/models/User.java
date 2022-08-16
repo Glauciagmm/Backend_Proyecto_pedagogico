@@ -1,8 +1,6 @@
 package com.uniquecare.pedagogico_backend.models;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.*;
 
 import java.util.HashSet;
 import java.util.List;
@@ -56,8 +54,10 @@ public class User {
     private List<Facility> facility;
 
     @OneToMany(mappedBy = "client")
-    // @JsonIgnoreProperties("assistant")
-    @JsonIgnore
+    @JsonIdentityInfo(
+            generator = ObjectIdGenerators.PropertyGenerator.class,
+            property = "id")
+    @JsonIgnoreProperties("client")
     private Set<Contract> contract = new HashSet<>();
 
 

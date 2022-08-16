@@ -60,6 +60,12 @@ public class ContractServiceImpl implements IContractService {
         return userService.getContractByUserId(userId);
     }
 
+   /* @Override
+    @Transactional
+    public int payContract(Long contract_id) {
+         Contract contract = new Contract()
+    }*/
+
 /*    @Override
     public Contract addContract(Authentication authentication, Contract contract) {
         return contractRepository.save(contract);

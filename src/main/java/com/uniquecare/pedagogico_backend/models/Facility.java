@@ -32,12 +32,14 @@ public class Facility {
 
 
     @OneToMany(mappedBy = "facility")
-    @JsonIgnore
+    //@JsonIgnore
+    @JsonIgnoreProperties({"facility"})
+    @JsonIdentityInfo(
+            generator = ObjectIdGenerators.PropertyGenerator.class,
+            property = "id")
     private Set<Contract> contract = new HashSet<>();
 
-    public Facility(String limpieza, String description, int pricePerHour, String user) {
 
-    }
 
     public Facility() {
     }
