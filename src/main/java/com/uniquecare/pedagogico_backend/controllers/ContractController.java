@@ -2,7 +2,6 @@ package com.uniquecare.pedagogico_backend.controllers;
 
 import com.uniquecare.pedagogico_backend.models.Contract;
 import com.uniquecare.pedagogico_backend.models.Facility;
-
 import com.uniquecare.pedagogico_backend.models.User;
 import com.uniquecare.pedagogico_backend.payload.request.ContractRequest;
 import com.uniquecare.pedagogico_backend.repositories.FacilityRepository;
@@ -16,7 +15,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-
 import javax.servlet.http.HttpSession;
 import java.net.URI;
 import java.util.List;
@@ -43,7 +41,6 @@ public class ContractController {
         this.facilityService = facilityService;
     }
 
-
     /**Lista todos los contractos de la base de datos, sus datos como fechas, assistente y cliente - works! */
 
     @GetMapping("/contract")
@@ -52,14 +49,13 @@ public class ContractController {
     }
 
 
-    /**
-     * Encuentra un contracto cuando le pasas su ID -  works!
-     */
+    /**Encuentra un contracto cuando le pasas su ID -  works! */
     @GetMapping("/contract/{id}")
     public Contract findContractById(@PathVariable("id") Long id) {
         return contractService.findContractById(id);
     }
-  @GetMapping("/contract/list")
+
+    @GetMapping("/contract/list")
     public ResponseEntity<List<Contract>> getContract(Authentication authentication, HttpSession session) {
         if (authentication == null) {
             System.out.println("Es necesario que hagas el login");

@@ -19,9 +19,6 @@ import java.util.Optional;
 
 public class UserServiceImplements implements IUserService {
 
-
-
-
     private final UserRepository userRepository;
 
     @Autowired
@@ -36,7 +33,7 @@ public class UserServiceImplements implements IUserService {
         return userRepository.findAll();
     }
 
-   @Override
+    @Override
     public Collection<User> setFacilityRole(ERole eRole) {
         return setFacilityRole(ERole.valueOf("ROLE_FACILITY"));
     }
@@ -61,8 +58,6 @@ public class UserServiceImplements implements IUserService {
      public List<Contract> getContractByUserId(Long userId) {
          return contractRepository.findAll();
      }*/
-
-
 
     @Override
     public Optional<User> findByUsername(String username) {
@@ -98,10 +93,7 @@ public class UserServiceImplements implements IUserService {
         return null;
     }
 
-
     /** works*/
-
-
     @Override
     public User getByUsername(String username) {
         return userRepository.findByUsername(username).orElseThrow(()->new RuntimeException("User not Found"));

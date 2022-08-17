@@ -22,40 +22,32 @@ import java.util.List;
 @Slf4j
 public class FacilityServiceImpl implements IFacilityService {
 
-
     private final FacilityRepository facilityRepository;
-
-
-
 
     @Autowired
     public FacilityServiceImpl(FacilityRepository facilityRepository) {
         this.facilityRepository = facilityRepository;
     }
 
-
-        @Override
-        public Facility addNewFacility (Facility facility){
+     @Override
+     public Facility addNewFacility (Facility facility){
             return facilityRepository.save(facility);
         }
 
-
-        @Override
-        /** works*/
-        public List<Facility> getAllFacilities () {
+     @Override
+     /** works*/
+     public List<Facility> getAllFacilities () {
             return facilityRepository.findAll();
         }
 
-        @Override
-        public Facility findFacilityById (Long id){
+     @Override
+     public Facility findFacilityById (Long id){
             return facilityRepository.findById(id).orElse(null);
         }
 
-
-        @Override
-        public List<Facility> getAllFacilitiesByCategoriesName (String categoryName){
-            return facilityRepository.findFacilitiesByCategoriesName(categoryName);
-        }
+     @Override
+     public List<Facility> getAllFacilitiesByCategoriesName (String categoryName){
+        return facilityRepository.findFacilitiesByCategoriesName(categoryName);}
 
     @Override
     public List<Facility> getAllFacilitiesByAssistantId(Long assistantId) {
@@ -63,39 +55,22 @@ public class FacilityServiceImpl implements IFacilityService {
     }
 
     @Override
-        public List<Facility> getAllFacilitiesByCategoriesId (Long categoryId){
-            return facilityRepository.findFacilitiesByCategoriesId(categoryId);
-        }
-  /*  @Override
-    public List<Facility> getAllFacilitiesByAssistantId(Long assistantId) {
-        return facilityRepository.findFacilitiesByAssistant(assistantId);
-    }*/
-//    @Override
-//    public List<Facility> getAllFacilitiesByUserId(Long userId) {
-//        return facilityRepository.findFacilitiesByUserId(userId);
-//    }
+    public List<Facility> getAllFacilitiesByCategoriesId (Long categoryId){
+         return facilityRepository.findFacilitiesByCategoriesId(categoryId);}
 
-
-        /** works*/
-        @Override
-        public void deleteFacilityById (Long id){
+    /** works*/
+    @Override
+    public void deleteFacilityById (Long id){
             facilityRepository.deleteById(id);
         }
 
-        /** works*/
-        @Override
-        public Facility updateFacility (Facility facility){
+    /** works*/
+    @Override
+    public Facility updateFacility (Facility facility){
             return facilityRepository.save(facility);
         }
 
-        @Override
-        public List<Facility> getContractByUserID (Long userId){
-
-            return null;
-        }
-
-
-        /** works*/
-
-
-    }
+    @Override
+    public List<Facility> getContractByUserID (Long userId){
+    return null;}
+}

@@ -1,26 +1,16 @@
 package com.uniquecare.pedagogico_backend.controllers;
 
 import com.uniquecare.pedagogico_backend.models.*;
-import com.uniquecare.pedagogico_backend.payload.request.ProfileRequest;
 import com.uniquecare.pedagogico_backend.repositories.CategoryRepository;
 import com.uniquecare.pedagogico_backend.repositories.RoleRepository;
 import com.uniquecare.pedagogico_backend.repositories.UserRepository;
 import com.uniquecare.pedagogico_backend.security.services.UserDetailsImpl;
-import com.uniquecare.pedagogico_backend.security.services.UserDetailsServiceImpl;
 import com.uniquecare.pedagogico_backend.services.IFacilityService;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-
-import com.uniquecare.pedagogico_backend.services.IUserService;
-import com.uniquecare.pedagogico_backend.services.UserServiceImplements;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-
-
 import javax.servlet.http.HttpSession;
 
 import java.net.URI;
@@ -32,7 +22,6 @@ import java.util.List;
 @CrossOrigin(origins="*")
 public class FacilityController {
 
-
     private final IFacilityService facilityService;
     private final CategoryRepository categoryRepository;
     private final UserRepository userRepository;
@@ -43,7 +32,6 @@ public class FacilityController {
     this.userRepository = userRepository;
     this.categoryRepository = categoryRepository;
     this.roleRepository = roleRepository;
-
     }
 
     /**Encuentra un servicio cuando le pasas su ID -  works! */
@@ -63,10 +51,7 @@ public class FacilityController {
         }return ResponseEntity.ok().body(facilityService.getAllFacilities());
     }
 
-
     /**Crea un nuevo servicio y le pasa el user que lo ha creado (user logueado)- works! */
-
-
     @PostMapping("/create")
     public ResponseEntity<Facility> addFacility(Authentication authentication, @RequestBody Facility facility) {
         URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/facility/create").toUriString());
@@ -82,11 +67,7 @@ public class FacilityController {
         return ResponseEntity.created(uri).body(facilityService.addNewFacility(facility));
     }
 
-
-
     /**Edita un servicio de la base de datos - works! */
-
-
     @PutMapping("/edit")
     public ResponseEntity<Facility> editFacility(@RequestBody Facility facility){
         URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/facility/create").toUriString());

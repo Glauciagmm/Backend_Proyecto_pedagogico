@@ -10,12 +10,8 @@ import java.util.List;
 @Repository
 public interface FacilityRepository extends JpaRepository<Facility, Long> {
     List<Facility> findFacilitiesByCategoriesId(Long categoryId);
- List<Facility> findFacilitiesByCategoriesName(String categoryName);
-
- List<Facility>findFacilitiesByAssistant(Long assistantId);
-
-//    List<Facility>findFacilitiesByUserId(Long userId);
+    List<Facility> findFacilitiesByCategoriesName(String categoryName);
+    List<Facility>findFacilitiesByAssistant(Long assistantId);
     List<Facility> getContractByAssistantId(Long assistantId);
     Facility getFacilityById (Long facilityId);
-    //void removeFacilityFromContract(Long userId, Long facilityId);
 }

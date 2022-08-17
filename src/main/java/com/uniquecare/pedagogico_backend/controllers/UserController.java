@@ -21,15 +21,11 @@ public class UserController {
 
     private final PasswordEncoder encoder;
 
-
-
-
     public UserController(IUserService userService, UserRepository userRepository, PasswordEncoder encoder) {
         this.userService = userService;
         this.userRepository = userRepository;
         this.encoder = encoder;
     }
-
 
     /**Lista todos los usuaruios de la base de datos - works! */
     @GetMapping("/user")
@@ -42,7 +38,6 @@ public class UserController {
     public Optional<User> findUserById(@PathVariable("id") Long id) {
         return userRepository.findById(id);
     }
-
 
     /**Edita un usuario sin editar la contraseña - works!
      * @param profileRequest*/
@@ -57,7 +52,6 @@ public class UserController {
         user.setPhone(profileRequest.getPhone());
         user.setPhoto(profileRequest.getPhoto());
         return userService.updateUser(user);
-
     }
 
     /**Borra un user de la base de datos - works! */

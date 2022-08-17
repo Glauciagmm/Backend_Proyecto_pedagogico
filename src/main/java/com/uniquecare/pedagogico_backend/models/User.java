@@ -1,14 +1,9 @@
 package com.uniquecare.pedagogico_backend.models;
 
-
 import com.fasterxml.jackson.annotation.*;
-
-
-
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
@@ -47,12 +42,7 @@ public class User {
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set <Role> roles = new HashSet<>();
 
-
-    /*
-        Relation User <-> Facility
-     */
     @OneToMany(cascade = CascadeType.MERGE, mappedBy = "assistant")//Generate the service
-    // @JsonIgnoreProperties("user")
     @JsonIgnore
     private List<Facility> facility;
 
@@ -62,8 +52,6 @@ public class User {
             property = "id")
     @JsonIgnoreProperties("client")
     private Set<Contract> contract = new HashSet<>();
-
-
 
     public Long getId() {
         return id;
@@ -129,11 +117,9 @@ public class User {
         this.phone = phone;
     }
 
-
     public Set<Role> getRoles() {
         return roles;
     }
-
 
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
@@ -177,13 +163,10 @@ public class User {
 
     }
 
-
-
     public User(Long id, List<Facility> facility) {
         this.id = id;
         this.facility = facility;
     }
-
 
     public User(Long id, String name, String surname, String username, String email, String city, String phone, String photo) {
         this.id = id;
@@ -196,11 +179,8 @@ public class User {
         this.photo = photo;
     }
 
-
-
      void addRole(Role roles) {
         this.roles.add(roles);
-
     }
 
     public boolean sendRequest(Facility facility) {

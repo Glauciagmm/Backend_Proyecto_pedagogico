@@ -1,8 +1,5 @@
 package com.uniquecare.pedagogico_backend.payload.request;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import java.util.Date;
 
 public class ContractRequest {

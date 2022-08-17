@@ -112,9 +112,5 @@ public class Contract {
                 ", client=" + client +
                 '}';
     }
-
-
-    public void add(Contract contract) {
-    }
 }
 

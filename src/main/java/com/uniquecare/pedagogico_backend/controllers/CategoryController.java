@@ -30,10 +30,10 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 @RequestMapping("/api/category")
 
 public class CategoryController {
-@Autowired
+    @Autowired
     private CategoryRepository categoryRepository;
 
-  @Autowired
+    @Autowired
     private FacilityRepository facilityRepository;
 
     @GetMapping("/all")
@@ -53,6 +53,7 @@ public class CategoryController {
                 .buildAndExpand(categorySaved.getFacilities()).toUri();
         return ResponseEntity.created(ubication).body(categorySaved);
     }
+
     @GetMapping("/{id}")
     public  ResponseEntity<Category> getCategoryById(@PathVariable Long id){
         Optional<Category> categoryOptional= categoryRepository.findById(id);
@@ -62,13 +63,12 @@ public class CategoryController {
         return ResponseEntity.ok(categoryOptional.get());
 
     }
-    //it works filtering by category
+
     @GetMapping("/{categoryId}/facilities")
     public ResponseEntity<List<Facility>> getAllFacilitiesByCategoryId(@PathVariable(value = "categoryId") Long categoryId) {
         if (!categoryRepository.existsById(categoryId)) {
             throw new ResourceNotFoundException("Not found Tag  with id = " + categoryId);
         }
-
         List<Facility> facilities = facilityRepository.findFacilitiesByCategoriesId(categoryId);
         return new ResponseEntity<>(facilities, HttpStatus.OK);
     }

@@ -61,11 +61,8 @@ public class ContractServiceImpl implements IContractService {
     }
 
 
- @Override
+     @Override
     public List<Contract> getContractByAssistant(Long assistantId) {
         return userService.getContractByAssistantId(assistantId);
     }
-
-
-
 }

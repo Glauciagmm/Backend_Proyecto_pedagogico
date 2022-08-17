@@ -2,12 +2,9 @@ package com.uniquecare.pedagogico_backend.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.util.Collection;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -18,11 +15,8 @@ public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     @NotNull
     private String name;
-
-
 
     @ManyToMany(fetch = FetchType.LAZY,
             cascade = {
@@ -32,17 +26,14 @@ public class Category {
             mappedBy = "categories")
     @JsonIgnore
     private Set<Facility> facilities = new HashSet<>();
-
     public Category() {
     }
-
-
 
     public long getId() {
         return id;
     }
 
-  public String getName() {
+    public String getName() {
         return name;
     }
 
@@ -50,13 +41,9 @@ public class Category {
         this.name = name;
     }
 
-
-
-
     public Set<Facility> getFacilities() {
         return facilities;
     }
-
 
     public void setFacilities(Set<Facility> facilities) {
         this.facilities = facilities;

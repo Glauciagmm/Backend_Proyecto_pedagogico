@@ -31,9 +31,7 @@ public class Facility {
     @JsonIgnoreProperties({"facility", "roles"})
     private User assistant;
 
-
     @OneToMany(mappedBy = "facility")
-    //@JsonIgnore
     @JsonIgnoreProperties({"facility"})
     @JsonIdentityInfo(
             generator = ObjectIdGenerators.PropertyGenerator.class,
