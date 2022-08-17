@@ -22,7 +22,7 @@ import java.net.URI;
 import java.util.List;
 
 @RestController
-@RequestMapping ("/api/contract")
+@RequestMapping ("/api")
 @CrossOrigin(origins="*")
 public class ContractController {
 
