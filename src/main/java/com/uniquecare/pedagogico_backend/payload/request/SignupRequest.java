@@ -96,14 +96,14 @@ public class SignupRequest {
         this.photo = photo;
     }
 
-    public SignupRequest(String username, String email, Set<String> role, String password, String name, String surname, String city, String photo) {
+    public SignupRequest(String username, String email, Set<String> role, String name, String surname, String city, String photo, String password) {
         this.username = username;
         this.email = email;
         this.role = role;
-        this.password = password;
         this.name = name;
         this.surname = surname;
         this.city = city;
         this.photo = photo;
+        this.password = password;
     }
 }
