@@ -38,16 +38,6 @@ public class FacilityController {
         return facilityService.findFacilityById(id);
     }
 
-   /* @GetMapping("/category/{CategoryId}")
-    public ResponseEntity<List<Facility>> findFacilityByCategoryId(@PathVariable("CategoryId") Long CategoryId){
-       return ResponseEntity.ok().body(facilityService.getAllFacilitiesByCategoryId(CategoryId));
-    }
-
-    @GetMapping("/{categoryName}")
-    public ResponseEntity<List<Facility>> findFacilityByCategoryName(@PathVariable("categoryName") String categoryName) {
-    return ResponseEntity.ok().body(facilityService.getAllFacilitiesByCategoryName(categoryName));
-    }*/
-
     /**Lista todos los servicios de la base de datos - works! */
     @GetMapping("/list")
     public ResponseEntity<List<Facility>>getFacility(Authentication authentication, HttpSession session){

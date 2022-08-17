@@ -5,7 +5,6 @@ import com.uniquecare.pedagogico_backend.models.Facility;
 
 import com.uniquecare.pedagogico_backend.models.User;
 import com.uniquecare.pedagogico_backend.payload.request.ContractRequest;
-import com.uniquecare.pedagogico_backend.payload.response.MessageResponse;
 import com.uniquecare.pedagogico_backend.repositories.FacilityRepository;
 import com.uniquecare.pedagogico_backend.repositories.UserRepository;
 import com.uniquecare.pedagogico_backend.security.services.UserDetailsImpl;
@@ -14,9 +13,7 @@ import com.uniquecare.pedagogico_backend.services.IFacilityService;
 import com.uniquecare.pedagogico_backend.services.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -97,63 +94,17 @@ public class ContractController {
         return ResponseEntity.internalServerError().build();
     }
 
-
-
-
-
-/*    @PostMapping("/add")
-    @PreAuthorize("hasRole('USER')")
-    ResponseEntity<?> addToContract(@RequestParam("id") Long contractId, @RequestBody ContractRequest contractRequest) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
-        User user = userRepository.getByUsername(userDetails.getUsername());
-        Facility facility = facilityService.findFacilityById(contractRequest.getFacility_id());
-        Contract contract = new Contract();
-        contract.setStart(contractRequest.getStart());
-        contract.setFinish(contractRequest.getFinish());
-        contract.setTotalPrice(contractRequest.getTotalPrice());
-        contract.setFacility(facility);
-        contract.setClient(user);
-    return ResponseEntity.created(authentication).body(contractService.addContract(contract));
-
-}*/
-
-    /*@DeleteMapping("/remove")
-    @PreAuthorize("hasRole('USER')")
-    ResponseEntity<?> removeContract(@RequestParam("id") Long contractId) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
-
-        contractService.removeFromContract(userDetails.getId(), contractId);
-
-        return ResponseEntity.ok(new MessageResponse("Solicitud removida"));
-    }*/
-
-
-
-
-    /*@GetMapping("/contract/{id}")
-    public ResponseEntity<List<Contract>> getContractByUserId(@PathVariable Long id) {
-        return contractService.findContractById(id);
+    @PutMapping("/contract/edit")
+    public ResponseEntity<Contract> editContract(@RequestBody Contract contract){
+        URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/contract/add").toUriString());
+        return ResponseEntity.created(uri).body(contractService.updateContract(contract));
     }
-*/
-    /*@PostMapping("/user/{user_id}/addContract/{facilit_id}")
-    public ResponseEntity<?> addContract1(Authentication authentication, @RequestBody Contract contract) {
-        Optional<User> user = userService.getUserByUsername(authentication.getPrincipal().toString());
-        System.out.println("Current user contract: " + user.get().getUsername());
-        return ResponseEntity.ok(contractService.addContract(authentication, contract));
-    }*/
 
-
-          /* UUID uuid = UUID.randomUUID();
-        items.forEach((contract) -> {
-            Contract contracts = new Contract();
-            contracts.setFacilit(facilitService.findFacilityById(contract.getFacilit().getId()));
-            contracts.setTotalPrice(contract.getTotalPrice());
-            contracts.setUser(user);
-            contractService.addContract(contracts);
-        });
-        URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/uniquecare/contract/{id}/").toUriString());
-        return ResponseEntity.created(uri).build();*/
+    /**Borra un servicio de la base de datos - works! */
+    @DeleteMapping("/contract/delete/{id}")
+    public ResponseEntity<Void> deleteContractById(@PathVariable Long id){
+        contractService.deleteContractById(id);
+        return ResponseEntity.noContent().build();
+    }
 }
 

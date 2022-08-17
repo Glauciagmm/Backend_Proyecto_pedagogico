@@ -1,51 +1,58 @@
 package com.uniquecare.pedagogico_backend.controllers;
 
-import com.uniquecare.pedagogico_backend.models.Facility;
-import com.uniquecare.pedagogico_backend.repositories.CategoryRepository;
-import com.uniquecare.pedagogico_backend.repositories.FacilityRepository;
-import com.uniquecare.pedagogico_backend.repositories.RoleRepository;
-import com.uniquecare.pedagogico_backend.repositories.UserRepository;
 import com.uniquecare.pedagogico_backend.services.FacilityServiceImpl;
-import com.uniquecare.pedagogico_backend.services.IFacilityService;
-import org.junit.jupiter.api.BeforeEach;
+import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.Mockito;
+import org.skyscreamer.jsonassert.JSONAssert;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 
-import java.util.Collection;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.assertj.core.api.AssertionsForClassTypes.allOf;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.hamcrest.Matchers.hasProperty;
+import static org.hamcrest.Matchers.is;
+import static org.mockito.ArgumentMatchers.contains;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.BDDMockito.given;
+import static org.mockito.BDDMockito.then;
 
-@ExtendWith(MockitoExtension.class)
+@AutoConfigureMockMvc
+@WebAppConfiguration
+@SpringBootTest
 class FacilityControllerTest {
 
-    @Mock
-    private FacilityController underTest;
-    private IFacilityService facilityService;
-    private CategoryRepository categoryRepository;
-    private UserRepository userRepository;
-    private RoleRepository roleRepository;
+  /*  @Autowired
+    private MockMvc mockMvc;*/
 
-    @BeforeEach
-    void setUp(){
-        underTest = new FacilityController (facilityService, categoryRepository, userRepository, roleRepository);
-    }
+    //private final FacilityServiceImpl facilityService = Mockito.mock();
 
     @Test
     void findFacilityById() {
     }
 
-    @Test
+  /*  @Test
     void getFacility() {
+        try{
+            mockMvc.perform(.get("/api/facility/list").accept(MediaType.APPLICATION_JSON)
+                    .andExpect
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        mockMvc.perform(get())
     }
+    
+    */
 
 /*   @Test
     void addFacility() {
@@ -74,3 +81,4 @@ class FacilityControllerTest {
     void deleteFacilityById() {
     }
 }
+
