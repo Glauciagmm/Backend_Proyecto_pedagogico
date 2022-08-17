@@ -2,6 +2,8 @@ package com.uniquecare.pedagogico_backend.models;
 
 import javax.persistence.*;
 import javax.persistence.*;
+import java.util.Collection;
+
 @Entity
 @Table(name = "roles")
 public class Role {
@@ -27,6 +29,17 @@ public class Role {
     }
     public void setName(ERole name) {
         this.name = name;
+    }
+
+    @ManyToMany(cascade = CascadeType.MERGE,mappedBy = "roles")
+    private Collection<User> users;
+
+    public Collection<User> getUsers() {
+        return users;
+    }
+
+    public void setUsers(Collection<User> users) {
+        this.users = users;
     }
 }
 

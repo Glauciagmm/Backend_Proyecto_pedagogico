@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
 
@@ -17,7 +18,11 @@ import java.util.Optional;
 public class UserController {
     private final IUserService userService;
     private final UserRepository userRepository;
+
     private final PasswordEncoder encoder;
+
+
+
 
     public UserController(IUserService userService, UserRepository userRepository, PasswordEncoder encoder) {
         this.userService = userService;
@@ -38,10 +43,11 @@ public class UserController {
         return userRepository.findById(id);
     }
 
+
     /**Edita un usuario sin editar la contraseña - works!
      * @param profileRequest*/
     @PutMapping("/user/edit/{id}")
-    public User updateUser (@RequestBody User profileRequest){
+    public User updateUser (@RequestBody User profileRequest) {
         User user = userRepository.findById(profileRequest.getId()).orElseThrow(RuntimeException::new);
         user.setName(profileRequest.getName());
         user.setSurname(profileRequest.getSurname());
@@ -50,7 +56,8 @@ public class UserController {
         user.setCity(profileRequest.getCity());
         user.setPhone(profileRequest.getPhone());
         user.setPhoto(profileRequest.getPhoto());
-    return userService.updateUser(user);
+        return userService.updateUser(user);
+
     }
 
     /**Borra un user de la base de datos - works! */

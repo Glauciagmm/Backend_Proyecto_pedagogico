@@ -1,10 +1,10 @@
 package com.uniquecare.pedagogico_backend.services;
 
 import com.uniquecare.pedagogico_backend.models.Facility;
-
 import java.util.List;
 
 public interface IFacilityService {
+
 
     /** works*/
     List<Facility> getAllFacilities();
@@ -16,6 +16,21 @@ public interface IFacilityService {
     /** works*/
     Facility addNewFacility(Facility facility);
     /** works*/
+
+
+
+
+
+    List<Facility> getAllFacilitiesByCategoriesId(Long categoryId);
+
+    List <Facility> getAllFacilitiesByCategoriesName(String categoryName);
+
+//    List <Facility> getAllFacilitiesByUserId(Long userId);
+
+    List <Facility> getAllFacilitiesByAssistantId(Long assistantId);
+
+
+
     void deleteFacilityById(Long id);
     /** works*/
     Facility updateFacility(Facility facility);

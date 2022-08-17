@@ -14,7 +14,7 @@ public class Contract {
     private double totalPrice;
 
     @ManyToOne
-    @JoinColumn (name = "facility_id", referencedColumnName = "id", nullable = false)
+    @JoinColumn(name = "facility_id", referencedColumnName = "id", nullable = false)
     @JsonIgnoreProperties({"contract"})
     private Facility facility;
 
@@ -23,7 +23,7 @@ public class Contract {
     @JsonIgnoreProperties({"contract", "facility", "roles"})
     private User client;
 
-    public Contract(){
+    public Contract() {
     }
 
     public Contract(Long id, Date start, Date finish, double totalPrice, Facility facility, User client) {
@@ -60,9 +60,11 @@ public class Contract {
         this.client = client;
     }
 
-    public Facility getFacility(){ return facility;}
+    public Facility getFacility() {
+        return facility;
+    }
 
-    public void setFacility(Facility facility){
+    public void setFacility(Facility facility) {
 
         this.facility = facility;
     }
@@ -112,4 +114,7 @@ public class Contract {
     }
 
 
+    public void add(Contract contract) {
+    }
 }
+

@@ -22,7 +22,7 @@ import java.net.URI;
 import java.util.List;
 
 @RestController
-@RequestMapping ("/api")
+@RequestMapping ("/api/contract")
 @CrossOrigin(origins="*")
 public class ContractController {
 
@@ -43,13 +43,14 @@ public class ContractController {
         this.facilityService = facilityService;
     }
 
-    /**
-     * Lista todos los contractos de la base de datos, sus datos como fechas, assistente y cliente - works!
-     */
+
+    /**Lista todos los contractos de la base de datos, sus datos como fechas, assistente y cliente - works! */
+
     @GetMapping("/contract")
     public ResponseEntity<List<Contract>> getContract() {
         return ResponseEntity.ok().body(contractService.findAllContracts());
     }
+
 
     /**
      * Encuentra un contracto cuando le pasas su ID -  works!
@@ -58,11 +59,7 @@ public class ContractController {
     public Contract findContractById(@PathVariable("id") Long id) {
         return contractService.findContractById(id);
     }
-
-    /**
-     * Lista todos los contractos de la base de datos, sus datos como fechas, assistente y cliente - works! Preciso controlar que sea los contractos que tenga el user logueado
-     */
-    @GetMapping("/contract/list")
+  @GetMapping("/contract/list")
     public ResponseEntity<List<Contract>> getContract(Authentication authentication, HttpSession session) {
         if (authentication == null) {
             System.out.println("Es necesario que hagas el login");
@@ -107,4 +104,3 @@ public class ContractController {
         return ResponseEntity.noContent().build();
     }
 }
-

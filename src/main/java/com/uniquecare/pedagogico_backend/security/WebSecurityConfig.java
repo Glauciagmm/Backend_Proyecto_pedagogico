@@ -10,6 +10,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
@@ -31,6 +32,11 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     UserDetailsServiceImpl userDetailsService;
+
+    @Bean
+    public UserDetailsService userDetailsService() {
+        return super.userDetailsService();
+    }
 
     @Autowired
     private AuthEntryPointJwt unauthorizedHandler;
@@ -62,16 +68,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
                 .authorizeRequests().antMatchers("/api/auth/**").permitAll()
-
-                .antMatchers("/api/swagger-ui/").permitAll()
-                .antMatchers("/api/category/**").permitAll()
                 .antMatchers("/api/test/**").permitAll()
-                .antMatchers("/api/facility/**").permitAll()
-                .antMatchers("/uniquecare/**").permitAll()
+                .antMatchers("/api/assistant/**").permitAll()
+                .antMatchers("/api/category/**/**").permitAll()
+                .antMatchers("/api/facility/**/**").permitAll()
                 .antMatchers("/api/user/**").permitAll()
-                .antMatchers("/api/contract/**").permitAll()
-
-
                 .anyRequest().authenticated();
 
         http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
@@ -88,3 +89,5 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
 }
+
+

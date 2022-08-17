@@ -17,13 +17,14 @@ public class Facility {
     private Long id;
     private String title;
     private String description;
-    private int pricePerHour;
+    private double pricePerHour;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(  name = "category_id", referencedColumnName = "id")
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "facility_categories",
+            joinColumns = {@JoinColumn(name = "facility_id")},
+            inverseJoinColumns = {@JoinColumn(name = "category_id")})
     @JsonIgnore
-    private Category category;
+    private Set<Category> categories = new HashSet<>();
 
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "assistant_id", referencedColumnName = "id")
@@ -40,15 +41,37 @@ public class Facility {
     private Set<Contract> contract = new HashSet<>();
 
 
-
     public Facility() {
+    }
+
+    public Facility(Long id, String title, String description, double pricePerHour, Set<Category> categories, User assistant, Set<Contract> contract) {
+        this.id = id;
+        this.title = title;
+        this.description = description;
+        this.pricePerHour = pricePerHour;
+        this.categories = categories;
+        this.assistant = assistant;
+        this.contract = contract;
+    }
+
+    public Facility(Long id) {
+        this.id = id;
+    }
+
+    public Facility(String title, String description, double pricePerHour, Set<Category> categories, User assistant, Set<Contract> contract) {
+        this.title = title;
+        this.description = description;
+        this.pricePerHour = pricePerHour;
+        this.categories = categories;
+        this.assistant = assistant;
+        this.contract = contract;
     }
 
     public Long getId() {
         return id;
     }
 
-    public void setId() {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -56,7 +79,7 @@ public class Facility {
         return title;
     }
 
-    public void setTitle() {
+    public void setTitle(String title) {
         this.title = title;
     }
 
@@ -64,24 +87,24 @@ public class Facility {
         return description;
     }
 
-    public void setDescription() {
+    public void setDescription(String description) {
         this.description = description;
     }
 
-    public int getPricePerHour() {
+    public double getPricePerHour() {
         return pricePerHour;
     }
 
-    public void setPricePerHour() {
+    public void setPricePerHour(double pricePerHour) {
         this.pricePerHour = pricePerHour;
     }
 
-    public Category getCategory() {
-        return category;
+    public Set<Category> getCategories() {
+        return categories;
     }
 
-    public void setCategory(Category category) {
-        this.category = category;
+    public void setCategories(Set<Category> categories) {
+        this.categories = categories;
     }
 
     public User getAssistant() {
@@ -98,39 +121,5 @@ public class Facility {
 
     public void setContract(Set<Contract> contract) {
         this.contract = contract;
-    }
-
-    public Facility(String title, String description, int pricePerHour, User assistant) {
-        this.title = title;
-        this.description = description;
-        this.pricePerHour = pricePerHour;
-        this.assistant = assistant;
-    }
-
-    public Facility(Long id, String title, String description, int pricePerHour, Category category, User assistant, Set<Contract> contract) {
-        this.id = id;
-        this.title = title;
-        this.description = description;
-        this.pricePerHour = pricePerHour;
-        this.category = category;
-        this.assistant = assistant;
-        this.contract = contract;
-    }
-
-    public Facility(Long id) {
-        this.id = id;
-    }
-
-
-    public void remove(Facility facility) {
-        this.contract = contract;
-    }
-
-
-    public void getUser(UserDetailsImpl loggedInUser) {
-    }
-
-    public void add(Facility contract) {
-
     }
 }

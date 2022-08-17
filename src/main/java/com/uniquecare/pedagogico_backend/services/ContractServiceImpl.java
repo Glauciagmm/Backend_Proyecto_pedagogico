@@ -60,50 +60,12 @@ public class ContractServiceImpl implements IContractService {
         return userService.getContractByUserId(userId);
     }
 
-   /* @Override
-    @Transactional
-    public int payContract(Long contract_id) {
-         Contract contract = new Contract()
-    }*/
 
-/*    @Override
-    public Contract addContract(Authentication authentication, Contract contract) {
-        return contractRepository.save(contract);
-    }*/
-
-   /* @Override
-    public Contract addContract(Long userId, Long facilityId) {
-        User user = userService.getUserById(userId);
-
-        Facility facility = facilityService.findFacilityById(facilityId);
-
-        if (!user.sendRequest(facility)) {
-            user.addContract(facility);
-
-            userService.save(user);
-        } else {
-            throw new RuntimeException("Solicitud enviada previament");
-        }
-        return null;
-    }*/
-
-
-
-   /* @Override
-    public List<Facility> getFacilityByUser(Long userId) {
-        return facilityService.getContractByUserID(userId);
+ @Override
+    public List<Contract> getContractByAssistant(Long assistantId) {
+        return userService.getContractByAssistantId(assistantId);
     }
-*/
 
 
-    /*@Override
-    public void removeFromContract(Long userId, Long facilityId) {
-        facilityService.removeFacilityFromContract(userId, facilityId);
-    }*/
-    /*
-    @Override
-    public void deleteContractById(Long UserId, Long facilityId) {
-
-    }*/
 
 }
