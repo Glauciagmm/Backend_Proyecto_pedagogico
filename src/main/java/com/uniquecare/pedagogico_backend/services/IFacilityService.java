@@ -1,19 +1,22 @@
 package com.uniquecare.pedagogico_backend.services;
 
 import com.uniquecare.pedagogico_backend.models.Facility;
-import org.springframework.data.domain.Pageable;
 import java.util.List;
 
 public interface IFacilityService {
-    Facility addFacility(Facility facility);
-    List<Facility> getAllFacilities(Pageable pageable);
+
+    /** works*/
+    List<Facility> getAllFacilities();
+    /** works*/
     Facility findFacilityById(Long id);
-
-    List <Facility> getAllFacilitiesByCategoryId (Long categoryId);
-
-    List <Facility> getAllFacilitiesByCategoryName (String categoryName);
-
+    /** works*/
+    Facility addNewFacility(Facility facility);
+    /** works*/
+    List<Facility> getAllFacilitiesByCategoriesId(Long categoryId);
+    List <Facility> getAllFacilitiesByCategoriesName(String categoryName);
+    List <Facility> getAllFacilitiesByAssistantId(Long assistantId);
     void deleteFacilityById(Long id);
-
+    /** works*/
     Facility updateFacility(Facility facility);
+    List <Facility> getContractByUserID (Long userId);
 }

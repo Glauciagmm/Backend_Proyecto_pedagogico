@@ -2,7 +2,7 @@ package com.uniquecare.pedagogico_backend.models;
 
 import java.util.Date;
 
-public class ErrorDetails {
+public class ErrorDetails extends Throwable {
     private Date timestamp;
     private String message;
     private String details;
@@ -11,6 +11,13 @@ public class ErrorDetails {
         this.timestamp = timestamp;
         this.message = message;
         this.details = details;
+    }
+
+    public ErrorDetails() {
+
+    }
+
+    public ErrorDetails(String message) {
     }
 
     public Date getTimestamp() {
@@ -23,5 +30,8 @@ public class ErrorDetails {
 
     public String getDetails() {
         return details;
+    }
+
+    public void setMessage(String access_denied) {
     }
 }

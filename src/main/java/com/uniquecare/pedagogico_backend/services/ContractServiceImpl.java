@@ -1,10 +1,12 @@
 package com.uniquecare.pedagogico_backend.services;
 
 import com.uniquecare.pedagogico_backend.models.Contract;
+import com.uniquecare.pedagogico_backend.models.Facility;
+import com.uniquecare.pedagogico_backend.models.User;
 import com.uniquecare.pedagogico_backend.repositories.ContractRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.core.Authentication;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
@@ -18,12 +20,21 @@ import java.util.List;
 public class ContractServiceImpl implements IContractService {
 
    private final ContractRepository contractRepository;
+   private final IUserService userService;
+   private final IFacilityService facilityService;
 
-   /* @Override
-    public Contract addContract(Contract contract) {
-        return contractRepository.save(contract);
-    }
-*/
+   @Autowired
+   public ContractServiceImpl (IUserService userService, IFacilityService facilityService, ContractRepository contractRepository){
+       this.userService = userService;
+       this.facilityService = facilityService;
+       this.contractRepository = contractRepository;
+   }
+
+    @Override
+        public Contract addContract(Contract contract) {
+            return contractRepository.save(contract);
+        }
+
     @Override
     public List<Contract> findAllContracts() {
         return contractRepository.findAll();
@@ -37,7 +48,6 @@ public class ContractServiceImpl implements IContractService {
     @Override
     public void deleteContractById(Long id) {
         contractRepository.deleteById(id);
-
     }
 
     @Override
@@ -46,7 +56,13 @@ public class ContractServiceImpl implements IContractService {
     }
 
     @Override
-    public Contract addContract(Authentication authentication, Contract contract) {
-        return contractRepository.save(contract);
+    public List<Contract> getContractByUser(Long userId) {
+        return userService.getContractByUserId(userId);
+    }
+
+
+     @Override
+    public List<Contract> getContractByAssistant(Long assistantId) {
+        return userService.getContractByAssistantId(assistantId);
     }
 }

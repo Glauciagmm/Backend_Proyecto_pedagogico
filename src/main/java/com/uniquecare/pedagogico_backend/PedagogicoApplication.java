@@ -10,5 +10,4 @@ public class PedagogicoApplication {
     public static void main(String[] args) {
         SpringApplication.run(PedagogicoApplication.class, args);
     }
-
 }

@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 
 import javax.validation.Valid;
 
+import com.uniquecare.pedagogico_backend.models.ErrorDetails;
 import com.uniquecare.pedagogico_backend.models.User;
 import com.uniquecare.pedagogico_backend.payload.request.LoginRequest;
 import com.uniquecare.pedagogico_backend.payload.request.SignupRequest;
@@ -21,11 +22,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.uniquecare.pedagogico_backend.models.ERole;
 import com.uniquecare.pedagogico_backend.models.Role;
@@ -35,6 +32,7 @@ import com.uniquecare.pedagogico_backend.repositories.UserRepository;
 
 @CrossOrigin(origins = "**", maxAge = 3600)
 @RestController
+
 @RequestMapping("/api/auth")
 public class AuthController {
     @Autowired
@@ -52,25 +50,36 @@ public class AuthController {
     @Autowired
     JwtUtils jwtUtils;
 
+    @ExceptionHandler
+
     @PostMapping("/signin")
-    public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
+    public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) throws ErrorDetails {
+        try {
 
-        Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
+            Authentication authentication = authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
 
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-        String jwt = jwtUtils.generateJwtToken(authentication);
+            SecurityContextHolder.getContext().setAuthentication(authentication);
+            String jwt = jwtUtils.generateJwtToken(authentication);
 
-        UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
-        List<String> roles = userDetails.getAuthorities().stream()
-                .map(item -> item.getAuthority())
-                .collect(Collectors.toList());
+            UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
+            List<String> roles = userDetails.getAuthorities().stream()
+                    .map(item -> item.getAuthority())
+                    .collect(Collectors.toList());
+
+
+        System.out.println("Usuario logueado");
 
         return ResponseEntity.ok(new JwtResponse(jwt,
                 userDetails.getId(),
                 userDetails.getUsername(),
                 userDetails.getEmail(),
                 roles));
+
+        }catch(Exception e) {
+            throw new ErrorDetails(e.getMessage());
+        }
+
     }
 
     @PostMapping("/signup")
@@ -102,28 +111,41 @@ public class AuthController {
         Set<Role> roles = new HashSet<>();
 
         if (strRoles == null) {
-            Role userRole = roleRepository.findByName(ERole.ROLE_USER)
-                    .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
-            roles.add(userRole);
-        } else {
+            Role newUserRole = roleRepository.findByName(ERole.ROLE_USER);
+                    if(newUserRole==null){
+                        new RuntimeException("Error: Role is not found.");
+                    }else{
+                        roles.add(newUserRole);
+                    }
             strRoles.forEach(role -> {
                 switch (role) {
                     case "admin":
-                        Role adminRole = roleRepository.findByName(ERole.ROLE_ADMIN)
-                                .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
-                        roles.add(adminRole);
+                        Role adminRole = roleRepository.findByName(ERole.ROLE_ADMIN);
+                        if(adminRole==null){
+                            new RuntimeException("Error: Role is not found.");
+                        }else{
+                            roles.add(adminRole);
+                        }
+
+
 
                         break;
                     case "facility":
-                        Role facilityRole = roleRepository.findByName(ERole.ROLE_FACILITY)
-                                .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
-                        roles.add(facilityRole);
-
-                        break;
+                        Role facilityRole = roleRepository.findByName(ERole.ROLE_FACILITY);
+                        if(facilityRole==null){
+                            new RuntimeException("Error: Role is not found.");
+                        }else{
+                            roles.add(facilityRole);
+                        }
+                    break;
                     default:
-                        Role userRole = roleRepository.findByName(ERole.ROLE_USER)
-                                .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
-                        roles.add(userRole);
+                        Role userRole = roleRepository.findByName(ERole.ROLE_USER);
+                        if(userRole==null){
+                            new RuntimeException("Error: Role is not found.");
+                        }else{
+                            roles.add(userRole);
+                        }
+
                 }
             });
         }
@@ -131,6 +153,6 @@ public class AuthController {
         user.setRoles(roles);
         userRepository.save(user);
 
-        return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
+        return ResponseEntity.ok(new MessageResponse("User registrado  con exito came on In!!!!!!!"));
     }
 }

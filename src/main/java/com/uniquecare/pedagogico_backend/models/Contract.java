@@ -1,83 +1,71 @@
 package com.uniquecare.pedagogico_backend.models;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import javax.persistence.*;
-import java.time.LocalDateTime;
+import java.util.Date;
 
 @Entity
 public class Contract {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
-    private LocalDateTime start;
-    private LocalDateTime finish;
-    private int totalPrice;
+    private Long id;
+    private Date start;
+    private Date finish;
+    private double totalPrice;
 
-   /* @ManyToOne
-    @JoinColumn(name="user_id")
-    User user;*/
 
     @ManyToOne
-    //@JsonIgnoreProperties("contract")
-
-    @JoinColumn (name = "facility_id", referencedColumnName = "id", nullable = false)
+    @JoinColumn(name = "facility_id", referencedColumnName = "id", nullable = false)
+    @JsonIgnoreProperties({"contract"})
     private Facility facility;
 
     @ManyToOne(cascade = CascadeType.ALL)
-    //@JsonIgnoreProperties("contract")
-    @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
-    private User user;
+    @JoinColumn(name = "client_id", referencedColumnName = "id", nullable = false)
+    @JsonIgnoreProperties({"contract", "facility", "roles"})
+    private User client;
 
-    public Contract(){
+    public Contract() {
     }
 
-    public void Contract (Long id, LocalDateTime start, LocalDateTime finish, Facility facility, int totalPrice){
+    public Contract(Long id, Date start, Date finish, double totalPrice, Facility facility, User client) {
         this.id = id;
-        this.start  = start;
+        this.start = start;
         this.finish = finish;
-        //this.user = user;
-        this.facility = facility;
         this.totalPrice = totalPrice;
+        this.facility = facility;
+        this.client = client;
     }
 
-    /*public Contract (LocalDateTime start, LocalDateTime finish, User user, Facilit facilit){
-        this.start  = start;
+    public Contract(Date start, Date finish, double totalPrice, Facility facility, User client) {
+        this.start = start;
         this.finish = finish;
-        this.user = user;
-        this.facilit = facilit;
-    }*/
+        this.totalPrice = totalPrice;
+        this.facility = facility;
+        this.client = client;
+    }
 
-  /*  public Contract (Long id, User user, Facilit facilit){
+    public Contract(Long id) {
         this.id = id;
-        this.user = user;
-        this.facilit = facilit;
     }
 
-    public void addContract(User user, Facilit facilit, LocalDateTime start, LocalDateTime finish){
-        this.user(user);
-        this.facilit(facilit);
-        this.start(start);
-        this.finish(finish);
-    }*/
-/*    public void removeContract(User user, Facilit facilit, LocalDateTime start, LocalDateTime finish) {
-        user.remove(user);
-        facilit.remove(facilit);
-    }*/
-
-    @JsonBackReference
-    public User getUser() {
-        return user;
+    public Contract(Date start, Date finish) {
+        this.start = start;
+        this.finish = finish;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public User getClient() {
+        return client;
     }
 
+    public void setClient(User client) {
+        this.client = client;
+    }
 
-    public Facility getFacilit(){ return facility;}
+    public Facility getFacility() {
+        return facility;
+    }
 
-    public void setFacilit(Facility facility){
+    public void setFacility(Facility facility) {
 
         this.facility = facility;
     }
@@ -90,30 +78,29 @@ public class Contract {
         this.id = id;
     }
 
-    public LocalDateTime getStart() {
+    public Date getStart() {
         return start;
     }
 
-    public void setStart(LocalDateTime start) {
+    public void setStart(Date start) {
         this.start = start;
     }
 
-    public LocalDateTime getFinish() {
+    public Date getFinish() {
         return finish;
     }
 
-    public void setFinish(LocalDateTime finish) {
+    public void setFinish(Date finish) {
         this.finish = finish;
     }
 
-    public int getTotalPrice() {
+    public double getTotalPrice() {
         return totalPrice;
     }
 
-    public void setTotalPrice(int totalPrice) {
+    public void setTotalPrice(double totalPrice) {
         this.totalPrice = totalPrice;
     }
-
 
     @Override
     public String toString() {
@@ -123,7 +110,8 @@ public class Contract {
                 ", finish=" + finish +
                 ", totalPrice=" + totalPrice +
                 ", facility=" + facility +
-                ", user=" + user +
+                ", client=" + client +
                 '}';
     }
 }
+

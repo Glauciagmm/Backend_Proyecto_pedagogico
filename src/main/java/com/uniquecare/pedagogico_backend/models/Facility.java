@@ -1,18 +1,15 @@
 package com.uniquecare.pedagogico_backend.models;
 
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.*;
 import com.uniquecare.pedagogico_backend.security.services.UserDetailsImpl;
 import lombok.Data;
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
-
 
 @Entity
 @Data
 @Table(name = "facility",uniqueConstraints = {@UniqueConstraint(columnNames = {"title"})})
-
 
 public class Facility {
     @Id
@@ -20,40 +17,53 @@ public class Facility {
     private Long id;
     private String title;
     private String description;
-    private int pricePerHour;
+    private double pricePerHour;
 
-
-
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(  name = "category_id", referencedColumnName = "id")
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    private Category category;
-
-
-//    @ManyToOne
-//    @JoinColumn(name="category_id", nullable=false)
-//    private Category category;
-
-
- @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "facility_categories",
+            joinColumns = {@JoinColumn(name = "facility_id")},
+            inverseJoinColumns = {@JoinColumn(name = "category_id")})
     @JsonIgnore
-    private User user;
-    private UserDetailsImpl userDetails;
+    private Set<Category> categories = new HashSet<>();
 
-
-
-
-
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinColumn(name = "assistant_id", referencedColumnName = "id")
+    @JsonIgnoreProperties({"facility", "roles"})
+    private User assistant;
 
     @OneToMany(mappedBy = "facility")
-    //@JsonIgnoreProperties("facility")
-    private Set <Contract> contract;
+    @JsonIgnoreProperties({"facility"})
+    @JsonIdentityInfo(
+            generator = ObjectIdGenerators.PropertyGenerator.class,
+            property = "id")
+    private Set<Contract> contract = new HashSet<>();
+
 
     public Facility() {
-
     }
 
+    public Facility(Long id, String title, String description, double pricePerHour, Set<Category> categories, User assistant, Set<Contract> contract) {
+        this.id = id;
+        this.title = title;
+        this.description = description;
+        this.pricePerHour = pricePerHour;
+        this.categories = categories;
+        this.assistant = assistant;
+        this.contract = contract;
+    }
+
+    public Facility(Long id) {
+        this.id = id;
+    }
+
+    public Facility(String title, String description, double pricePerHour, Set<Category> categories, User assistant, Set<Contract> contract) {
+        this.title = title;
+        this.description = description;
+        this.pricePerHour = pricePerHour;
+        this.categories = categories;
+        this.assistant = assistant;
+        this.contract = contract;
+    }
 
     public Long getId() {
         return id;
@@ -79,28 +89,28 @@ public class Facility {
         this.description = description;
     }
 
-    public int getPricePerHour() {
+    public double getPricePerHour() {
         return pricePerHour;
     }
 
-    public void setPricePerHour(int pricePerHour) {
+    public void setPricePerHour(double pricePerHour) {
         this.pricePerHour = pricePerHour;
     }
 
-    public Category getCategory() {
-        return category;
+    public Set<Category> getCategories() {
+        return categories;
     }
 
-    public void setCategory(Category category) {
-        this.category = category;
+    public void setCategories(Set<Category> categories) {
+        this.categories = categories;
     }
 
-    public User getUser(User user) {
-        return user;
+    public User getAssistant() {
+        return assistant;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setAssistant(User assistant) {
+        this.assistant = assistant;
     }
 
     public Set<Contract> getContract() {
@@ -109,71 +119,5 @@ public class Facility {
 
     public void setContract(Set<Contract> contract) {
         this.contract = contract;
-    }
-
-    public Facility(String title, String description, int pricePerHour, User user) {
-        this.title = title;
-        this.description = description;
-        this.pricePerHour = pricePerHour;
-        this.user = user;
-    }
-
-    /* public Facility(Long id, String title, String description, int pricePerHour, User user, Set<Contract> contract) {
->>>>>>> feature/test
-        this.id = id;
-        this.title = title;
-        this.description = description;
-        this.pricePerHour = pricePerHour;
-        this.category=  category;
-        this.user = user;
-        this.contract = contract;
-    }
-
-<<<<<<< HEAD
-    public Facility(Long id, String title, String description, int pricePerHour, Category category, User user) {
-       this.id = id;
-=======
-    public Facility(Long id, String title, String description, int pricePerHour) {
-        this.id = id;
->>>>>>> feature/test
-        this.title = title;
-        this.description = description;
-        this.pricePerHour = pricePerHour;
-        this.category= category;
-        this.user=user;
-
-    }
-
-    public Facility(Long id, User user, Set<Contract> contract) {
-<<<<<<< HEAD
-         this.id = id;
-=======
-        this.id = id;
->>>>>>> feature/test
-        this.user = user;
-        this.contract = contract;
-    }
-
-    public Facility(Long id, Set<Contract> contract) {
-<<<<<<< HEAD
-
-=======
->>>>>>> feature/test
-        this.id = id;
-
-        this.contract = contract;
-    }
-
-
-    public void add(Facility facility) {
-        this.contract = contract;
-    }*/
-
-    public void remove(Facility facility) {
-        this.contract = contract;
-    }
-
-
-    public void getUser(UserDetailsImpl loggedInUser) {
     }
 }
