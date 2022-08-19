@@ -24,12 +24,28 @@ public class SignupRequest {
     private String phone;
     private String photo;
 
-    public String getPhone() {
-        return phone;
+    public String getUsername() {
+        return username;
     }
 
-    public void setPhone(String phone) {
-        this.phone = phone;
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public String getName() {
@@ -56,36 +72,12 @@ public class SignupRequest {
         this.city = city;
     }
 
-    public String getUsername() {
-        return username;
+    public String getPhone() {
+        return phone;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public Set<String> getRole() {
-        return this.role;
-    }
-
-    public void setRole(Set<String> role) {
-        this.role = role;
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
     public String getPhoto() {
@@ -96,14 +88,21 @@ public class SignupRequest {
         this.photo = photo;
     }
 
-    public SignupRequest(String username, String email, Set<String> role, String name, String surname, String city, String photo, String password) {
+    public Set<String> getRole() {
+        return this.role;
+    }
+
+    public void setRole(Set<String> role) {
+        this.role = role;
+    }
+
+    public SignupRequest(String username, String email, Set<String> role, String password, String name, String surname, String city) {
         this.username = username;
         this.email = email;
         this.role = role;
+        this.password = password;
         this.name = name;
         this.surname = surname;
         this.city = city;
-        this.photo = photo;
-        this.password = password;
     }
 }

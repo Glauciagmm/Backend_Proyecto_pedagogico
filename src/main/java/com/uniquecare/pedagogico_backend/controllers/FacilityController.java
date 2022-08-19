@@ -7,7 +7,9 @@ import com.uniquecare.pedagogico_backend.repositories.UserRepository;
 import com.uniquecare.pedagogico_backend.security.services.UserDetailsImpl;
 import com.uniquecare.pedagogico_backend.services.IFacilityService;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -35,12 +37,14 @@ public class FacilityController {
     }
 
     /**Encuentra un servicio cuando le pasas su ID -  works! */
+    @PreAuthorize("hasRole('USER') or hasRole('FACILITY') or hasRole('ADMIN')")
     @GetMapping("/{id}")
     public Facility findFacilityById(@PathVariable("id") Long id){
         return facilityService.findFacilityById(id);
     }
 
     /**Lista todos los servicios de la base de datos - works! */
+    @PreAuthorize("hasRole('USER') or hasRole('FACILITY') or hasRole('ADMIN')")
     @GetMapping("/list")
     public ResponseEntity<List<Facility>>getFacility(Authentication authentication, HttpSession session){
         if (authentication == null){
@@ -51,12 +55,15 @@ public class FacilityController {
         }return ResponseEntity.ok().body(facilityService.getAllFacilities());
     }
 
+
     /**Crea un nuevo servicio y le pasa el user que lo ha creado (user logueado)- works! */
+    @PreAuthorize("hasRole('FACILITY')")
     @PostMapping("/create")
     public ResponseEntity<Facility> addFacility(Authentication authentication, @RequestBody Facility facility) {
         URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/facility/create").toUriString());
         if (authentication == null) {
             System.out.println("Es necesario que hagas el login");
+            return ResponseEntity.badRequest().body(facility);
         } else {
             UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
             System.out.println(userDetails.getUsername());
@@ -68,6 +75,7 @@ public class FacilityController {
     }
 
     /**Edita un servicio de la base de datos - works! */
+    @PreAuthorize("hasRole('FACILITY') or hasRole('ADMIN')")
     @PutMapping("/edit")
     public ResponseEntity<Facility> editFacility(@RequestBody Facility facility){
         URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/facility/create").toUriString());
@@ -75,10 +83,11 @@ public class FacilityController {
     }
 
     /**Borra un servicio de la base de datos - works! */
+    @PreAuthorize("hasRole('FACILITY') or hasRole('ADMIN')")
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<Void> deleteFacilityById(@PathVariable Long id){
         facilityService.deleteFacilityById(id);
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.ok().build();
     }
 }
 

@@ -105,4 +105,15 @@ public class ProfileRequest {
         this.phone = phone;
         this.photo = photo;
     }
+
+    public ProfileRequest(String username, String email, Set<String> role, String name, String surname, String city, String phone, String photo) {
+        this.username = username;
+        this.email = email;
+        this.role = role;
+        this.name = name;
+        this.surname = surname;
+        this.city = city;
+        this.phone = phone;
+        this.photo = photo;
+    }
 }

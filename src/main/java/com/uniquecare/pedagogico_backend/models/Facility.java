@@ -1,10 +1,10 @@
 package com.uniquecare.pedagogico_backend.models;
 
 import com.fasterxml.jackson.annotation.*;
-import com.uniquecare.pedagogico_backend.security.services.UserDetailsImpl;
 import lombok.Data;
 import javax.persistence.*;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -65,6 +65,12 @@ public class Facility {
         this.contract = contract;
     }
 
+    public Facility(String title, String description, double pricePerHour) {
+        this.title = title;
+        this.description = description;
+        this.pricePerHour = pricePerHour;
+    }
+
     public Long getId() {
         return id;
     }
@@ -119,5 +125,31 @@ public class Facility {
 
     public void setContract(Set<Contract> contract) {
         this.contract = contract;
+    }
+
+
+    /*public Facility addAssistant(User  assitant) {
+        assitant.add(assitant);
+        assitant.setFacility((List<Facility>) this);
+        return this;
+    }
+
+    public Facility removeAssistant (User  assitant) {
+        assitant.remove(assitant);
+        assitant.setFacility(null);
+        return this;
+    }*/
+
+    @Override
+    public String toString() {
+        return "Facility{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", description='" + description + '\'' +
+                ", pricePerHour=" + pricePerHour +
+                ", categories=" + categories +
+                ", assistant=" + assistant +
+                ", contract=" + contract +
+                '}';
     }
 }

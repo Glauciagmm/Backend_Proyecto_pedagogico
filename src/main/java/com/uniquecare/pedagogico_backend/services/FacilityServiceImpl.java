@@ -30,7 +30,7 @@ public class FacilityServiceImpl implements IFacilityService {
     }
 
      @Override
-     public Facility addNewFacility (Facility facility){
+     public Facility addNewFacility(Facility facility){
             return facilityRepository.save(facility);
         }
 

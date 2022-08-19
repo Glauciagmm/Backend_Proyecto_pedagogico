@@ -27,12 +27,6 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
         return UserDetailsImpl.build(user);
     }
-/*  public Optional<User> getUserById(String userId){
-    return userRepository.findById(userId.getId());
-
-  }*/
-
-
 }
 
 

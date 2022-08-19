@@ -7,34 +7,30 @@ import com.uniquecare.pedagogico_backend.repositories.CategoryRepository;
 
 import java.net.URI;
 import java.util.List;
-import java.util.Optional;
-
 import javax.validation.Valid;
-
 import com.uniquecare.pedagogico_backend.repositories.FacilityRepository;
-import com.uniquecare.pedagogico_backend.services.ICategoryService;
-import com.uniquecare.pedagogico_backend.services.IFacilityService;
-import lombok.RequiredArgsConstructor;
+import com.uniquecare.pedagogico_backend.services.CategoryServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+
 @RestController
-@RequiredArgsConstructor
 @CrossOrigin(origins="*")
-
 @RequestMapping("/api/category")
-
 public class CategoryController {
-    @Autowired
-    private CategoryRepository categoryRepository;
 
     @Autowired
     private FacilityRepository facilityRepository;
+    private  final CategoryRepository categoryRepository;
+    private  final CategoryServiceImpl categoryService;
+
+    public CategoryController(CategoryRepository categoryRepository, CategoryServiceImpl categoryService){
+        this.categoryRepository = categoryRepository;
+        this.categoryService = categoryService;
+    }
 
     @GetMapping("/all")
     public String allAccess() {
@@ -43,25 +39,20 @@ public class CategoryController {
 
     @GetMapping("/list")
     public ResponseEntity<List<Category>> Category(Authentication authentication){
-        return ResponseEntity.ok(categoryRepository.findAll());
+        return ResponseEntity.ok(categoryService.getAllCategories());
     }
 
-    @PostMapping
+    @PostMapping("/create")
     public ResponseEntity<Category> saveCategory(@Valid @RequestBody Category category) {
-        Category categorySaved = categoryRepository.save(category);
+        Category categorySaved = categoryService.addNewCategory(category);
         URI ubication = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
                 .buildAndExpand(categorySaved.getFacilities()).toUri();
         return ResponseEntity.created(ubication).body(categorySaved);
     }
 
     @GetMapping("/{id}")
-    public  ResponseEntity<Category> getCategoryById(@PathVariable Long id){
-        Optional<Category> categoryOptional= categoryRepository.findById(id);
-        if(categoryOptional.isPresent()){
-            return ResponseEntity.unprocessableEntity().build();
-        }
-        return ResponseEntity.ok(categoryOptional.get());
-
+    public  Category getCategoryById(@PathVariable Long id){
+        return categoryService.getById(id);
     }
 
     @GetMapping("/{categoryId}/facilities")

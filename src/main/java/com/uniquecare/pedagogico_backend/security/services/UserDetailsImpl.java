@@ -4,14 +4,10 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.uniquecare.pedagogico_backend.models.ERole;
-import com.uniquecare.pedagogico_backend.models.Role;
 import com.uniquecare.pedagogico_backend.models.User;
-import org.springframework.context.annotation.Bean;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.stereotype.Service;
 
 
 public class UserDetailsImpl implements UserDetails {
@@ -25,15 +21,14 @@ public class UserDetailsImpl implements UserDetails {
     private String surname;
     private String city;
     private String phone;
-   @JsonIgnore
+    private String photo;
+    @JsonIgnore
     private String password;
-
-
- private Collection<? extends GrantedAuthority> authorities;
+    private Collection<? extends GrantedAuthority> authorities;
     private User user;
 
 
-  public UserDetailsImpl(Long id, String username, String email, String password, String name, String surname, String city, String phone,  Collection<? extends GrantedAuthority> authorities) {
+    public UserDetailsImpl(Long id, String username, String email, String password, String name, String surname, String city, String phone, String photo, Collection<? extends GrantedAuthority> authorities) {
         this.id = id;
         this.username = username;
         this.email = email;
@@ -42,9 +37,11 @@ public class UserDetailsImpl implements UserDetails {
         this.surname = surname;
         this.city = city;
         this.phone = phone;
+        this.photo = photo;
         this.authorities=authorities;
 
     }
+
     public static UserDetailsImpl build(User user) {
         List<GrantedAuthority> authorities = user.getRoles().stream()
                 .map(role -> new SimpleGrantedAuthority(role.getName().name()))
@@ -59,13 +56,16 @@ public class UserDetailsImpl implements UserDetails {
                 user.getSurname(),
                 user.getCity(),
                 user.getPhone(),
+                user.getPhoto(),
                 authorities);
        }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return authorities;
     }
 
+    public UserDetailsImpl() {}
 
     public Long getId() {
         return id;
@@ -85,9 +85,6 @@ public class UserDetailsImpl implements UserDetails {
     public String getUsername() {
         return username;
     }
-
-
-
 
     public String getSurname() {
         return surname;
@@ -111,6 +108,14 @@ public class UserDetailsImpl implements UserDetails {
 
     public void setPhone(String phone) {
         this.phone = phone;
+    }
+
+    public String getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(String photo) {
+        this.photo = photo;
     }
 
     @Override

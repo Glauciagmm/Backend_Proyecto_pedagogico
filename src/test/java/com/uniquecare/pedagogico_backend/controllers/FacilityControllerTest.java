@@ -1,84 +1,159 @@
 package com.uniquecare.pedagogico_backend.controllers;
 
-import com.uniquecare.pedagogico_backend.services.FacilityServiceImpl;
-import org.hamcrest.Matchers;
+import com.uniquecare.pedagogico_backend.models.Facility;
+import com.uniquecare.pedagogico_backend.repositories.FacilityRepository;
+import com.uniquecare.pedagogico_backend.security.WebSecurityConfig;
+import com.uniquecare.pedagogico_backend.security.services.UserDetailsImpl;
+
+import com.uniquecare.pedagogico_backend.security.services.UserDetailsServiceImpl;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
-import org.skyscreamer.jsonassert.JSONAssert;
+import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.test.context.web.WebAppConfiguration;
-import org.springframework.test.web.servlet.MockMvc;
 
-import java.time.LocalDateTime;
-import java.util.ArrayList;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.annotation.Import;
+import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.security.test.context.support.WithUserDetails;
+import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.web.servlet.MockMvc;
+import springfox.documentation.swagger.web.SecurityConfiguration;
+
+import javax.annotation.PostConstruct;
 import java.util.List;
 
-import static org.assertj.core.api.AssertionsForClassTypes.allOf;
-import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-import static org.hamcrest.Matchers.hasProperty;
-import static org.hamcrest.Matchers.is;
-import static org.mockito.ArgumentMatchers.contains;
-import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.BDDMockito.given;
-import static org.mockito.BDDMockito.then;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.*;
 
-@AutoConfigureMockMvc
-@WebAppConfiguration
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.BDDMockito.given;
+
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+
 @SpringBootTest
+@AutoConfigureMockMvc(addFilters = false)
+@Import(SecurityConfiguration.class)
+@RunWith(SpringRunner.class)
 class FacilityControllerTest {
 
-  /*  @Autowired
-    private MockMvc mockMvc;*/
+    MockMvc mockMvc;
 
-    //private final FacilityServiceImpl facilityService = Mockito.mock();
+    public FacilityControllerTest(MockMvc mockMvc){
+        this.mockMvc = mockMvc;
+    }
+
+    @Autowired
+    private FacilityRepository facilityRepository;
+
+    @MockBean(name = "userDetailsImpl")
+    private UserDetailsServiceImpl userDetailsService;
+
+    @MockBean
+    private WebSecurityConfig webSecurityConfig;
+
+    @PostConstruct
+    public void setup() {
+        given(userDetailsService.loadUserByUsername(anyString()))
+                .willReturn(new UserDetailsImpl());
+    }
+
+   @Test
+    @WithMockUser
+    public void test() throws Exception {
+        mockMvc.perform(
+                get("/signin").secure(true)
+                                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
+    }
 
     @Test
-    void findFacilityById() {
+    @WithUserDetails(value = "username", userDetailsServiceBeanName = "userDetailsService")
+    public void testAuthentication() throws Exception {
+        mockMvc.perform(
+                get("/pdps/authentication").secure(true)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
     }
 
-  /*  @Test
-    void getFacility() {
-        try{
-            mockMvc.perform(.get("/api/facility/list").accept(MediaType.APPLICATION_JSON)
-                    .andExpect
+    @BeforeEach
+    void setUp(){facilityRepository.deleteAll();}
 
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        mockMvc.perform(get())
+    @Test
+    void addFacility() throws Exception {
+
+        mockMvc.perform(post("/api/facility/create")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content("{\"title\":\"Recados\"," +
+                        "\"description\":\"Compras en supermercados, farmacias etc\"," +
+                        "\"pricePerHour\":\"12\"}")
+        ).andExpect(status().isOk());
+
+       List<Facility> facility = facilityRepository.findAll();
+
+        assertThat(facility, contains(allOf(
+                hasProperty("title", is("Recados")),
+                hasProperty("description", is("Compras en supermercados, farmacias etc")),
+                hasProperty("pricePerHour", is("12"))
+
+        )));
     }
-    
-    */
 
-/*   @Test
-    void addFacility() {
-        Authentication authentication = new Authentication() {
-            @Override
-            public Object getPrincipal() {
-                return null;
-            }
-        }
-        Facility facility =
-                new Facility(
-                        "Viajes",
-                        "Cuidado personal de personas dependentes",
-                        20,
-                        "Glaucia"
+    @Test
+    void findFacilityById() throws Exception{
+        Facility facility = facilityRepository.save(new Facility("limpieza", "Limpieza de Hograr y  jardines", 12));
 
-        );
-        underTest.addFacility(facility);
-    }*/
+        mockMvc.perform(get("api/facility/" + facility.getId()))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.title", equalTo("Limpieza")))
+                .andExpect(jsonPath("$.description", equalTo("Limpieza de Hograr y  jardines")))
+                .andExpect(jsonPath("$.pricePerHour", equalTo(12)));
+
+    }
+
+    @Test
+    void getFacility() throws Exception {
+
+        sampleFacility();
+
+        mockMvc.perform(get("/api/facility"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[*]", hasSize(1)))
+                .andExpect(jsonPath("$[0].title", equalTo("Limpieza")))
+                .andExpect(jsonPath("$[0].description", equalTo("Limpieza de Hograr y  jardines")))
+                .andExpect(jsonPath("$[0].pricePerHour", equalTo(19)))
+                .andDo(print());
+    }
+
+    /**Añade objetos al método que luego serán comprobados en el test getFacilitys*/
+    private void sampleFacility() {
+        List<Facility> facility = List.of(
+                new Facility("Limpieza",
+                       "Limpieza de Hograr y  jardines",
+                       19));
+        facilityRepository.saveAll(facility);
+    }
 
     @Test
     void editFacility() {
     }
 
     @Test
-    void deleteFacilityById() {
+    void deleteFacilityById() throws Exception{
+        Facility facility = facilityRepository.save(new Facility("limpieza", "Limpieza de Hograr y  jardines", 12));
+
+        mockMvc.perform(delete("/api/facility/"+ facility.getId()))
+                .andExpect(status().isOk());
+
+        List<Facility> facilities = facilityRepository.findAll();
+        assertThat(facilities, not(contains(allOf(
+                hasProperty("title", is("limpieza")),
+                hasProperty("description", is("Limpieza de Hograr y  jardines"))
+        ))));
     }
 }
-

@@ -26,7 +26,16 @@ public class Category {
             mappedBy = "categories")
     @JsonIgnore
     private Set<Facility> facilities = new HashSet<>();
-    public Category() {
+    public Category() {}
+
+    public Category(Long id, String name, Set<Facility> facilities) {
+        this.id = id;
+        this.name = name;
+        this.facilities = facilities;
+    }
+
+    public Category(Long id) {
+        this.id = id;
     }
 
     public long getId() {

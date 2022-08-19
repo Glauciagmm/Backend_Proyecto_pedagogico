@@ -36,11 +36,11 @@ public class User {
     private String phone;
     private String photo;
 
-    @ManyToMany(fetch = FetchType.LAZY,cascade=CascadeType.MERGE)
-    @JoinTable(  name = "user_roles",
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "user_roles",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
-    private Set <Role> roles = new HashSet<>();
+    private Set<Role> roles = new HashSet<>();
 
     @OneToMany(cascade = CascadeType.MERGE, mappedBy = "assistant")//Generate the service
     @JsonIgnore
@@ -151,35 +151,19 @@ public class User {
 
     public User() {}
 
-    public User(String name, String surname, String username, String email, String city, String phone, String photo, String password) {
+    public User(String name, String surname, String username, String email, String password, String city, String phone) {
         this.name = name;
         this.surname = surname;
         this.username = username;
         this.email = email;
-        this.city = city;
-        this.phone = phone;
-        this.photo = photo;
         this.password = password;
-
-    }
-
-    public User(Long id, List<Facility> facility) {
-        this.id = id;
-        this.facility = facility;
-    }
-
-    public User(Long id, String name, String surname, String username, String email, String city, String phone, String photo) {
-        this.id = id;
-        this.name = name;
-        this.surname = surname;
-        this.username = username;
-        this.email = email;
         this.city = city;
         this.phone = phone;
         this.photo = photo;
+        this.roles = roles;
     }
 
-     void addRole(Role roles) {
+    void addRole(Role roles) {
         this.roles.add(roles);
     }
 

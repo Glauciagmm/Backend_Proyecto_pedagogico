@@ -12,6 +12,7 @@ import com.uniquecare.pedagogico_backend.services.IFacilityService;
 import com.uniquecare.pedagogico_backend.services.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -43,6 +44,7 @@ public class ContractController {
 
     /**Lista todos los contractos de la base de datos, sus datos como fechas, assistente y cliente - works! */
 
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/contract")
     public ResponseEntity<List<Contract>> getContract() {
         return ResponseEntity.ok().body(contractService.findAllContracts());

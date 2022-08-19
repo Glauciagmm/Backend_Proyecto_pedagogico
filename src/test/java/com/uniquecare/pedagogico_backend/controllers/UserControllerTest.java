@@ -1,64 +1,82 @@
 package com.uniquecare.pedagogico_backend.controllers;
 
 import com.uniquecare.pedagogico_backend.models.User;
-import com.uniquecare.pedagogico_backend.repositories.UserRepository;
 import com.uniquecare.pedagogico_backend.services.IUserService;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.ResultMatcher;
 
-import java.util.List;
-
-
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.*;
+import static net.bytebuddy.matcher.ElementMatchers.is;
+import static org.mockito.BDDMockito.given;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
+import static org.springframework.test.web.client.match.MockRestRequestMatchers.jsonPath;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.test.web.servlet.MockMvc;
-import static org.mockito.Mockito.verify;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 
+
+
+@RunWith(SpringRunner.class)
 @WebMvcTest(UserController.class)
 class UserControllerTest {
 
-    @SuppressWarnings("SpringJavaAutowiringInspection")
+/*
     private MockMvc mockMvc;
 
+    public UserControllerTest(MockMvc mockMvc){
+        this.mockMvc = mockMvc;
+    }
 
     @MockBean
-    IUserService userService;
+    private IUserService userService;
 
-    @Autowired
-    private final UserRepository userRepository;
+    @Test
+    public void findUserById() throws Exception {
 
-    @Autowired
-    private final PasswordEncoder encoder;
+        User user = new User();
+        user.setName("Test Name");
+        user.setSurname("surname");
+        user.setUsername("username");
+        user.setEmail("email");
+        user.setPassword("password");
+        user.setCity("city");
+        user.setPhone("phone");
+        user.setPhoto("photo");
+        user.setId(1L);
+
+        given(userService.getUserById(user.getId())).willReturn(user);
+
+        mockMvc.perform(get("/users/" + user.getId().toString())
+                        .contentType(APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("name", is(user.getName())));
+    }
+*/
 
 
-    UserControllerTest(IUserService userService, UserRepository userRepository, PasswordEncoder encoder) {
+   /* @Mock
+    private UserRepository userRepositoryMock;
+    private IUserService userServiceUnderTest;
+
+    @Mock
+    private PasswordEncoder encoderUnderTest;*/
+
+
+   /* UserControllerTest(IUserService userService, UserRepository userRepository, PasswordEncoder encoder) {
         this.userService = userService;
         this.userRepository = userRepository;
         this.encoder = encoder;
-    }
+    }*/
 
-    @BeforeEach
+    /*@BeforeEach
     void setUp() {
-        userRepository.deleteAll();
-    }
+
+        userServiceUnderTest = new UserServiceImplements(userRepositoryMock);
+    }*/
 
     /*@Test
     public void getUsers() throws Exception {
